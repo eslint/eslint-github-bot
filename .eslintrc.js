@@ -13,6 +13,7 @@ module.exports = {
         "comma-dangle": 0,
         "global-require": 0,
         "import/no-dynamic-require": 0,
+        "arrow-parens": [2, "always"],
         indent: [ 2, 4, {
             SwitchCase: 1
         } ]

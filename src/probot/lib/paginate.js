@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 
 // Default callback should just return the response passed to it.
-const defaultCallback = response => response;
+const defaultCallback = (response) => response;
 
 module.exports = async function paginate(responsePromise, callback = defaultCallback) {
     let collection = [];

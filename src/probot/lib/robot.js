@@ -51,7 +51,7 @@ class Robot {
         this.log = wrapLogger(logger);
         this.github = null;
 
-        this.webhook.on("*", event => this.log.trace(event, "webhook received"));
+        this.webhook.on("*", (event) => this.log.trace(event, "webhook received"));
     }
 
     /**

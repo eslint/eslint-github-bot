@@ -17,7 +17,7 @@ module.exports = (options) => {
         level: process.env.LOG_LEVEL || "debug",
         stream: bunyanFormat({ outputMode: process.env.LOG_FORMAT || "short" }),
         serializers: {
-            repository: repository => repository.full_name
+            repository: (repository) => repository.full_name
         }
     });
 

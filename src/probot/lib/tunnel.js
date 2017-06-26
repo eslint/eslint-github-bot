@@ -14,7 +14,7 @@ function testTunnel(subdomain) {
     };
 
     return new Promise((resolve, reject) => {
-        https.request(options, res => (res.statusCode === 200 ? resolve() : reject())).end();
+        https.request(options, (res) => (res.statusCode === 200 ? resolve() : reject())).end();
     });
 }
 
