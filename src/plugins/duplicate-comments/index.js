@@ -63,6 +63,14 @@ const duplicateCheck = async (accountName, context) => {
     }
 };
 
+/**
+ * Makesure all comments have a hash at the end
+ * @example
+ *
+ * hi
+ *
+ * [//]: # (hi)
+ */
 module.exports = (robot) => {
     robot.on("issue_comment.created", duplicateCheck.bind(null, robot.accountName));
 };
