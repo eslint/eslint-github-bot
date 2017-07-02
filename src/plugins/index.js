@@ -1,3 +1,6 @@
+/**
+ * All the exposed plugins
+ */
 module.exports = {
     checkUnitTest: require("./check-unit-test"),
     commitMessage: require("./commit-message"),

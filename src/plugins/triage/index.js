@@ -2,21 +2,17 @@
  * Adds the triage label if the issue has no labels on it
  * @param {object} payload - event payload from github
  * @param {object} github - github interface
- * @returns {Promise.<void>} promise
+ * @returns {undefined}
  * @private
  */
-const triage = async ({ payload, github }) => {
-    try {
-        if (payload.issue.labels.length === 0) {
-            await github.issues.addLabels({
-                owner: payload.repository.owner.login,
-                repo: payload.repository.name,
-                number: payload.issue.number,
-                labels: ["triage"]
-            });
-        }
-    } catch (e) {
-        console.error(e);
+const triage = ({ payload, github }) => {
+    if (payload.issue.labels.length === 0) {
+        github.issues.addLabels({
+            owner: payload.repository.owner.login,
+            repo: payload.repository.name,
+            number: payload.issue.number,
+            labels: ["triage"]
+        });
     }
 };
 

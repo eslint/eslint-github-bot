@@ -59,7 +59,8 @@ const action = async (context) => {
 };
 
 /**
- * Add triage label when an issue is opened or reopened
+ * Check if unit test are present or not
+ * Ignore check if its a PR with title - Build|Chore|Docs|Upgrade
  */
 module.exports = (robot) => {
     robot.on("pull_request.opened", action);

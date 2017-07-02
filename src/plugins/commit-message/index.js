@@ -9,7 +9,7 @@ const TAG_REGEX = /^(?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade):/;
 const commentMessage = (username) => `
 **:tada: Thanks for contributing to <project name> :tada:**
 
-@${username} Please fix the following issues :poop: : 
+@${username} Please fix the following issues :poop: :
 * Please update your first commit message :pencil2: to follow our commit message guidelines.
 
 [//]: # (commit-message)
@@ -35,7 +35,7 @@ const processCommitMessage = async (context) => {
     try {
         const allCommits = await github.pullRequests.getCommits(context.issue());
 
-        // only check first commit message only
+        // only check first commit message
         if (!isCommitMessageLegal(allCommits.data[0].commit.message)) {
             github.issues.createComment(context.issue({
                 body: commentMessage(payload.sender.login)
@@ -47,7 +47,7 @@ const processCommitMessage = async (context) => {
 };
 
 /**
- * Add triage label when an issue is opened or reopened
+ * check commit message
  */
 module.exports = (robot) => {
     robot.on("pull_request.opened", processCommitMessage);

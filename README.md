@@ -1,9 +1,13 @@
 GLaDOS
 ========
 
-Plugin based Github bot.
+:alien: Plugin based Github bot :guardsman:
 
-## Setup
+* _"Two plus two is f…f…f… f…10. IN BASE FOUR! I'M FINE!"_
+* _Killing you and giving you advice aren't mutually exclusive. The rocket really is the way to go."_
+* _"DANCING IS NOT SCIENCE!"_
+
+## :wrench: Setup
 
 * Clone this repo.
 * `npm install`
@@ -16,14 +20,14 @@ Plugin based Github bot.
 * `TOKEN`: Auth token for the bot.
 * `NAME`: Name of the bot account.
 
-## Technical Insight
+## :sunrise_over_mountains: Technical Insight
 
-### Core
+### :game_die: Core
 
 * It uses a modified version of [Probot](https://github.com/probot/probot) project as the base.
 * Have to use a modified version as probot doesn't support webhooks. It works for GitHub apps.
 
-### Plugins
+### :electric_plug: Plugins
 
 Plugins are the core part of the bot. They are standalone pieces which listen on certain types of webhook events and then react to it.
 
@@ -33,7 +37,7 @@ Plugins are the core part of the bot. They are standalone pieces which listen on
 * **PR ready to merge*** - Checks if the PR is ready to merge and if it is then it adds the `pr: ready to merge` label.
     * At least one review is approved.
     * Build status is `success`.
-* **Check unit test*** - Make sure the PR contains unit test. This check will be ignored for `Build`, `Chore`,etc PR's.
+* **Check unit test*** - Make sure the PR contains unit test. This check will be ignored for `Build|Chore|Docs|Upgrade` PR title.
 
 _Note: All plugin names marked with `*` are experimental._
 

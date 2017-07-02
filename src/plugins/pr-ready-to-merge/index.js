@@ -37,7 +37,9 @@ const handlePrReviewChange = async (context) => {
 };
 
 /**
- * Add triage label when an issue is opened or reopened
+ * Add pr ready to merge label when
+ * - At least one review is approved.
+ * - Build status is success.
  */
 module.exports = (robot) => {
     robot.on("status", handleStatusChange);
