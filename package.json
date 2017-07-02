@@ -1,7 +1,7 @@
 {
   "name": "glados",
   "version": "0.1.0",
-  "description": "Awesome bot",
+  "description": "Awesome Github bot",
   "main": "./src/app.js",
   "scripts": {
     "lint": "eslint src",
@@ -9,7 +9,7 @@
     "start": "node ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Gyandeep Singh <gyandeeps@gmail.com>",
+  "author": "Gyandeep Singh <gyandeep.singh@cerner.com>",
   "license": "MIT",
   "dependencies": {
     "bottleneck": "^1.15.1",

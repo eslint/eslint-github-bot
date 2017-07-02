@@ -1,6 +1,19 @@
+/**
+ * Filters the comments based on the current user
+ * @param {Array<object>} comments - collection of comments as returned by the github
+ * @param {string} user - name of the account being used for admin purposes
+ * @returns {Array<object>} filtered comments
+ * @private
+ */
 const filterUserComments = (comments, user) =>
     comments.filter((comment) => comment.user.login === user);
 
+/**
+ * Extract the comment hash from the comment
+ * @param {string} comment - comment body
+ * @returns {string} comment hash
+ * @private
+ */
 const getCommentHash = (comment) => {
     const startIdx = comment.indexOf("[//]: # (") + 9;
     const endIndex = comment.indexOf(")", startIdx);
@@ -8,6 +21,13 @@ const getCommentHash = (comment) => {
     return comment.substring(startIdx, endIndex);
 };
 
+/**
+ * Creates the collection of comments based on the hash present inside the comments
+ * ignore the comments which doesnt have a hash
+ * @param {Array<object>} comments - collection of comments as returned by the github
+ * @returns {Map} comments by hash map
+ * @private
+ */
 const commentsByHash = (comments) => comments.reduce((coll, comment) => {
     const commentHash = getCommentHash(comment.body);
 
@@ -25,6 +45,12 @@ const commentsByHash = (comments) => comments.reduce((coll, comment) => {
     return coll;
 }, new Map());
 
+/**
+ * Filter comments that need to be deleted and return them
+ * @param {Map} commentsMap - comments collection by hash value inside the comment
+ * @returns {Array} Comments to be deleted
+ * @private
+ */
 const getCommentsTobeDeleted = (commentsMap) => {
     const comments = [];
 
@@ -37,6 +63,13 @@ const getCommentsTobeDeleted = (commentsMap) => {
     return comments;
 };
 
+/**
+ * Process the comments and return the comments which are duplicate and needs to be deleted
+ * @param {Array<object>} comments - collection of comments as returned by the github
+ * @param {string} user - name of the account being used for admin purposes
+ * @returns {Array<object>} comments to be deleted
+ * @private
+ */
 const processComments = (comments, user) =>
     getCommentsTobeDeleted(
         commentsByHash(
@@ -44,6 +77,13 @@ const processComments = (comments, user) =>
         )
     );
 
+/**
+ * Checks for duplicates comments and removes all the duplicates leaving the last one
+ * @param {string} accountName - name of the account being used for admin purposes
+ * @param {object} context - context given by the probot
+ * @returns {Promise.<void>} done when comments are removed
+ * @private
+ */
 const duplicateCheck = async (accountName, context) => {
     const { payload, github } = context;
 

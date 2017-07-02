@@ -26,7 +26,9 @@ module.exports = (options) => {
     const robot = createRobot({ webhook, cache, logger });
 
     robot.auth({
-        token: options.token
+        token: options.token,
+        host: options.host,
+        pathPrefix: options.pathPrefix
     });
 
     // Log all webhook errors
