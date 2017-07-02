@@ -1,7 +1,7 @@
 {
   "name": "glados",
   "version": "0.1.0",
-  "description": "Awesome Github bot",
+  "description": "Plugin based Github bot",
   "main": "./src/app.js",
   "scripts": {
     "lint": "eslint src",
@@ -9,7 +9,7 @@
     "start": "node ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Gyandeep Singh <gyandeep.singh@cerner.com>",
+  "author": "Gyandeep Singh <gyandeeps@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "bottleneck": "^1.15.1",
@@ -26,11 +26,13 @@
   "devDependencies": {
     "eslint": "^4.1.1",
     "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-import": "^2.6.1",
     "localtunnel": "^1.8.3"
   },
   "keywords": [
-    "bot"
+    "bot",
+    "github",
+    "events"
   ],
   "engines": {
     "node": ">=7.7"
