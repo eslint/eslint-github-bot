@@ -7,6 +7,7 @@
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "start": "node ./src/app.js",
+    "start:webhook": "node ./src/webhook.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Gyandeep Singh <gyandeeps@gmail.com>",
@@ -20,6 +21,7 @@
     "github-webhook-handler": "^0.6.0",
     "load-plugins": "^2.1.2",
     "pkg-conf": "^2.0.0",
+    "probot": "^0.7.4",
     "resolve": "^1.3.2",
     "semver": "^5.3.0"
   },

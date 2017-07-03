@@ -1,12 +1,11 @@
-const probot = require("probot");
+const probot = require("./probot");
 const plugins = require("./plugins");
 
 const port = process.env.PORT || 8000;
 const bot = probot({
     port,
     secret: process.env.SECRET || "", // required
-    cert: process.env.PRIVATE_KEY || "", // required
-    id: process.env.APP_ID || "" // required
+    token: process.env.TOKEN || "" // required
 });
 
 // as probot library doesnt support this, i am juts injecting it for now
