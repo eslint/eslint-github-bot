@@ -8,8 +8,8 @@
     "lint:fix": "eslint src tests --fix",
     "start": "node ./src/app.js",
     "start:webhook": "node ./src/webhook.js",
-    "test": "jest --colors --verbose",
-    "test:cover": "jest --colors --coverage --verbose"
+    "test": "jest --colors --verbose --runInBand",
+    "test:cover": "jest --colors --coverage --verbose --runInBand"
   },
   "author": "Gyandeep Singh <gyandeeps@gmail.com>",
   "license": "MIT",
@@ -45,7 +45,8 @@
       "<rootDir>/tests/**/*.js"
     ],
     "testPathIgnorePatterns": [
-      "<rootDir>/tests/.eslintrc.js"
+      "<rootDir>/tests/.eslintrc.js",
+      "<rootDir>/tests/__mocks__"
     ],
     "coverageDirectory": "./coverage",
     "collectCoverage": false

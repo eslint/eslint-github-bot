@@ -31,18 +31,13 @@ const isCommitMessageLegal = (message) => TAG_REGEX.test(message);
  */
 const processCommitMessage = async (context) => {
     const { payload, github } = context;
+    const allCommits = await github.pullRequests.getCommits(context.issue());
 
-    try {
-        const allCommits = await github.pullRequests.getCommits(context.issue());
-
-        // only check first commit message
-        if (!isCommitMessageLegal(allCommits.data[0].commit.message)) {
-            github.issues.createComment(context.issue({
-                body: commentMessage(payload.sender.login)
-            }));
-        }
-    } catch (e) {
-        console.error(e);
+    // only check first commit message
+    if (!isCommitMessageLegal(allCommits.data[0].commit.message)) {
+        github.issues.createComment(context.issue({
+            body: commentMessage(payload.sender.login)
+        }));
     }
 };
 
