@@ -1,3 +1,5 @@
+const path = require("path");
+
 const TAG_REGEX = /^(?:Build|Chore|Docs|Upgrade):/;
 
 /**
@@ -31,6 +33,7 @@ If this is a mistake then please ignore this message. I am not that smart as a b
 const areUnitTestFilesPresent = (files, repoUrl) =>
     files
         .map((file) => file.blob_url)
+        .map((url) => path.dirname(url))
         .map((url) => url.substring(repoUrl.length))
         .some((url) => url.includes("test"));
 
@@ -43,18 +46,14 @@ const areUnitTestFilesPresent = (files, repoUrl) =>
 const action = async (context) => {
     const { payload, github } = context;
 
-    try {
-        if (!isChoreTypePullRequest(payload.pull_request.title)) {
-            const { data: allFiles } = await github.pullRequests.getFiles(context.issue());
+    if (!isChoreTypePullRequest(payload.pull_request.title)) {
+        const { data: allFiles } = await github.pullRequests.getFiles(context.issue());
 
-            if (!areUnitTestFilesPresent(allFiles, payload.repository.html_url)) {
-                github.issues.createComment(context.issue({
-                    body: commentMessage(payload.sender.login)
-                }));
-            }
+        if (!areUnitTestFilesPresent(allFiles, payload.repository.html_url)) {
+            github.issues.createComment(context.issue({
+                body: commentMessage(payload.sender.login)
+            }));
         }
-    } catch (e) {
-        console.error(e);
     }
 };
 

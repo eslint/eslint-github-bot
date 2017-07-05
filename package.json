@@ -8,8 +8,8 @@
     "lint:fix": "eslint src tests --fix",
     "start": "node ./src/app.js",
     "start:webhook": "node ./src/webhook.js",
-    "test": "jest --colors --verbose --runInBand",
-    "test:cover": "jest --colors --coverage --verbose --runInBand"
+    "test": "jest --colors --verbose",
+    "test:cover": "jest --colors --coverage"
   },
   "author": "Gyandeep Singh <gyandeeps@gmail.com>",
   "license": "MIT",
