@@ -4,11 +4,12 @@
   "description": "Plugin based Github bot",
   "main": "./src/app.js",
   "scripts": {
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
+    "lint": "eslint src tests",
+    "lint:fix": "eslint src tests --fix",
     "start": "node ./src/app.js",
     "start:webhook": "node ./src/webhook.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --colors --verbose",
+    "test:cover": "jest --colors --coverage --verbose"
   },
   "author": "Gyandeep Singh <gyandeeps@gmail.com>",
   "license": "MIT",
@@ -29,13 +30,26 @@
     "eslint": "^4.1.1",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.6.1",
-    "localtunnel": "^1.8.3"
+    "jest": "^20.0.4",
+    "localtunnel": "^1.8.3",
+    "nock": "^9.0.13"
   },
   "keywords": [
     "bot",
     "github",
     "events"
   ],
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "<rootDir>/tests/**/*.js"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/tests/.eslintrc.js"
+    ],
+    "coverageDirectory": "./coverage",
+    "collectCoverage": false
+  },
   "engines": {
     "node": ">=7.7"
   }

@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/gyandeeps/glados.svg?branch=master)](https://travis-ci.org/gyandeeps/glados)
+
 GLaDOS
 ========
 

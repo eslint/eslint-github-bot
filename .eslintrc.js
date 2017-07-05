@@ -12,7 +12,10 @@ module.exports = {
         "quotes": [2, "double"],
         "comma-dangle": 0,
         "global-require": 0,
-        "import/no-dynamic-require": 0,
+        "import/no-dynamic-require": 0, // activate all import rules later (issue with eslint 4.x)
+        "import/no-unresolved": 0,
+        "import/no-extraneous-dependencies": 0,
+        "import/no-absolute-path": 0,
         "arrow-parens": [2, "always"],
         indent: [ 2, 4, {
             SwitchCase: 1
