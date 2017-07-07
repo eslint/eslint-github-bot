@@ -1,10 +1,15 @@
+/**
+ * @fileoverview Checks if the status of the latest commit on a PR
+ * @author Gyandeep Singh
+ */
+
 const { labels, getAllCommitsByPR } = require("./common");
 
 /**
  * Gets the combined state of a particular sha commit
  * @param {object} context - context given by the probot
  * @param {string} sha - git sha value
- * @returns {Promise.<string>} value of the state
+ * @returns {Promise<string>} value of the state
  */
 const getStatusBySha = async (context, sha) => {
     const { data: { state, statuses } } = await context.github.repos.getCombinedStatus(
@@ -17,28 +22,28 @@ const getStatusBySha = async (context, sha) => {
 };
 
 /**
- * Get status for all the sha values
- * @param {object} context - context given by the probot
- * @param {Array<string>} allSha - All sha from a PR
- * @returns {Promise<Array<Promise>>} collection of promises
+ * Get the sha values from the commit objects
+ * @param {object} commit - Commit
+ * @returns {Promise<string>} sha values
+ * @private
  */
-const getStatusAllSha = (context, allSha) =>
-    Promise.all(allSha.map((sha) => getStatusBySha(context, sha)));
+const pluckSha = async (commit) => commit.sha;
 
 /**
- * Get the sha values from all the commit objects
- * @param {Array< object>} commits - all the commits from the PR
- * @returns {Array<string>} sha values
+ * Get the latest commit
+ * @param {Array<object>} commits - all the Commit
+ * @returns {Promise<Object>} latest commit object
+ * @private
  */
-const pluckSha = async (commits) => commits.map((commit) => commit.sha);
+const getLatestCommit = async (commits) => commits.pop();
 
 /**
- * Check if every status is a success
- * @param {Array<string>} allStatus - collection of status
- * @returns {boolean} true if all are success
+ * Check if status is a success
+ * @param {string} status - Status of a commit
+ * @returns {boolean} true if it is success
+ * @private
  */
-const allStatusAreSuccess = (allStatus) =>
-    allStatus.every((status) => status === labels.successStatus);
+const isStatusSuccess = (status) => status === labels.successStatus;
 
 /**
  * Check to see if the PR build status is good or not
@@ -48,9 +53,10 @@ const allStatusAreSuccess = (allStatus) =>
  */
 const isPrStatusSuccess = (context, prId) =>
     getAllCommitsByPR(context, prId)
+        .then(getLatestCommit)
         .then(pluckSha)
-        .then((shas) => getStatusAllSha(context, shas))
-        .then(allStatusAreSuccess);
+        .then((shas) => getStatusBySha(context, shas))
+        .then(isStatusSuccess);
 
 module.exports = {
     isPrStatusSuccess
