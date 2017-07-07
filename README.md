@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/gyandeeps/glados.svg?branch=master)](https://travis-ci.org/gyandeeps/glados)
+[![Build Status](https://travis-ci.org/eslint/eslint-bot.svg?branch=master)](https://travis-ci.org/gyandeeps/eslint-bot)
 
-GLaDOS
+GLaDOS - ESLint bot
 ========
 
 :alien: Plugin based Github bot :guardsman:
@@ -22,15 +22,8 @@ GLaDOS
 * `PORT`: Port for web server _(default 8000)_.
 * `SECRET`: Secret setup for GitHub webhook or you generated when you created the app.
 * `NAME`: Name of the bot account.
-
-#### GitHub APP only
-
 * `PRIVATE_KEY`: the contents of the private key you downloaded after creating the app.
 * `APP_ID`: Auth token for the bot.
-
-#### Webhook only
-
-* `TOKEN`: Auth token for the bot.
 
 ## :sunrise_over_mountains: Technical Insight
 
@@ -39,11 +32,6 @@ GLaDOS
 #### GitHub APP
 
 * It uses probot directly with no modifications.
-
-#### Webhook only
-
-* It uses a modified version of [Probot](https://github.com/probot/probot) project as the base.
-* Have to use a modified version as probot doesn't support webhooks. It works for GitHub apps.
 
 ### :electric_plug: Plugins
 
