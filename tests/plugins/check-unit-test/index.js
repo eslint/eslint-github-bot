@@ -38,7 +38,7 @@ const emitBotEvent = (bot, { action, title }) => bot.receive({
     }
 });
 
-describe("commit-message", () => {
+describe("check-unit-test", () => {
     let bot = null;
     let nockScope = null;
 

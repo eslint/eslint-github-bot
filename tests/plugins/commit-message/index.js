@@ -91,6 +91,24 @@ describe("commit-message", () => {
                     }, 1000);
                 });
         });
+
+        test("Add message if the commit message is correct but longer than 72 chars", (done) => {
+            mockCommitsWithMsg("New: standard commit message very very very long message and its beond 72");
+
+            const nockScope = nock("https://api.github.com")
+                .post("/repos/test/repo-test/issues/1/comments")
+                .reply(201);
+
+            emitBotEvent(bot, {
+                action: "opened"
+            })
+                .then(() => {
+                    setTimeout(() => {
+                        expect(nockScope.isDone()).toBeTruthy();
+                        done();
+                    }, 1000);
+                });
+        });
     });
 
     describe("pull request reopened", () => {

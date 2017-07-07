@@ -47,7 +47,7 @@ const emitBotEvent = (bot, state = "open") => bot.receive({
     }
 });
 
-describe("commit-message", () => {
+describe("duplicate-comments", () => {
     let bot = null;
     let nockScope = null;
 
