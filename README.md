@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/eslint/eslint-bot.svg?branch=master)](https://travis-ci.org/gyandeeps/eslint-bot)
+[![Build Status](https://travis-ci.org/eslint/eslint-bot.svg?branch=master)](https://travis-ci.org/eslint/eslint-bot)
 
-GLaDOS - ESLint bot
+ESLint bot - GLaDOS
 ========
 
 :alien: Plugin based Github bot :guardsman:
@@ -14,8 +14,7 @@ GLaDOS - ESLint bot
 * Clone this repo.
 * `npm install`
 * Start the app
-    * `npm start` to start it as a GitHub APP (**preferred**).
-    * `npm run start:webhook` to start the it as a webhook.
+    * `npm start` to start it as a GitHub APP
 
 ### ENV variables required.
 

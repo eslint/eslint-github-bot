@@ -1,5 +1,5 @@
 {
-  "name": "glados",
+  "name": "eslint-bot",
   "version": "0.1.0",
   "description": "Plugin based Github bot for ESLint",
   "main": "./src/app.js",
@@ -25,7 +25,8 @@
   "keywords": [
     "bot",
     "github",
-    "events"
+    "events",
+    "eslint"
   ],
   "jest": {
     "testEnvironment": "node",
