@@ -43,6 +43,7 @@ Plugins are the core part of the bot. They are standalone pieces which listen on
     * At least one review is approved.
     * Build status is `success`.
 * **Check unit test*** - Make sure the PR contains unit test. This check will be ignored for `Build|Chore|Docs|Upgrade` PR title.
+* **Needs info** - It add the comment to the issue when `needs info` label is added to it.
 
 _Note: All plugin names marked with `*` are experimental._
 

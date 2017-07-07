@@ -6,5 +6,6 @@ module.exports = {
     commitMessage: require("./commit-message"),
     duplicateComments: require("./duplicate-comments"),
     prReadyToMerge: require("./pr-ready-to-merge"),
+    needsInfo: require("./needs-info"),
     triage: require("./triage")
 };
