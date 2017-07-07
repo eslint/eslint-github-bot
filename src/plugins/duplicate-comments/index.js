@@ -87,19 +87,15 @@ const processComments = (comments, user) =>
 const duplicateCheck = async (accountName, context) => {
     const { payload, github } = context;
 
-    try {
-        if (payload.issue.state === "open") {
-            const allComments = await github.issues.getComments(context.issue());
+    if (payload.issue.state === "open") {
+        const allComments = await github.issues.getComments(context.issue());
 
-            processComments(allComments.data, accountName)
-                .forEach(
-                    (comment) => github.issues.deleteComment(
-                        context.repo({ id: comment.id })
-                    )
-                );
-        }
-    } catch (e) {
-        console.error(e);
+        processComments(allComments.data, accountName)
+            .forEach(
+                (comment) => github.issues.deleteComment(
+                    context.repo({ id: comment.id })
+                )
+            );
     }
 };
 
