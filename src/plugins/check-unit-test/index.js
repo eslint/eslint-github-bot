@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Make sure the PR contains unit test.
+ * This check will be ignored for Build|Chore|Docs|Upgrade PR title.
+ * @author Gyandeep Singh
+ */
+
 const path = require("path");
 
 const TAG_REGEX = /^(?:Build|Chore|Docs|Upgrade):/;

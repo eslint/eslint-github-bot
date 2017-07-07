@@ -1,3 +1,11 @@
+/**
+ * @fileoverview Checks if the PR is ready to merge and
+ * if it is then it adds the pr: ready to merge label.
+ * - At least one review is approved.
+ * - Build status is success.
+ * @author Gyandeep Singh
+ */
+
 const { labels, removePrApprovedLabel, addPrApprovedLabel } = require("./common");
 const { isPrReviewSuccess } = require("./reviewCheck");
 const { isPrStatusSuccess } = require("./statusCheck");

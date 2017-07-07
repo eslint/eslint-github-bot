@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Checks if the at least one user has approved the review
+ * @author Gyandeep Singh
+ */
+
 const { getPullrequestBySha, labels } = require("./common");
 
 /**

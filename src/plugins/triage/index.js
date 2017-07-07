@@ -1,4 +1,9 @@
 /**
+ * @fileoverview It add the triage label to the issues which doesn't have any labels.
+ * @author Gyandeep Singh
+ */
+
+/**
  * Adds the triage label if the issue has no labels on it
  * @param {object} payload - event payload from github
  * @param {object} github - github interface

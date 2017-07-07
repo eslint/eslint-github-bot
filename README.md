@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/eslint/eslint-bot.svg?branch=master)](https://travis-ci.org/eslint/eslint-bot)
+[![Build Status](https://travis-ci.org/eslint/eslint-github-bot.svg?branch=master)](https://travis-ci.org/eslint/eslint-github-bot)
 
-ESLint bot - GLaDOS
-========
+ESLint GitHub bot - GLaDOS
+==========================
 
 :alien: Plugin based Github bot :guardsman:
 

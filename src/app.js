@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Main file which starts the probot server and loads the plugins
+ * @author Gyandeep Singh
+ */
+
 const probot = require("probot");
 const plugins = require("./plugins");
 

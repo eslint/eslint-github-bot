@@ -1,3 +1,9 @@
+/**
+ * @fileoverview  It checks the first commit message on PR and
+ * make sure it is formatted according to the guidelines. If not then it leaves a message on the PR.
+ * @author Gyandeep Singh
+ */
+
 const TAG_REGEX = /^(?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade):/;
 const commitMessageIssue = "* The commit summary needs to begin with a tag (such as `Fix:` or `Update:`). Please check out our [guide](http://eslint.org/docs/developer-guide/contributing/pull-requests#step-2-make-your-changes) for how to properly format your commit summary and [update](http://eslint.org/docs/developer-guide/contributing/pull-requests#updating-the-commit-message) it on this pull request.";
 const commitLengthIssue = "* The commit summary must be 72 characters or shorter. Please check out our [guide](http://eslint.org/docs/developer-guide/contributing/pull-requests#step-2-make-your-changes) for how to properly format your commit summary and [update](http://eslint.org/docs/developer-guide/contributing/pull-requests#updating-the-commit-message) it on this pull request.";
@@ -6,6 +12,7 @@ const messageLengthLimit = 72;
 /**
  * Create the comment for the commit message issue
  * @param {string} username - user to tag on the comment
+ * @param {Array<string>} messageIssues - collection of issue messages
  * @returns {string} comment message
  * @private
  */
@@ -37,9 +44,9 @@ const isCommitMessageLegal = (message) => TAG_REGEX.test(message);
 const isCommitMessageLengthLegal = (message) => message.length <= messageLengthLimit;
 
 /**
- * Aplly different checks on the commit message
+ * Apply different checks on the commit message
  * @param {string} message - commit message
- * @returns {Array<string>} Collection of issue messagees
+ * @returns {Array<string>} Collection of issue messages
  * @private
  */
 const checkCommitMessage = (message) => {

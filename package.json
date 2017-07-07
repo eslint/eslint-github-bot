@@ -1,5 +1,5 @@
 {
-  "name": "eslint-bot",
+  "name": "eslint-github-bot",
   "version": "0.1.0",
   "description": "Plugin based Github bot for ESLint",
   "main": "./src/app.js",
@@ -12,6 +12,8 @@
   },
   "author": "Gyandeep Singh <gyandeeps@gmail.com>",
   "license": "MIT",
+  "repository": "eslint/eslint-github-bot",
+  "bugs": "https://github.com/eslint/eslint-github-bot/issues/",
   "dependencies": {
     "probot": "^0.7.4"
   },

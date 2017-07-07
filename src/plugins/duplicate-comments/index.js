@@ -1,4 +1,16 @@
 /**
+ * @fileoverview It removes all the duplicates comments by this bot and
+ * leaves the last one of each type. It uses a unique hash from the comment message.
+ * Makesure all comments have a hash at the end
+ * @example
+ *
+ * hi
+ *
+ * [//]: # (hi)
+ * @author Gyandeep Singh
+ */
+
+/**
  * Filters the comments based on the current user
  * @param {Array<object>} comments - collection of comments as returned by the github
  * @param {string} user - name of the account being used for admin purposes

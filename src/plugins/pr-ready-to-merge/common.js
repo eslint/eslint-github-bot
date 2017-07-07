@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Common git utils for the plugin
+ * @author Gyandeep Singh
+ */
+
 const labels = {
     reviewLabel: "pr: ready to merge",
     successStatus: "success",
