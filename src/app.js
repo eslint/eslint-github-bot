@@ -15,7 +15,7 @@ const bot = probot({
 });
 
 // as probot library doesnt support this, i am juts injecting it for now
-bot.robot.accountName = process.env.NAME || "eslint"; // required
+bot.robot.accountName = process.env.NAME || "test bot name"; // required
 
 // load all the plugins from inside plugins folder
 Object.keys(plugins).forEach((pluginId) => bot.load(plugins[pluginId]));
