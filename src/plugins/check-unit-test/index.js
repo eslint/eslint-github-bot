@@ -23,8 +23,10 @@ const isChoreTypePullRequest = (message) => TAG_REGEX.test(message);
  * @private
  */
 const commentMessage = (username) => `
-@${username} Looks like you have made some code changes but you have not added any unit tests. We require unit test for all type of code changes.
-If this is a mistake then please ignore this message. I am not that smart as a bot (working on it). Thanks :smile:
+Hi @${username},
+
+It looks like you have made some code changes, but you have not added any unit tests. We require unit tests for all types of code changes.
+If this is a mistake, then please ignore this message.
 
 [//]: # (check-unit-test)
 `;
