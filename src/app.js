@@ -13,12 +13,17 @@ const bot = probot({
     cert: process.env.PRIVATE_KEY || "", // required
     id: process.env.APP_ID || "" // required
 });
+const disabledPlugins = [
+    "prReadyToMerge"
+];
 
 // as probot library doesnt support this, i am juts injecting it for now
 bot.robot.accountName = process.env.NAME || "eslint"; // required
 
-// load all the plugins from inside plugins folder
-Object.keys(plugins).forEach((pluginId) => bot.load(plugins[pluginId]));
+// load all the plugins from inside plugins folder except the one which are disabled
+Object.keys(plugins)
+    .filter((pluginId) => !disabledPlugins.includes(pluginId))
+    .forEach((pluginId) => bot.load(plugins[pluginId]));
 
 // start the server
 bot.start();
