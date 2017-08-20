@@ -7,11 +7,11 @@ const mockPrWithComments = (comments = []) =>
         .get("/repos/test/repo-test/issues/1/comments")
         .reply(200, comments);
 
-const createFakeComment = (id, body, login) => ({
+const createFakeComment = (id, body, type) => ({
     id,
     body,
     user: {
-        login
+        type
     }
 });
 
@@ -59,7 +59,6 @@ describe("duplicate-comments", () => {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }
         });
-        bot.accountName = "botAccountName";
         duplicateComments(bot);
     });
 
@@ -76,8 +75,8 @@ describe("duplicate-comments", () => {
     describe("issue comment created", () => {
         test("Removes the duplicate comment of the bot", (done) => {
             mockComments([
-                createFakeComment(4, "test [//]: # (test)", bot.accountName),
-                createFakeComment(5, "test [//]: # (test)", bot.accountName)
+                createFakeComment(4, "test [//]: # (test)", "Bot"),
+                createFakeComment(5, "test [//]: # (test)", "Bot")
             ]);
             mockDelteComment(4);
             emitBotEvent(bot)
@@ -91,8 +90,8 @@ describe("duplicate-comments", () => {
 
         test("Do not remove any comment if no bot comment is repeated", (done) => {
             mockComments([
-                createFakeComment(4, "test [//]: # (test)", bot.accountName),
-                createFakeComment(5, "test [//]: # (test-1)", bot.accountName)
+                createFakeComment(4, "test [//]: # (test)", "Bot"),
+                createFakeComment(5, "test [//]: # (test-1)", "Bot")
             ]);
             mockDelteComment(4);
             emitBotEvent(bot)

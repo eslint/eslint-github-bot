@@ -17,9 +17,6 @@ const disabledPlugins = [
     "prReadyToMerge"
 ];
 
-// as probot library doesnt support this, i am juts injecting it for now
-bot.robot.accountName = process.env.NAME || "eslint"; // required
-
 // load all the plugins from inside plugins folder except the one which are disabled
 Object.keys(plugins)
     .filter((pluginId) => !disabledPlugins.includes(pluginId))

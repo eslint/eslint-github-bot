@@ -10,15 +10,16 @@
  * @author Gyandeep Singh
  */
 
+const botType = "Bot";
+
 /**
  * Filters the comments based on the current user
  * @param {Array<object>} comments - collection of comments as returned by the github
- * @param {string} user - name of the account being used for admin purposes
  * @returns {Array<object>} filtered comments
  * @private
  */
-const filterUserComments = (comments, user) =>
-    comments.filter((comment) => comment.user.login === user);
+const filterBotComments = (comments) =>
+    comments.filter((comment) => comment.user.type === botType);
 
 /**
  * Extract the comment hash from the comment
@@ -78,31 +79,29 @@ const getCommentsTobeDeleted = (commentsMap) => {
 /**
  * Process the comments and return the comments which are duplicate and needs to be deleted
  * @param {Array<object>} comments - collection of comments as returned by the github
- * @param {string} user - name of the account being used for admin purposes
  * @returns {Array<object>} comments to be deleted
  * @private
  */
-const processComments = (comments, user) =>
+const processComments = (comments) =>
     getCommentsTobeDeleted(
         commentsByHash(
-            filterUserComments(comments, user)
+            filterBotComments(comments)
         )
     );
 
 /**
  * Checks for duplicates comments and removes all the duplicates leaving the last one
- * @param {string} accountName - name of the account being used for admin purposes
  * @param {object} context - context given by the probot
  * @returns {Promise.<void>} done when comments are removed
  * @private
  */
-const duplicateCheck = async (accountName, context) => {
+const duplicateCheck = async (context) => {
     const { payload, github } = context;
 
     if (payload.issue.state === "open") {
         const allComments = await github.issues.getComments(context.issue());
 
-        processComments(allComments.data, accountName)
+        processComments(allComments.data)
             .forEach(
                 (comment) => github.issues.deleteComment(
                     context.repo({ id: comment.id })
@@ -120,5 +119,5 @@ const duplicateCheck = async (accountName, context) => {
  * [//]: # (hi)
  */
 module.exports = (robot) => {
-    robot.on("issue_comment.created", duplicateCheck.bind(null, robot.accountName));
+    robot.on("issue_comment.created", duplicateCheck);
 };
