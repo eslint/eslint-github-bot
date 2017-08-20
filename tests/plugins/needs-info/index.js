@@ -7,11 +7,14 @@ describe("needs-info", () => {
     let issueCommentReq = null;
 
     beforeAll(() => {
-        bot = probot({
+        bot = probot.createRobot({
             id: "test",
-            cert: "test"
+            cert: "test",
+            cache: {
+                wrap: () => Promise.resolve({ data: { token: "test" } })
+            }
         });
-        needsInfo(bot.robot);
+        needsInfo(bot);
     });
 
     beforeEach(() => {
