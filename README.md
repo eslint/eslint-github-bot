@@ -20,7 +20,6 @@ ESLint GitHub bot - GLaDOS
 
 * `PORT`: Port for web server _(default 8000)_.
 * `SECRET`: Secret setup for GitHub webhook or you generated when you created the app.
-* `NAME`: Name of the bot account.
 * `PRIVATE_KEY`: the contents of the private key you downloaded after creating the app.
 * `APP_ID`: Auth token for the bot.
 
