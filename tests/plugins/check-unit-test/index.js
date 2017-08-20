@@ -43,11 +43,14 @@ describe("check-unit-test", () => {
     let nockScope = null;
 
     beforeAll(() => {
-        bot = probot({
+        bot = probot.createRobot({
             id: "test",
-            cert: "test"
+            cert: "test",
+            cache: {
+                wrap: () => Promise.resolve({ data: { token: "test" } })
+            }
         });
-        checkUnitTest(bot.robot);
+        checkUnitTest(bot);
     });
 
     beforeEach(() => {

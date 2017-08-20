@@ -44,11 +44,14 @@ describe("commit-message", () => {
     let bot = null;
 
     beforeAll(() => {
-        bot = probot({
+        bot = probot.createRobot({
             id: "test",
-            cert: "test"
+            cert: "test",
+            cache: {
+                wrap: () => Promise.resolve({ data: { token: "test" } })
+            }
         });
-        commitMessage(bot.robot);
+        commitMessage(bot);
     });
 
     afterEach(() => {

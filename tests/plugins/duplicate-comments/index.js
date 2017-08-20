@@ -52,12 +52,15 @@ describe("duplicate-comments", () => {
     let nockScope = null;
 
     beforeAll(() => {
-        bot = probot({
+        bot = probot.createRobot({
             id: "test",
-            cert: "test"
+            cert: "test",
+            cache: {
+                wrap: () => Promise.resolve({ data: { token: "test" } })
+            }
         });
-        bot.robot.accountName = "botAccountName";
-        duplicateComments(bot.robot);
+        bot.accountName = "botAccountName";
+        duplicateComments(bot);
     });
 
     afterEach(() => {
@@ -73,8 +76,8 @@ describe("duplicate-comments", () => {
     describe("issue comment created", () => {
         test("Removes the duplicate comment of the bot", (done) => {
             mockComments([
-                createFakeComment(4, "test [//]: # (test)", bot.robot.accountName),
-                createFakeComment(5, "test [//]: # (test)", bot.robot.accountName)
+                createFakeComment(4, "test [//]: # (test)", bot.accountName),
+                createFakeComment(5, "test [//]: # (test)", bot.accountName)
             ]);
             mockDelteComment(4);
             emitBotEvent(bot)
@@ -88,8 +91,8 @@ describe("duplicate-comments", () => {
 
         test("Do not remove any comment if no bot comment is repeated", (done) => {
             mockComments([
-                createFakeComment(4, "test [//]: # (test)", bot.robot.accountName),
-                createFakeComment(5, "test [//]: # (test-1)", bot.robot.accountName)
+                createFakeComment(4, "test [//]: # (test)", bot.accountName),
+                createFakeComment(5, "test [//]: # (test-1)", bot.accountName)
             ]);
             mockDelteComment(4);
             emitBotEvent(bot)

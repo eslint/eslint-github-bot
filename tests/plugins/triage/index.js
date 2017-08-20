@@ -1,16 +1,19 @@
 const { triage } = require("../../../src/plugins/index");
 const nock = require("nock");
-const probot = require("probot");
+const { createRobot } = require("probot");
 
 describe("triage", () => {
     let bot = null;
 
     beforeAll(() => {
-        bot = probot({
+        bot = createRobot({
             id: "test",
-            cert: "test"
+            cert: "test",
+            cache: {
+                wrap: () => Promise.resolve({ data: { token: "test" } })
+            }
         });
-        triage(bot.robot);
+        triage(bot);
     });
 
     afterEach(() => {
