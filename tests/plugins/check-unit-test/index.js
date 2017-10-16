@@ -1,6 +1,7 @@
 const { checkUnitTest } = require("../../../src/plugins/index");
 const nock = require("nock");
 const probot = require("probot");
+const GitHubApi = require("github");
 
 const mockPrWithFiles = (url) =>
     nock("https://api.github.com")
@@ -50,6 +51,7 @@ describe("check-unit-test", () => {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }
         });
+        bot.auth = () => new GitHubApi();
         checkUnitTest(bot);
     });
 

@@ -1,6 +1,7 @@
 const { triage } = require("../../../src/plugins/index");
 const nock = require("nock");
 const { createRobot } = require("probot");
+const GitHubApi = require("github");
 
 describe("triage", () => {
     let bot = null;
@@ -13,6 +14,7 @@ describe("triage", () => {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }
         });
+        bot.auth = () => new GitHubApi();
         triage(bot);
     });
 
