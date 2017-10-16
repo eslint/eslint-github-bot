@@ -47,11 +47,13 @@ describe("triage", () => {
                         }
                     }
                 }
-            });
-            setTimeout(() => {
-                expect(issueLabelReq.isDone()).toBeTruthy();
-                done();
-            }, 50);
+            })
+                .then(() => {
+                    setTimeout(() => {
+                        expect(issueLabelReq.isDone()).toBeTruthy();
+                        done();
+                    }, 50);
+                });
         });
 
         test("Do not add the label if already present", (done) => {
@@ -79,11 +81,13 @@ describe("triage", () => {
                         }
                     }
                 }
-            });
-            setTimeout(() => {
-                expect(issueLabelReq.isDone()).not.toBeTruthy();
-                done();
-            }, 50);
+            })
+                .then(() => {
+                    setTimeout(() => {
+                        expect(issueLabelReq.isDone()).not.toBeTruthy();
+                        done();
+                    }, 50);
+                });
         });
     });
 
