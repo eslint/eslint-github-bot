@@ -15,14 +15,14 @@
   "repository": "eslint/eslint-github-bot",
   "bugs": "https://github.com/eslint/eslint-github-bot/issues/",
   "dependencies": {
-    "probot": "^0.11.0"
+    "probot": "^2.0.0"
   },
   "devDependencies": {
-    "eslint": "^4.6.1",
+    "eslint": "^4.9.0",
     "eslint-config-airbnb-base": "^11.3.2",
     "eslint-plugin-import": "^2.7.0",
-    "jest": "^21.0.1",
-    "nock": "^9.0.14"
+    "jest": "^21.2.1",
+    "nock": "^9.0.22"
   },
   "keywords": [
     "bot",
