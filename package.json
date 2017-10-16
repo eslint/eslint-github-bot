@@ -7,7 +7,7 @@
     "lint": "eslint src tests",
     "lint:fix": "eslint src tests --fix",
     "start": "node ./src/app.js",
-    "test": "jest --colors --verbose",
+    "test": "npm run lint && jest --colors --verbose",
     "test:cover": "jest --colors --coverage"
   },
   "author": "Gyandeep Singh <gyandeeps@gmail.com>",
