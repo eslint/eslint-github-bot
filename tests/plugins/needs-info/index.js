@@ -54,11 +54,13 @@ describe("needs-info", () => {
                         }
                     }
                 }
-            });
-            setTimeout(() => {
-                expect(issueCommentReq.isDone()).toBeTruthy();
-                done();
-            }, 50);
+            })
+                .then(() => {
+                    setTimeout(() => {
+                        expect(issueCommentReq.isDone()).toBeTruthy();
+                        done();
+                    }, 50);
+                });
         });
 
         test("Do not add the comment if needs label label is not present", (done) => {
@@ -87,11 +89,13 @@ describe("needs-info", () => {
                         }
                     }
                 }
-            });
-            setTimeout(() => {
-                expect(issueCommentReq.isDone()).not.toBeTruthy();
-                done();
-            }, 50);
+            })
+                .then(() => {
+                    setTimeout(() => {
+                        expect(issueCommentReq.isDone()).not.toBeTruthy();
+                        done();
+                    }, 50);
+                });
         });
     });
 });
