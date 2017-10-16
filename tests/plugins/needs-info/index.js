@@ -28,8 +28,8 @@ describe("needs-info", () => {
     });
 
     describe("issue labeled", () => {
-        test("Adds the comment if there needs info is added", (done) => {
-            bot.receive({
+        test("Adds the comment if there needs info is added", async () => {
+            await bot.receive({
                 event: "issues",
                 payload: {
                     action: "labeled",
@@ -54,17 +54,13 @@ describe("needs-info", () => {
                         }
                     }
                 }
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(issueCommentReq.isDone()).toBeTruthy();
-                        done();
-                    }, 50);
-                });
+            });
+
+            expect(issueCommentReq.isDone()).toBeTruthy();
         });
 
-        test("Do not add the comment if needs label label is not present", (done) => {
-            bot.receive({
+        test("Do not add the comment if needs label label is not present", async () => {
+            await bot.receive({
                 event: "issues",
                 payload: {
                     action: "labeled",
@@ -89,13 +85,9 @@ describe("needs-info", () => {
                         }
                     }
                 }
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(issueCommentReq.isDone()).not.toBeTruthy();
-                        done();
-                    }, 50);
-                });
+            });
+
+            expect(issueCommentReq.isDone()).not.toBeTruthy();
         });
     });
 });

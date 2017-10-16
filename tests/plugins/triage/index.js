@@ -21,7 +21,7 @@ describe("triage", () => {
     });
 
     describe("issue opened", () => {
-        test("Adds the label if there are no labels present", (done) => {
+        test("Adds the label if there are no labels present", async () => {
             const issueLabelReq = nock("https://api.github.com")
                 .post("/repos/test/repo-test/issues/1/labels", (body) => {
                     expect(body).toContain("triage");
@@ -29,7 +29,7 @@ describe("triage", () => {
                 })
                 .reply(200);
 
-            bot.receive({
+            await bot.receive({
                 event: "issues",
                 payload: {
                     action: "opened",
@@ -47,21 +47,17 @@ describe("triage", () => {
                         }
                     }
                 }
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(issueLabelReq.isDone()).toBeTruthy();
-                        done();
-                    }, 50);
-                });
+            });
+
+            expect(issueLabelReq.isDone()).toBeTruthy();
         });
 
-        test("Do not add the label if already present", (done) => {
+        test("Do not add the label if already present", async () => {
             const issueLabelReq = nock("https://api.github.com")
                 .post("/repos/test/repo-test/issues/1/labels")
                 .reply(200);
 
-            bot.receive({
+            await bot.receive({
                 event: "issues",
                 payload: {
                     action: "opened",
@@ -81,18 +77,14 @@ describe("triage", () => {
                         }
                     }
                 }
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(issueLabelReq.isDone()).not.toBeTruthy();
-                        done();
-                    }, 50);
-                });
+            });
+
+            expect(issueLabelReq.isDone()).not.toBeTruthy();
         });
     });
 
     describe("issue reopened", () => {
-        test("Adds the label if there are no labels present", (done) => {
+        test("Adds the label if there are no labels present", async () => {
             const issueLabelReq = nock("https://api.github.com")
                 .post("/repos/test/repo-test/issues/1/labels", (body) => {
                     expect(body).toContain("triage");
@@ -100,7 +92,7 @@ describe("triage", () => {
                 })
                 .reply(200);
 
-            bot.receive({
+            await bot.receive({
                 event: "issues",
                 payload: {
                     action: "reopened",
@@ -118,21 +110,17 @@ describe("triage", () => {
                         }
                     }
                 }
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(issueLabelReq.isDone()).toBeTruthy();
-                        done();
-                    }, 50);
-                });
+            });
+
+            expect(issueLabelReq.isDone()).toBeTruthy();
         });
 
-        test("Do not add the label if already present", (done) => {
+        test("Do not add the label if already present", async () => {
             const issueLabelReq = nock("https://api.github.com")
                 .post("/repos/test/repo-test/issues/1/labels")
                 .reply(200);
 
-            bot.receive({
+            await bot.receive({
                 event: "issues",
                 payload: {
                     action: "reopened",
@@ -152,13 +140,9 @@ describe("triage", () => {
                         }
                     }
                 }
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(issueLabelReq.isDone()).not.toBeTruthy();
-                        done();
-                    }, 50);
-                });
+            });
+
+            expect(issueLabelReq.isDone()).not.toBeTruthy();
         });
     });
 });

@@ -58,7 +58,7 @@ const action = async (context) => {
         const { data: allFiles } = await github.pullRequests.getFiles(context.issue());
 
         if (!areUnitTestFilesPresent(allFiles, payload.repository.html_url)) {
-            github.issues.createComment(context.issue({
+            await github.issues.createComment(context.issue({
                 body: commentMessage(payload.sender.login)
             }));
         }

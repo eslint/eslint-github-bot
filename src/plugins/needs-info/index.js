@@ -46,11 +46,11 @@ const hasNeedInfoLabel = (labels) =>
  * @returns {undefined}
  * @private
  */
-const check = (context) => {
+const check = async (context) => {
     const { payload, github } = context;
 
     if (hasNeedInfoLabel(payload.issue.labels)) {
-        github.issues.createComment(context.issue({
+        await github.issues.createComment(context.issue({
             body: commentMessage(payload.issue.user.login)
         }));
     }
