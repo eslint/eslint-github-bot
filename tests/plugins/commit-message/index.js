@@ -2,19 +2,34 @@ const { commitMessage } = require("../../../src/plugins/index");
 const nock = require("nock");
 const probot = require("probot");
 
-const mockCommitsWithMsg = (message) => {
+const mockSingleCommitWithMessage = (message) => {
     nock("https://api.github.com")
         .get("/repos/test/repo-test/pulls/1/commits")
         .reply(200, [
             {
                 commit: {
                     message
-                }
+                },
+                sha: "first-sha"
+            }
+        ]);
+};
+
+const mockMultipleCommits = () => {
+    nock("https://api.github.com")
+        .get("/repos/test/repo-test/pulls/1/commits")
+        .reply(200, [
+            {
+                commit: {
+                    message: "foo"
+                },
+                sha: "first-sha"
             },
             {
                 commit: {
-                    message: "second message doenst matter as first commit is always checked"
-                }
+                    message: "bar"
+                },
+                sha: "second-sha"
             }
         ]);
 };
@@ -26,7 +41,7 @@ const emitBotEvent = (bot, payload = {}) => bot.receive({
             id: 1
         },
         pull_request: {
-            number: 1
+            number: 1,
         },
         sender: {
             login: "user-a"
@@ -58,135 +73,86 @@ describe("commit-message", () => {
         nock.cleanAll();
     });
 
-    describe("pull request opened", () => {
-        test("Add message if the commit message is not correct", (done) => {
-            mockCommitsWithMsg("non standard commit message");
+    ["opened", "reopened", "synchronize", "edited"].forEach((action) => {
+        describe(`pull request ${action}`, () => {
+            test("Posts failure status if commit message is not correct", () => {
+                mockSingleCommitWithMessage("non standard commit message");
 
-            const nockScope = nock("https://api.github.com")
-                .post("/repos/test/repo-test/issues/1/comments")
-                .reply(201);
+                const nockScope = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/statuses/first-sha", (req) => req.state === "failure")
+                    .reply(201);
 
-            emitBotEvent(bot, {
-                action: "opened"
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).toBeTruthy();
-                        done();
-                    }, 1000);
-                });
-        });
+                return emitBotEvent(bot, { action })
+                    .then(() => expect(nockScope.isDone()).toBeTruthy());
+            });
 
-        test("Do not add message if the commit message is correct", (done) => {
-            mockCommitsWithMsg("New: standard commit message");
+            test("Posts success status if commit message is correct", () => {
+                mockSingleCommitWithMessage("New: standard commit message");
 
-            const nockScope = nock("https://api.github.com")
-                .post("/repos/test/repo-test/issues/1/comments")
-                .reply(201);
+                const nockScope = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/statuses/first-sha", (req) => req.state === "success")
+                    .reply(201);
 
-            emitBotEvent(bot, {
-                action: "opened"
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).not.toBeTruthy();
-                        done();
-                    }, 1000);
-                });
-        });
+                return emitBotEvent(bot, { action })
+                    .then(() => expect(nockScope.isDone()).toBeTruthy());
+            });
 
-        test("Add message if the commit message is correct but longer than 72 chars", (done) => {
-            mockCommitsWithMsg("New: standard commit message very very very long message and its beond 72");
+            test("Posts failure status if the commit message is longer than 72 chars", () => {
+                mockSingleCommitWithMessage("New: standard commit message very very very long message and its beond 72");
 
-            const nockScope = nock("https://api.github.com")
-                .post("/repos/test/repo-test/issues/1/comments")
-                .reply(201);
+                const nockScope = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/statuses/first-sha", (req) => req.state === "failure")
+                    .reply(201);
 
-            emitBotEvent(bot, {
-                action: "opened"
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).toBeTruthy();
-                        done();
-                    }, 1000);
-                });
-        });
-    });
+                return emitBotEvent(bot, { action })
+                    .then(() => expect(nockScope.isDone()).toBeTruthy());
+            });
 
-    describe("pull request reopened", () => {
-        test("Add message if the commit message is not correct", (done) => {
-            mockCommitsWithMsg("non standard commit message");
+            test("Posts success status if the commit message is longer than 72 chars after the newline", () => {
+                mockSingleCommitWithMessage(
+                    `New: foo\n\n${"A".repeat(72)}`
+                );
 
-            const nockScope = nock("https://api.github.com")
-                .post("/repos/test/repo-test/issues/1/comments")
-                .reply(201);
+                const nockScope = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/statuses/first-sha", (req) => req.state === "success")
+                    .reply(201);
 
-            emitBotEvent(bot, {
-                action: "reopened"
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).toBeTruthy();
-                        done();
-                    }, 1000);
-                });
-        });
+                return emitBotEvent(bot, { action })
+                    .then(() => expect(nockScope.isDone()).toBeTruthy());
+            });
 
-        test("Do not add message if the commit message is correct", (done) => {
-            mockCommitsWithMsg("New: standard commit message");
+            test("Posts success status if there are multiple commit messages and the title is valid", () => {
+                mockMultipleCommits();
 
-            const nockScope = nock("https://api.github.com")
-                .post("/repos/test/repo-test/issues/1/comments")
-                .reply(201);
+                const nockScope = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/statuses/second-sha", (req) => req.state === "success")
+                    .reply(201);
 
-            emitBotEvent(bot, {
-                action: "reopened"
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).not.toBeTruthy();
-                        done();
-                    }, 1000);
-                });
-        });
-    });
+                return emitBotEvent(bot, { action, pull_request: { number: 1, title: "Update: foo" } })
+                    .then(() => expect(nockScope.isDone()).toBeTruthy());
+            });
 
-    describe("pull request synchronize", () => {
-        test("Add message if the commit message is not correct", (done) => {
-            mockCommitsWithMsg("non standard commit message");
+            test("Posts failure status if there are multiple commit messages and the title is invalid", () => {
+                mockMultipleCommits();
 
-            const nockScope = nock("https://api.github.com")
-                .post("/repos/test/repo-test/issues/1/comments")
-                .reply(201);
+                const nockScope = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/statuses/second-sha", (req) => req.state === "failure")
+                    .reply(201);
 
-            emitBotEvent(bot, {
-                action: "synchronize"
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).toBeTruthy();
-                        done();
-                    }, 1000);
-                });
-        });
+                return emitBotEvent(bot, { action, pull_request: { number: 1, title: "foo" } })
+                    .then(() => expect(nockScope.isDone()).toBeTruthy());
+            });
 
-        test("Do not add message if the commit message is correct", (done) => {
-            mockCommitsWithMsg("New: standard commit message");
+            test("Posts failure status if there are multiple commit messages and the title is too long", () => {
+                mockMultipleCommits();
 
-            const nockScope = nock("https://api.github.com")
-                .post("/repos/test/repo-test/issues/1/comments")
-                .reply(201);
+                const nockScope = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/statuses/second-sha", (req) => req.state === "failure")
+                    .reply(201);
 
-            emitBotEvent(bot, {
-                action: "synchronize"
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).not.toBeTruthy();
-                        done();
-                    }, 1000);
-                });
+                return emitBotEvent(bot, { action, pull_request: { number: 1, title: `Update: ${"A".repeat(72)}` } })
+                    .then(() => expect(nockScope.isDone()).toBeTruthy());
+            });
         });
     });
 });
