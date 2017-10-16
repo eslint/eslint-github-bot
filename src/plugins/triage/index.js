@@ -10,9 +10,9 @@
  * @returns {undefined}
  * @private
  */
-const triage = ({ payload, github }) => {
+const triage = async ({ payload, github }) => {
     if (payload.issue.labels.length === 0) {
-        github.issues.addLabels({
+        await github.issues.addLabels({
             owner: payload.repository.owner.login,
             repo: payload.repository.name,
             number: payload.issue.number,

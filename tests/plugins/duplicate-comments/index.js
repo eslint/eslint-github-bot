@@ -66,56 +66,41 @@ describe("duplicate-comments", () => {
         nock.cleanAll();
     });
 
-    const mockDelteComment = (id) => {
+    const mockDeleteComment = (id) => {
         nockScope = nock("https://api.github.com")
             .delete(`/repos/test/repo-test/issues/comments/${id}`)
             .reply(201);
     };
 
     describe("issue comment created", () => {
-        test("Removes the duplicate comment of the bot", (done) => {
+        test("Removes the duplicate comment of the bot", async () => {
             mockComments([
                 createFakeComment(4, "test [//]: # (test)", "Bot"),
                 createFakeComment(5, "test [//]: # (test)", "Bot")
             ]);
-            mockDelteComment(4);
-            emitBotEvent(bot)
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).toBeTruthy();
-                        done();
-                    }, 1000);
-                });
+            mockDeleteComment(4);
+            await emitBotEvent(bot);
+            expect(nockScope.isDone()).toBeTruthy();
         });
 
-        test("Do not remove any comment if no bot comment is repeated", (done) => {
+        test("Do not remove any comment if no bot comment is repeated", async () => {
             mockComments([
                 createFakeComment(4, "test [//]: # (test)", "Bot"),
                 createFakeComment(5, "test [//]: # (test-1)", "Bot")
             ]);
-            mockDelteComment(4);
-            emitBotEvent(bot)
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).not.toBeTruthy();
-                        done();
-                    }, 1000);
-                });
+            mockDeleteComment(4);
+            await emitBotEvent(bot);
+            expect(nockScope.isDone()).not.toBeTruthy();
         });
 
-        test("Do not remove any comment even if non bot comment are repeated", (done) => {
+        test("Do not remove any comment even if non bot comment are repeated", async () => {
             mockComments([
                 createFakeComment(4, "test [//]: # (test)", "user-x"),
                 createFakeComment(5, "test [//]: # (test)", "user-x")
             ]);
-            mockDelteComment(4);
-            emitBotEvent(bot)
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).not.toBeTruthy();
-                        done();
-                    }, 1000);
-                });
+            mockDeleteComment(4);
+            await emitBotEvent(bot);
+            expect(nockScope.isDone()).not.toBeTruthy();
         });
     });
 });

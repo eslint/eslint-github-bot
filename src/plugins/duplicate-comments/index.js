@@ -101,12 +101,12 @@ const duplicateCheck = async (context) => {
     if (payload.issue.state === "open") {
         const allComments = await github.issues.getComments(context.issue());
 
-        processComments(allComments.data)
-            .forEach(
+        await Promise.all(processComments(allComments.data)
+            .map(
                 (comment) => github.issues.deleteComment(
                     context.repo({ id: comment.id })
                 )
-            );
+            ));
     }
 };
 

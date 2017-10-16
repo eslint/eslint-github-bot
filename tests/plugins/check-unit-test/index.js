@@ -64,92 +64,68 @@ describe("check-unit-test", () => {
     });
 
     describe("pull request opened", () => {
-        test("Add message if the there are no test files", (done) => {
+        test("Add message if the there are no test files", async () => {
             mockPrWithFiles("src/make.js");
-            emitBotEvent(bot, {
+            await emitBotEvent(bot, {
                 action: "opened",
                 title: "New: some work done"
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).toBeTruthy();
-                        done();
-                    }, 1000);
-                });
+            });
+
+            expect(nockScope.isDone()).toBeTruthy();
         });
 
-        test("Do not add message if the test folder is present", (done) => {
+        test("Do not add message if the test folder is present", async () => {
             mockPrWithFiles("src/tests/make.js");
-            emitBotEvent(bot, {
+            await emitBotEvent(bot, {
                 action: "opened",
                 title: "New: some work done"
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).not.toBeTruthy();
-                        done();
-                    }, 1000);
-                });
+            });
+
+            expect(nockScope.isDone()).not.toBeTruthy();
         });
 
-        test("Add message if the test folder is not present tho a file with named test is", (done) => {
+        test("Add message if the test folder is not present tho a file with named test is", async () => {
             mockPrWithFiles("src/lib/test.js");
-            emitBotEvent(bot, {
+            await emitBotEvent(bot, {
                 action: "opened",
                 title: "New: some work done"
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).toBeTruthy();
-                        done();
-                    }, 1000);
-                });
+            });
+
+            expect(nockScope.isDone()).toBeTruthy();
         });
 
-        test("Do not add message if the test files are not present and commit is chore", (done) => {
+        test("Do not add message if the test files are not present and commit is chore", async () => {
             mockPrWithFiles("src/make.js");
-            emitBotEvent(bot, {
+            await emitBotEvent(bot, {
                 action: "opened",
                 title: "Chore: some work done"
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).not.toBeTruthy();
-                        done();
-                    }, 1000);
-                });
+            });
+
+            expect(nockScope.isDone()).not.toBeTruthy();
         });
     });
 
     describe("pull request reopened", () => {
-        test("Add message if the there are no test files", (done) => {
+        test("Add message if the there are no test files", async () => {
             mockPrWithFiles("src/make.js");
-            emitBotEvent(bot, {
+            await emitBotEvent(bot, {
                 action: "reopened",
                 title: "New: some work done"
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).toBeTruthy();
-                        done();
-                    }, 1000);
-                });
+            });
+
+            expect(nockScope.isDone()).toBeTruthy();
         });
     });
 
     describe("pull request synchronize", () => {
-        test("Add message if the there are no test files", (done) => {
+        test("Add message if the there are no test files", async () => {
             mockPrWithFiles("src/make.js");
-            emitBotEvent(bot, {
+            await emitBotEvent(bot, {
                 action: "synchronize",
                 title: "New: some work done"
-            })
-                .then(() => {
-                    setTimeout(() => {
-                        expect(nockScope.isDone()).toBeTruthy();
-                        done();
-                    }, 1000);
-                });
+            });
+
+            expect(nockScope.isDone()).toBeTruthy();
         });
     });
 });
