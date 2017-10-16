@@ -15,3 +15,5 @@ versions.json
 /.vscode
 .sublimelinterrc
 .svn
+/credentials.json
+*.pem
