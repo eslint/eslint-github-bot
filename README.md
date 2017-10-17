@@ -46,6 +46,10 @@ Plugins are the core part of the bot. They are standalone pieces which listen on
 
 _Note: All plugin names marked with `*` are experimental._
 
-#### How to disable a plugin
+#### Adding plugins
 
-Works need to be done in this area but for now just comment the plugin which you want to disable inside `src/plugins/index` file.
+To add a plugin:
+
+1. Create the plugin as a new file in `src/plugins`.
+1. Add the plugin to the list in `src/plugins/index.js`.
+1. Add the plugin to the list `src/app.js` to enable it by default.

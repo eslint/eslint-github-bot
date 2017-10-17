@@ -13,13 +13,15 @@ const bot = probot({
     cert: process.env.PRIVATE_KEY || "", // required
     id: process.env.APP_ID || "" // required
 });
-const disabledPlugins = [
-    "prReadyToMerge"
-];
+const enabledPlugins = new Set([
+    "commitMessage",
+    "needsInfo",
+    "triage"
+]);
 
-// load all the plugins from inside plugins folder except the one which are disabled
+// load all the enabled plugins from inside plugins folder
 Object.keys(plugins)
-    .filter((pluginId) => !disabledPlugins.includes(pluginId))
+    .filter((pluginId) => enabledPlugins.has(pluginId))
     .forEach((pluginId) => bot.load(plugins[pluginId]));
 
 // start the server
