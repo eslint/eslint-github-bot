@@ -1,6 +1,7 @@
 const { duplicateComments } = require("../../../src/plugins/index");
 const nock = require("nock");
 const probot = require("probot");
+const GitHubApi = require("github");
 
 const mockPrWithComments = (comments = []) =>
     nock("https://api.github.com")
@@ -59,6 +60,7 @@ describe("duplicate-comments", () => {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }
         });
+        bot.auth = () => new GitHubApi();
         duplicateComments(bot);
     });
 

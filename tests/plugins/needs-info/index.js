@@ -1,6 +1,7 @@
 const { needsInfo } = require("../../../src/plugins/index");
 const nock = require("nock");
 const probot = require("probot");
+const GitHubApi = require("github");
 
 describe("needs-info", () => {
     let bot = null;
@@ -14,6 +15,7 @@ describe("needs-info", () => {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }
         });
+        bot.auth = () => new GitHubApi();
         needsInfo(bot);
     });
 

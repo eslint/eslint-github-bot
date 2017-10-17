@@ -1,6 +1,7 @@
 const { commitMessage } = require("../../../src/plugins/index");
 const nock = require("nock");
 const probot = require("probot");
+const GitHubApi = require("github");
 
 const mockSingleCommitWithMessage = (message) => {
     nock("https://api.github.com")
@@ -66,6 +67,7 @@ describe("commit-message", () => {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }
         });
+        bot.auth = () => new GitHubApi();
         commitMessage(bot);
     });
 
