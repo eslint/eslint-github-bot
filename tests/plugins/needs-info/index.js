@@ -49,6 +49,9 @@ describe("needs-info", () => {
                         },
                         number: 1
                     },
+                    label: {
+                        name: "needs info"
+                    },
                     repository: {
                         name: "repo-test",
                         owner: {
@@ -79,6 +82,9 @@ describe("needs-info", () => {
                             login: "user-a"
                         },
                         number: 1
+                    },
+                    label: {
+                        name: "triage"
                     },
                     repository: {
                         name: "repo-test",
