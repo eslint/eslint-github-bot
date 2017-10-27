@@ -32,24 +32,22 @@ If it's something else, please just provide as much additional information as po
 
 /**
  * Check if the needs info label is present or not
- * @param {Array<Object>} labels - collection of labels on the issue
+ * @param {Object} label - added label object
  * @returns {boolean} True if it does contain needs info label
  * @private
  */
-const hasNeedInfoLabel = (labels) =>
-    labels.some((label) => label.name === needInfoLabel);
+const hasNeedInfoLabel = (label) => label.name === needInfoLabel;
 
 /**
  * If the label is need info then add the comment
- * @param {object} payload - event payload from github
- * @param {object} github - github interface
+ * @param {Object} context - event payload from github
  * @returns {undefined}
  * @private
  */
 const check = async (context) => {
     const { payload, github } = context;
 
-    if (hasNeedInfoLabel(payload.issue.labels)) {
+    if (hasNeedInfoLabel(payload.label)) {
         await github.issues.createComment(context.issue({
             body: commentMessage(payload.issue.user.login)
         }));
