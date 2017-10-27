@@ -17,6 +17,7 @@ module.exports = {
         "import/no-extraneous-dependencies": 0,
         "import/no-absolute-path": 0,
         "arrow-parens": [2, "always"],
+        "function-paren-newline": 0,
         indent: [ 2, 4, {
             SwitchCase: 1
         } ]
