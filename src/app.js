@@ -6,12 +6,24 @@
 const probot = require("probot");
 const plugins = require("./plugins");
 
+if (!process.env.SECRET) {
+    throw new Error("Missing 'SECRET' environment variable");
+}
+
+if (!process.env.PRIVATE_KEY) {
+    throw new Error("Missing 'PRIVATE_KEY' environment variable");
+}
+
+if (!process.env.APP_ID) {
+    throw new Error("Missing 'APP_ID' environment variable");
+}
+
 const port = process.env.PORT || 8000;
 const bot = probot({
     port,
-    secret: process.env.SECRET || "", // required
-    cert: process.env.PRIVATE_KEY || "", // required
-    id: process.env.APP_ID || "" // required
+    secret: process.env.SECRET,
+    cert: process.env.PRIVATE_KEY,
+    id: process.env.APP_ID
 });
 const enabledPlugins = new Set([
     "commitMessage",
