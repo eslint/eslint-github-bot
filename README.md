@@ -1,13 +1,20 @@
 [![Build Status](https://travis-ci.org/eslint/eslint-github-bot.svg?branch=master)](https://travis-ci.org/eslint/eslint-github-bot)
 
-ESLint GitHub bot - GLaDOS
+ESLint GitHub bot
 ==========================
 
-:alien: Plugin based Github bot :guardsman:
+`eslint-github-bot` is a bot created with [probot](https://github.com/probot/probot) which automates some common tasks for repositories run by the ESLint team.
 
-* _"Two plus two is f…f…f… f…10. IN BASE FOUR! I'M FINE!"_
-* _Killing you and giving you advice aren't mutually exclusive. The rocket really is the way to go."_
-* _"DANCING IS NOT SCIENCE!"_
+The bot can perform the following tasks:
+
+* **Triage** - adds the "triage" label to newly-created issues which don't have labels.
+* **Commit message check** - adds a status check to pull requests to verify that they follow ESLint's [pull request guidelines](https://eslint.org/docs/developer-guide/contributing/pull-requests#step-2-make-your-changes)
+* **Needs info** - adds a comment to issues requesting more information when a maintainer adds the `needs info` label.
+* **PR ready to merge** (experimental) - adds a label to all PRs which are "ready to merge", defined by the following criteria:
+    * At least one review is approved.
+    * Build status is `success`.
+* **Check unit tests** (experimental) - makes sure a PR contains unit tests. This check will be ignored for PRs with `Build|Chore|Docs|Upgrade` in the commit message.
+* **Duplicate comments** (inactive) - removes all the duplicates comments by this bot and leaves the last one of each type.
 
 ## :wrench: Setup
 
@@ -16,35 +23,12 @@ ESLint GitHub bot - GLaDOS
 * Start the app
     * `npm start` to start it as a GitHub APP
 
-### ENV variables required.
+### ENV variables required:
 
-* `PORT`: Port for web server _(default 8000)_.
+* `PORT`: Port for web server _(optional, defaults to 8000)_.
 * `SECRET`: Secret setup for GitHub webhook or you generated when you created the app.
 * `PRIVATE_KEY`: the contents of the private key you downloaded after creating the app.
 * `APP_ID`: The numeric app ID
-
-## :sunrise_over_mountains: Technical Insight
-
-### :game_die: Core
-
-#### GitHub APP
-
-* It uses probot directly with no modifications.
-
-### :electric_plug: Plugins
-
-Plugins are the core part of the bot. They are standalone pieces which listen on certain types of webhook events and then react to it.
-
-* **Triage** - It add the `triage` label to the issues which doesn't have any labels.
-* **Commit message check** - It checks the first commit message on PR and make sure it is formatted according to the guidelines. If not then it leaves a message on the PR.
-* **Duplicate comments** - It removes all the duplicates comments by this bot and leaves the last one of each type. It uses a unique hash from the comment message.
-* **PR ready to merge*** - Checks if the PR is ready to merge and if it is then it adds the `pr: ready to merge` label.
-    * At least one review is approved.
-    * Build status is `success`.
-* **Check unit test*** - Make sure the PR contains unit test. This check will be ignored for `Build|Chore|Docs|Upgrade` PR title.
-* **Needs info** - It add the comment to the issue when `needs info` label is added to it.
-
-_Note: All plugin names marked with `*` are experimental._
 
 #### Adding plugins
 
