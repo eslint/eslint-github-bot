@@ -36,4 +36,4 @@ To add a plugin:
 
 1. Create the plugin as a new file in `src/plugins`.
 1. Add the plugin to the list in `src/plugins/index.js`.
-1. Add the plugin to the list `src/app.js` to enable it by default.
+1. Add the plugin to the list in `src/app.js` to enable it by default.
