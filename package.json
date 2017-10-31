@@ -15,6 +15,7 @@
   "repository": "eslint/eslint-github-bot",
   "bugs": "https://github.com/eslint/eslint-github-bot/issues/",
   "dependencies": {
+    "moment": "^2.19.1",
     "probot": "^3.0.0"
   },
   "devDependencies": {

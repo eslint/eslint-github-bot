@@ -10,6 +10,7 @@ The bot can perform the following tasks:
 * **Triage** - adds the "triage" label to newly-created issues which don't have labels.
 * **Commit message check** - adds a status check to pull requests to verify that they follow ESLint's [pull request guidelines](https://eslint.org/docs/developer-guide/contributing/pull-requests#step-2-make-your-changes)
 * **Needs info** - adds a comment to issues requesting more information when a maintainer adds the `needs info` label.
+* **Release issues** - creates a new issue with the `release` label scheduled two weeks later, after another release issue is closed.
 * **PR ready to merge** (experimental) - adds a label to all PRs which are "ready to merge", defined by the following criteria:
     * At least one review is approved.
     * Build status is `success`.
