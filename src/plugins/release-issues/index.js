@@ -24,21 +24,25 @@ Resources:
 
 `.trim();
 
+async function issueWasClosedMultipleTimes(github, { owner, repo, number }) {
+    const issueEvents = await github.issues.getEvents({
+        owner,
+        repo,
+        issue_number: number,
+        per_page: 100
+    }).then((res) => res.data);
+
+    return issueEvents.filter((eventObj) => eventObj.event === "closed").length > 1;
+}
+
 async function handleIssueClosed(context) {
     // If the issue does not have the "release" label, skip it.
     if (!context.payload.issue.labels.some((label) => label.name === LABEL_NAME)) {
         return;
     }
 
-    const issueEvents = await context.github.issues.getEvents(
-        context.issue({
-            per_page: 100,
-            issue_number: context.issue().number
-        })
-    ).then((res) => res.data);
-
-        // If the issue was previously closed and then reopened, skip it.
-    if (issueEvents.filter((eventObj) => eventObj.event === "closed").length > 1) {
+    // If the issue was previously closed and then reopened, skip it.
+    if (await issueWasClosedMultipleTimes(context.github, context.issue())) {
         return;
     }
 
