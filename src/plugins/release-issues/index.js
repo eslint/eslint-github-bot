@@ -63,7 +63,7 @@ async function handleIssueClosed(context) {
         context.repo({
             title: newIssueTitle,
             body: newIssueBody,
-            labels: [LABEL_NAME]
+            labels: [LABEL_NAME, "tsc agenda"]
         })
     );
 }
