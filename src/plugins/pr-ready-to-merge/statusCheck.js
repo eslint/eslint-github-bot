@@ -3,15 +3,17 @@
  * @author Gyandeep Singh
  */
 
+"use strict";
+
 const { labels, getAllCommitsByPR } = require("./common");
 
 /**
  * Gets the combined state of a particular sha commit
- * @param {object} context - context given by the probot
+ * @param {Object} context - context given by the probot
  * @param {string} sha - git sha value
  * @returns {Promise<string>} value of the state
  */
-const getStatusBySha = async (context, sha) => {
+async function getStatusBySha(context, sha) {
     const { data: { state, statuses } } = await context.github.repos.getCombinedStatus(
         context.repo({
             ref: sha
@@ -19,23 +21,27 @@ const getStatusBySha = async (context, sha) => {
     );
 
     return statuses.length > 0 ? state : labels.successStatus;
-};
+}
 
 /**
  * Get the sha values from the commit objects
- * @param {object} commit - Commit
- * @returns {Promise<string>} sha values
+ * @param {Object} commit - Commit
+ * @returns {string} sha values
  * @private
  */
-const pluckSha = async (commit) => commit.sha;
+function pluckSha(commit) {
+    return commit.sha;
+}
 
 /**
  * Get the latest commit
- * @param {Array<object>} commits - all the Commit
- * @returns {Promise<Object>} latest commit object
+ * @param {Array<Object>} commits - all the Commit
+ * @returns {Object} latest commit object
  * @private
  */
-const getLatestCommit = async (commits) => commits.pop();
+function getLatestCommit(commits) {
+    return commits[commits.length - 1];
+}
 
 /**
  * Check if status is a success
@@ -43,20 +49,23 @@ const getLatestCommit = async (commits) => commits.pop();
  * @returns {boolean} true if it is success
  * @private
  */
-const isStatusSuccess = (status) => status === labels.successStatus;
+function isStatusSuccess(status) {
+    return status === labels.successStatus;
+}
 
 /**
  * Check to see if the PR build status is good or not
- * @param context - context given by the probot
+ * @param {Object} context - context given by the probot
  * @param {int} prId - pull request number
  * @returns {Promise<boolean>} true if its good
  */
-const isPrStatusSuccess = (context, prId) =>
-    getAllCommitsByPR(context, prId)
+function isPrStatusSuccess(context, prId) {
+    return getAllCommitsByPR(context, prId)
         .then(getLatestCommit)
         .then(pluckSha)
-        .then((shas) => getStatusBySha(context, shas))
+        .then(shas => getStatusBySha(context, shas))
         .then(isStatusSuccess);
+}
 
 module.exports = {
     isPrStatusSuccess

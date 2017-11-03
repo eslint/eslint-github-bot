@@ -1,3 +1,5 @@
+"use strict";
+
 const { needsInfo } = require("../../../src/plugins/index");
 const nock = require("nock");
 const probot = require("probot");
@@ -30,7 +32,7 @@ describe("needs-info", () => {
     });
 
     describe("issue labeled", () => {
-        test("Adds the comment if there needs info is added", async () => {
+        test("Adds the comment if there needs info is added", async() => {
             await bot.receive({
                 event: "issues",
                 payload: {
@@ -64,7 +66,7 @@ describe("needs-info", () => {
             expect(issueCommentReq.isDone()).toBeTruthy();
         });
 
-        test("Do not add the comment if needs label label is not present", async () => {
+        test("Do not add the comment if needs label label is not present", async() => {
             await bot.receive({
                 event: "issues",
                 payload: {

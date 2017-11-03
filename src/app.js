@@ -3,6 +3,8 @@
  * @author Gyandeep Singh
  */
 
+"use strict";
+
 const probot = require("probot");
 const plugins = require("./plugins");
 
@@ -34,8 +36,8 @@ const enabledPlugins = new Set([
 
 // load all the enabled plugins from inside plugins folder
 Object.keys(plugins)
-    .filter((pluginId) => enabledPlugins.has(pluginId))
-    .forEach((pluginId) => bot.load(plugins[pluginId]));
+    .filter(pluginId => enabledPlugins.has(pluginId))
+    .forEach(pluginId => bot.load(plugins[pluginId]));
 
 // start the server
 bot.start();
