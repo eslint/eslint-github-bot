@@ -112,7 +112,7 @@ Anyone is welcome to attend the meeting as observers. We ask that you refrain fr
  * @param {string} issueInfo.owner The owner of the repository
  * @param {string} issueInfo.repo The repo name
  * @param {number} issueInfo.number The issue number on GitHub
- * @returns {Promise<void>} A Promise when the action is complete
+ * @returns {Promise<boolean>} A Promise that fulfills with `true` if the issue was closed multiple times
  */
 async function issueWasClosedMultipleTimes(github, { owner, repo, number }) {
     const issueEvents = await github.issues.getEvents({
