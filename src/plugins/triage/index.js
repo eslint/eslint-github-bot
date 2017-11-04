@@ -3,14 +3,16 @@
  * @author Gyandeep Singh
  */
 
+"use strict";
+
 /**
  * Adds the triage label if the issue has no labels on it
- * @param {object} payload - event payload from github
- * @param {object} github - github interface
- * @returns {undefined}
+ * @param {Object} payload - event payload from github
+ * @param {Object} github - github interface
+ * @returns {Promise<void>} A Promise that fulfills when the action is complete
  * @private
  */
-const triage = async ({ payload, github }) => {
+async function triage({ payload, github }) {
     if (payload.issue.labels.length === 0) {
         await github.issues.addLabels({
             owner: payload.repository.owner.login,
@@ -19,12 +21,13 @@ const triage = async ({ payload, github }) => {
             labels: ["triage"]
         });
     }
-};
+}
 
 /**
  * Add triage label when an issue is opened or reopened
  */
-module.exports = (robot) => {
+
+module.exports = robot => {
     robot.on("issues.opened", triage);
     robot.on("issues.reopened", triage);
 };

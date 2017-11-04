@@ -3,13 +3,21 @@
  * @author Teddy Katz
  */
 
+"use strict";
+
 const moment = require("moment");
 
 const LABEL_NAME = "release";
 
 const ISSUE_TITLE_FORMAT = "[Scheduled release for ]MMMM Do, YYYY";
 
-const getIssueBody = (releaseDate) => `
+/**
+ * Gets the desired issue body for a release issue, given the date of the release.
+ * @param {Moment} releaseDate The date of the release, as Moment UTC date
+ * @returns {string} The text of the issue
+ */
+function getIssueBody(releaseDate) {
+    return `
 
 The scheduled release on ${releaseDate.format("dddd, MMMM Do, YYYY")} is assigned to:
 
@@ -23,21 +31,37 @@ Resources:
 * [Release guidelines](https://eslint.org/docs/maintainer-guide/releases)
 
 `.trim();
+}
 
+/**
+ * A function that determines whether an issue on GitHub was closed multiple times in the past.
+ * @param {GitHub} github A GitHub API client
+ * @param {Object} issueInfo information about the issue
+ * @param {string} issueInfo.owner The owner of the repository
+ * @param {string} issueInfo.repo The repo name
+ * @param {number} issueInfo.number The issue number on GitHub
+ * @returns {Promise<void>} A Promise when the action is complete
+ */
 async function issueWasClosedMultipleTimes(github, { owner, repo, number }) {
     const issueEvents = await github.issues.getEvents({
         owner,
         repo,
         issue_number: number,
         per_page: 100
-    }).then((res) => res.data);
+    }).then(res => res.data);
 
-    return issueEvents.filter((eventObj) => eventObj.event === "closed").length > 1;
+    return issueEvents.filter(eventObj => eventObj.event === "closed").length > 1;
 }
 
+/**
+ * A listener for when an issue gets closed
+ * @param {probot.Context} context webhook event context
+ * @returns {Promise<void>} A Promise when the action is complete
+ */
 async function handleIssueClosed(context) {
+
     // If the issue does not have the "release" label, skip it.
-    if (!context.payload.issue.labels.some((label) => label.name === LABEL_NAME)) {
+    if (!context.payload.issue.labels.some(label => label.name === LABEL_NAME)) {
         return;
     }
 
@@ -68,6 +92,6 @@ async function handleIssueClosed(context) {
     );
 }
 
-module.exports = (robot) => {
+module.exports = robot => {
     robot.on("issues.closed", handleIssueClosed);
 };

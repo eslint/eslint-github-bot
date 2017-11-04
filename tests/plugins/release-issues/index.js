@@ -1,3 +1,5 @@
+"use strict";
+
 const { releaseIssues } = require("../../../src/plugins/index");
 const nock = require("nock");
 const probot = require("probot");
@@ -7,6 +9,13 @@ describe("release-issues", () => {
     let issueWasCreated;
     let issue;
 
+    /**
+     * Runs the bot with the given arguments, setting up fixtures and running the webhook listener
+     * @param {string} issueTitle The title of the existing issue which was closed
+     * @param {string[]} labelNames The labels of the issue which was closed
+     * @param {string[]} eventTypes The events that have occurred for the issue
+     * @returns {Promise<void>} A Promise that fulfills after the webhook action is complete
+     */
     function runBot({ issueTitle, labelNames, eventTypes }) {
         issueWasCreated = false;
 
@@ -17,12 +26,13 @@ describe("release-issues", () => {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }
         });
+
         bot.auth = () => new GitHubApi();
         releaseIssues(bot);
 
         nock("https://api.github.com")
             .get("/repos/test/repo-test/issues/1/events?per_page=100")
-            .reply(200, eventTypes.map((type) => ({ event: type })));
+            .reply(200, eventTypes.map(type => ({ event: type })));
 
         nock("https://api.github.com")
             .post("/repos/test/repo-test/issues")
@@ -42,7 +52,7 @@ describe("release-issues", () => {
                 issue: {
                     number: 1,
                     title: issueTitle,
-                    labels: labelNames.map((name) => ({ name }))
+                    labels: labelNames.map(name => ({ name }))
                 },
                 repository: {
                     owner: {
@@ -59,7 +69,7 @@ describe("release-issues", () => {
     });
 
     describe("when an issue does not have the release label", () => {
-        test("ignores the issue", async () => {
+        test("ignores the issue", async() => {
             await runBot({
                 issueTitle: "Scheduled release for October 27th, 2017",
                 labelNames: ["foo"],
@@ -71,7 +81,7 @@ describe("release-issues", () => {
     });
 
     describe("when an issue has already been closed and reopened", () => {
-        test("ignores the issue", async () => {
+        test("ignores the issue", async() => {
             await runBot({
                 issueTitle: "Scheduled release for October 27th, 2017",
                 labelNames: ["release"],
@@ -83,7 +93,7 @@ describe("release-issues", () => {
     });
 
     describe("when an issue has an invalid title", () => {
-        test("ignores the issue", async () => {
+        test("ignores the issue", async() => {
             await runBot({
                 issueTitle: "Foo bar!",
                 labelNames: ["release"],
@@ -95,7 +105,7 @@ describe("release-issues", () => {
     });
 
     describe("when an issue has a parseable title, has the release label, and has never been closed", () => {
-        test("creates a new issue", async () => {
+        test("creates a new issue", async() => {
             await runBot({
                 issueTitle: "Scheduled release for October 27th, 2017",
                 labelNames: ["release"],

@@ -3,6 +3,8 @@
  * @author Gyandeep Singh
  */
 
+"use strict";
+
 const needInfoLabel = "needs info";
 
 /**
@@ -11,7 +13,8 @@ const needInfoLabel = "needs info";
  * @returns {string} comment message
  * @private
  */
-const commentMessage = (username) => `
+function commentMessage(username) {
+    return `
 Hi @${username}, thanks for the issue. It looks like there's not enough information for us to know how to help you.
 
 If you're reporting a bug, please be sure to include:
@@ -29,6 +32,7 @@ If it's something else, please just provide as much additional information as po
 
 [//]: # (needs-info)
 `;
+}
 
 /**
  * Check if the needs info label is present or not
@@ -36,7 +40,9 @@ If it's something else, please just provide as much additional information as po
  * @returns {boolean} True if it does contain needs info label
  * @private
  */
-const hasNeedInfoLabel = (label) => label.name === needInfoLabel;
+function hasNeedInfoLabel(label) {
+    return label.name === needInfoLabel;
+}
 
 /**
  * If the label is need info then add the comment
@@ -44,7 +50,7 @@ const hasNeedInfoLabel = (label) => label.name === needInfoLabel;
  * @returns {undefined}
  * @private
  */
-const check = async (context) => {
+async function check(context) {
     const { payload, github } = context;
 
     if (hasNeedInfoLabel(payload.label)) {
@@ -52,11 +58,12 @@ const check = async (context) => {
             body: commentMessage(payload.issue.user.login)
         }));
     }
-};
+}
 
 /**
  * If the label is need info then add the comment when issue is labeled
  */
-module.exports = (robot) => {
+
+module.exports = robot => {
     robot.on("issues.labeled", check);
 };

@@ -4,6 +4,8 @@
  * @author Gyandeep Singh
  */
 
+"use strict";
+
 const TAG_REGEX = /^(?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade):/;
 const MESSAGE_LENGTH_LIMIT = 72;
 
@@ -19,11 +21,12 @@ function checkCommitMessage(message) {
 
 /**
  * If the first commit message is not legal then it adds a comment
- * @param {object} context - context given by the probot
+ * @param {Object} context - context given by the probot
  * @returns {Promise.<void>} promise
  * @private
  */
-const processCommitMessage = async (context) => {
+async function processCommitMessage(context) {
+
     /*
      * We care about the default commit message that will appear when the
      * PR is merged. If the PR has exactly one commit, this is the commit
@@ -61,12 +64,13 @@ const processCommitMessage = async (context) => {
             context: "commit-message"
         })
     );
-};
+}
 
 /**
  * check commit message
  */
-module.exports = (robot) => {
+
+module.exports = robot => {
     robot.on("pull_request.opened", processCommitMessage);
     robot.on("pull_request.reopened", processCommitMessage);
     robot.on("pull_request.synchronize", processCommitMessage);

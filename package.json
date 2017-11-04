@@ -4,8 +4,8 @@
   "description": "Plugin based Github bot for ESLint",
   "main": "./src/app.js",
   "scripts": {
-    "lint": "eslint src tests",
-    "lint:fix": "eslint src tests --fix",
+    "lint": "eslint src tests .eslintrc.js",
+    "lint:fix": "npm run lint -- --fix",
     "start": "node ./src/app.js",
     "test": "npm run lint && jest --colors --verbose",
     "test:cover": "jest --colors --coverage"
@@ -20,8 +20,7 @@
   },
   "devDependencies": {
     "eslint": "^4.9.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0",
+    "eslint-config-eslint": "^4.0.0",
     "jest": "^21.2.1",
     "nock": "^9.0.25"
   },
