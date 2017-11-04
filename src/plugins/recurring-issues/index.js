@@ -57,6 +57,15 @@ async function getTeamMembers({ github, organizationName, teamName }) {
 }
 
 /**
+ * Formats a list of team members' names and GitHub usernames into a bulleted Markdown list
+ * @param {{name: string, login: string}[]} teamMembers Information about team members
+ * @returns {string} Markdown text containing a bulleted list of names
+ */
+function formatTeamMembers(teamMembers) {
+    return teamMembers.map(({ login, name }) => `- ${name || login} (@${login}) - TSC`).join("\n");
+}
+
+/**
  * Gets the desired issue body for a release issue, given the date and of the meeting
  * @param {Moment} meetingDate The date and time when the meeting will take place, as a Moment date
  * @param {GitHub} github A GitHub API client
@@ -90,13 +99,7 @@ Extracted from:
 
 # Invited
 
-${
-    (await getTeamMembers({
-        github,
-        organizationName,
-        teamName: tscTeamName
-    })).map(({ login, name }) => `- ${name || login} (@${login}) - TSC`).join("\n")
-}
+${await getTeamMembers({ github, organizationName, teamName: tscTeamName }).then(formatTeamMembers)}
 
 # Public participation
 
