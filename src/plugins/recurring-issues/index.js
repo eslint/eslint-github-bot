@@ -52,7 +52,7 @@ async function getTeamMembers({ github, organizationName, teamName }) {
 
     return Promise.all(teamMembers.map(async member => ({
         login: member.login,
-        name: await github.users.getById({ id: member.id }).then(res => res.data[0].name)
+        name: await github.users.getById({ id: member.id }).then(res => res.data.name)
     })));
 }
 
