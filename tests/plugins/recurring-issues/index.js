@@ -69,21 +69,17 @@ describe("recurring-issues", () => {
 
         nock("https://api.github.com")
             .get("/user/1")
-            .reply(200, [
-                {
-                    login: "user1",
-                    name: "User One"
-                }
-            ]);
+            .reply(200, {
+                login: "user1",
+                name: "User One"
+            });
 
         nock("https://api.github.com")
             .get("/user/2")
-            .reply(200, [
-                {
-                    login: "user2",
-                    name: "User Two"
-                }
-            ]);
+            .reply(200, {
+                login: "user2",
+                name: "User Two"
+            });
 
         return bot.receive({
             event: "issues",
