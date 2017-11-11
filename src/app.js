@@ -31,7 +31,8 @@ const enabledPlugins = new Set([
     "commitMessage",
     "needsInfo",
     "triage",
-    "recurringIssues"
+    "recurringIssues",
+    "releaseMerge"
 ]);
 
 // load all the enabled plugins from inside plugins folder
