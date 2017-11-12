@@ -7,19 +7,24 @@
 
 /**
  * Adds the triage label if the issue has no labels on it
- * @param {Object} payload - event payload from github
- * @param {Object} github - github interface
+ * @param {Context} context Probot webhook event context
  * @returns {Promise<void>} A Promise that fulfills when the action is complete
  * @private
  */
-async function triage({ payload, github }) {
-    if (payload.issue.labels.length === 0) {
-        await github.issues.addLabels({
-            owner: payload.repository.owner.login,
-            repo: payload.repository.name,
-            number: payload.issue.number,
-            labels: ["triage"]
-        });
+async function triage(context) {
+    if (context.payload.issue.labels.length === 0) {
+
+        /*
+         * Fetch the issue again to double-check that it has no labels.
+         * Sometimes, when an issue is opened with labels, the initial
+         * webhook event contains no labels.
+         * https://github.com/eslint/eslint-github-bot/issues/38
+         */
+        const issue = await context.github.issues.get(context.issue()).then(res => res.data);
+
+        if (issue.labels.length === 0) {
+            await context.github.issues.addLabels(context.issue({ labels: ["triage"] }));
+        }
     }
 }
 
