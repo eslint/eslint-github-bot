@@ -79,12 +79,13 @@ async function getTscMeetingIssueBody({ meetingDate, github, organizationName, t
 # Time
 
 UTC ${moment.utc(meetingDate).format(timeFormatString)}:
-- San Francisco: ${moment.tz(meetingDate, "America/Los_Angeles").format(timeFormatString)}
+- Los Angeles: ${moment.tz(meetingDate, "America/Los_Angeles").format(timeFormatString)}
+- Chicago: ${moment.tz(meetingDate, "America/Chicago").format(timeFormatString)}
 - New York: ${moment.tz(meetingDate, "America/New_York").format(timeFormatString)}
 - Madrid: ${moment.tz(meetingDate, "Europe/Madrid").format(timeFormatString)}
 - Moscow: ${moment.tz(meetingDate, "Europe/Moscow").format(timeFormatString)}
-- Sydney: ${moment.tz(meetingDate, "Australia/Sydney").format(timeFormatString)}
 - Tokyo: ${moment.tz(meetingDate, "Asia/Tokyo").format(timeFormatString)}
+- Sydney: ${moment.tz(meetingDate, "Australia/Sydney").format(timeFormatString)}
 
 # Location
 
