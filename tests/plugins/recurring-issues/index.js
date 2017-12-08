@@ -173,6 +173,7 @@ describe("recurring-issues", () => {
                 "UTC Thu 09-Nov-2017 21:00:",
                 "- San Francisco: Thu 09-Nov-2017 13:00",
                 "- New York: Thu 09-Nov-2017 16:00",
+                "- Minneapolis: Thu 09-Nov-2017 15:00",
                 "- Madrid: Thu 09-Nov-2017 22:00",
                 "- Moscow: Fri 10-Nov-2017 00:00",
                 "- Sydney: Fri 10-Nov-2017 08:00",
