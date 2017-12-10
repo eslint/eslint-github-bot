@@ -17,8 +17,7 @@
   "dependencies": {
     "moment": "^2.19.3",
     "moment-timezone": "^0.5.14",
-    "probot": "^3.0.3",
-    "semver": "^5.4.1"
+    "probot": "^3.0.3"
   },
   "devDependencies": {
     "eslint": "^4.13.0",

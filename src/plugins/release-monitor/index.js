@@ -5,9 +5,8 @@
 
 "use strict";
 
-const semver = require("semver");
-
 const TAG_REGEX = /^(?:Build|Chore|Docs|Fix):/;
+const POST_RELEASE_LABEL = "post-release";
 
 /**
  * Apply different checks on the commit message to see if its ok for a patch release
@@ -30,16 +29,6 @@ function getCommitMessageForPR(allCommits, context) {
     return allCommits.data.length === 1
         ? allCommits.data[0].commit.message
         : context.payload.pull_request.title;
-}
-
-/**
- * Check if the version is atleast minor
- * @param {string} version - version to check
- * @returns {boolean} true if its minor version
- * @private
- */
-function atLeastMinorVersion(version) {
-    return semver.patch(semver.clean(version)) === 0;
 }
 
 /**
@@ -71,16 +60,17 @@ function getAllOpenPRs(context) {
  * @param {Object} context - probot context object
  * @param {string} state - state can be either success or failure
  * @param {string} sha - sha for the commit
+ * @param {string} description - description for the status
  * @returns {Promise} Resolves when the status is created on the PR
  * @private
  */
-function createStatusOnPR(context, state, sha) {
+function createStatusOnPR({ context, state, sha, description }) {
     return context.github.repos.createStatus(
         context.repo({
             sha,
             state,
             target_url: "",
-            description: "semver-patch merge only phase",
+            description,
             context: "Release monitor"
         })
     );
@@ -94,18 +84,28 @@ function createStatusOnPR(context, state, sha) {
  * @private
  */
 function createSuccessPRStatus(context, sha) {
-    return createStatusOnPR(context, "success", sha);
+    return createStatusOnPR({
+        context,
+        state: "success",
+        description: "No patch release is pending",
+        sha
+    });
 }
 
 /**
- * Create failure status on the PR
+ * Create pending status on the PR
  * @param {Object} context - probot context object
  * @param {string} sha - sha for the commit
  * @returns {Promise} Resolves when the status is created on the PR
  * @private
  */
-function createFailurePRStatus(context, sha) {
-    return createStatusOnPR(context, "failure", sha);
+function createPendingPRStatus(context, sha) {
+    return createStatusOnPR({
+        context,
+        state: "pending",
+        description: "A patch release is pending",
+        sha
+    });
 }
 
 /**
@@ -130,11 +130,11 @@ function getAllCommitForPR(context, number) {
  * @returns {Promise} Resolves when the status is created on the PR
  * @private
  */
-async function createStatusOnAllPRs(context, isSuccess) {
+async function createStatusOnAllPRs({ context, isSuccess }) {
 
     // put error status on every PR which doesn't have fix or docs status.
     const { data: allOpenPrs } = await getAllOpenPRs(context);
-    const statusFunc = isSuccess ? createSuccessPRStatus : createFailurePRStatus;
+    const statusFunc = isSuccess ? createSuccessPRStatus : createPendingPRStatus;
 
     await Promise.all(allOpenPrs.map(async pr => {
         const allCommits = await getAllCommitForPR(context, pr.number);
@@ -154,16 +154,15 @@ function hasReleaseLabel(labels) {
 }
 
 /**
- * Handler for release publish event
+ * Handler for issue label event
  * @param {Object} context - probot context object
  * @returns {Promise} promise
  * @private
  */
-async function releasePublishedHandler(context) {
+async function issueLabeledHandler(context) {
 
-    // https://developer.github.com/v3/activity/events/types/#releaseevent
-    // check if the version is major or minor
-    if (context.payload.release.prerelease || !atLeastMinorVersion(context.payload.release.tag_name)) {
+    // check if the label is post-release
+    if (context.payload.label.name !== POST_RELEASE_LABEL) {
         return;
     }
 
@@ -177,15 +176,11 @@ async function releasePublishedHandler(context) {
         return;
     }
 
-    await context.github.issues.addLabels(
-        context.issue({
-            number: allOpenReleaseIssue[0].number,
-            labels: ["post-release"]
-        })
-    );
-
-    // put error status on every PR which doesn't have fix or docs status.
-    await createStatusOnAllPRs(context, false);
+    // put pending status on every PR which doesn't have fix or docs status.
+    await createStatusOnAllPRs({
+        context,
+        isSuccess: false
+    });
 }
 
 /**
@@ -202,11 +197,14 @@ async function issueCloseHandler(context) {
     }
 
     // remove all the error status from any pr out their
-    await createStatusOnAllPRs(context, true);
+    await createStatusOnAllPRs({
+        context,
+        isSuccess: true
+    });
 }
 
 /**
- * Handler for release publish event
+ * Handler for pull request open and reopen event
  * @param {Object} context - probot context object
  * @returns {Promise} promise
  * @private
@@ -227,13 +225,13 @@ async function prOpenHandler(context) {
     const statusFunc =
         releaseIssue.total_count === 0 || isMessageValidForPatchRelease(getCommitMessageForPR(allCommits, context))
             ? createSuccessPRStatus
-            : createFailurePRStatus;
+            : createPendingPRStatus;
 
     await statusFunc(context, pluckLatestCommitSha(allCommits));
 }
 
 module.exports = robot => {
-    robot.on("release.published", releasePublishedHandler);
+    robot.on("issues.labeled", issueLabeledHandler);
     robot.on("issues.closed", issueCloseHandler);
     robot.on(["pull_request.opened", "pull_request.reopened"], prOpenHandler);
 };

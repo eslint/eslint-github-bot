@@ -12,5 +12,5 @@ module.exports = {
     needsInfo: require("./needs-info"),
     triage: require("./triage"),
     recurringIssues: require("./recurring-issues"),
-    releaseMerge: require("./release-merge-purifier")
+    releaseMonitor: require("./release-monitor")
 };

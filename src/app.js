@@ -32,7 +32,7 @@ const enabledPlugins = new Set([
     "needsInfo",
     "triage",
     "recurringIssues",
-    "releaseMerge"
+    "releaseMonitor"
 ]);
 
 // load all the enabled plugins from inside plugins folder
