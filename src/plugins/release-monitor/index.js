@@ -5,8 +5,9 @@
 
 "use strict";
 
-const TAG_REGEX = /^(?:Build|Chore|Docs|Fix):/;
+const COMMIT_MESSAGE_REGEX = /^(?:Build|Chore|Docs|Fix):/;
 const POST_RELEASE_LABEL = "post-release";
+const RELEASE_LABEL = "release";
 
 /**
  * Apply different checks on the commit message to see if its ok for a patch release
@@ -15,20 +16,20 @@ const POST_RELEASE_LABEL = "post-release";
  * @private
  */
 function isMessageValidForPatchRelease(message) {
-    return TAG_REGEX.test(message);
+    return COMMIT_MESSAGE_REGEX.test(message);
 }
 
 /**
  * Get the correct commit message for a PR
  * @param {Object} allCommits - Collection of all commit objects
- * @param {Object} context - context object
+ * @param {Object} pr - Pull request object
  * @returns {string} Commit message
  * @private
  */
-function getCommitMessageForPR(allCommits, context) {
+function getCommitMessageForPR(allCommits, pr) {
     return allCommits.data.length === 1
         ? allCommits.data[0].commit.message
-        : context.payload.pull_request.title;
+        : pr.title;
 }
 
 /**
@@ -44,7 +45,7 @@ function pluckLatestCommitSha(allCommits) {
 /**
  * Gets all the open PR
  * @param {Object} context - context object
- * @returns {Array<Object>} collection of release objects
+ * @returns {Promise} collection of release objects
  * @private
  */
 function getAllOpenPRs(context) {
@@ -124,6 +125,24 @@ function getAllCommitForPR(context, number) {
 }
 
 /**
+ * Updates the status on all the provided prs
+ * @param {Object} context - probot context object
+ * @param {Array<Object>} prs - Collection of prs
+ * @param {boolean} isSuccess - to create a success status
+ * @returns {Promise} Resolves when the status is created on the PR
+ * @private
+ */
+async function createStatusOnPRs({ context, prs, isSuccess }) {
+    const statusFunc = isSuccess ? createSuccessPRStatus : createPendingPRStatus;
+
+    await Promise.all(prs.map(async pr => {
+        const allCommits = await getAllCommitForPR(context, pr.number);
+
+        await statusFunc(context, pluckLatestCommitSha(allCommits));
+    }));
+}
+
+/**
  * Get all the commits for a PR
  * @param {Object} context - probot context object
  * @param {boolean} isSuccess - to create a success status
@@ -131,16 +150,34 @@ function getAllCommitForPR(context, number) {
  * @private
  */
 async function createStatusOnAllPRs({ context, isSuccess }) {
-
-    // put error status on every PR which doesn't have fix or docs status.
     const { data: allOpenPrs } = await getAllOpenPRs(context);
-    const statusFunc = isSuccess ? createSuccessPRStatus : createPendingPRStatus;
 
-    await Promise.all(allOpenPrs.map(async pr => {
+    return createStatusOnPRs({
+        context,
+        prs: allOpenPrs,
+        isSuccess
+    });
+}
+
+/**
+ * Returns collection of all the PRs which do not have fix or docs tag on it
+ * @param {Object} context - probot context object
+ * @returns {Promise} promise
+ * @private
+ */
+async function getNonSemverPatchPRs(context) {
+    const { data: allOpenPrs } = await getAllOpenPRs(context);
+
+    return allOpenPrs.reduce(async(previousPromise, pr) => {
+        const coll = await previousPromise;
         const allCommits = await getAllCommitForPR(context, pr.number);
 
-        await statusFunc(context, pluckLatestCommitSha(allCommits));
-    }));
+        if (!isMessageValidForPatchRelease(getCommitMessageForPR(allCommits, pr))) {
+            coll.push(pr);
+        }
+
+        return coll;
+    }, Promise.resolve([]));
 }
 
 /**
@@ -150,7 +187,7 @@ async function createStatusOnAllPRs({ context, isSuccess }) {
  * @private
  */
 function hasReleaseLabel(labels) {
-    return labels.some(({ name }) => name === "release");
+    return labels.some(({ name }) => name === RELEASE_LABEL);
 }
 
 /**
@@ -166,10 +203,10 @@ async function issueLabeledHandler(context) {
         return;
     }
 
-    // add a label on release issue to say we are in the no semver minor merge please
+    // get the open release issues. Mostly it should only be one
     const { data: allOpenReleaseIssue } = await context.github.issues.getForRepo(context.repo({
         state: "open",
-        labels: "release"
+        labels: RELEASE_LABEL
     }));
 
     if (allOpenReleaseIssue.length === 0) {
@@ -177,8 +214,9 @@ async function issueLabeledHandler(context) {
     }
 
     // put pending status on every PR which doesn't have fix or docs status.
-    await createStatusOnAllPRs({
+    await createStatusOnPRs({
         context,
+        prs: await getNonSemverPatchPRs(context),
         isSuccess: false
     });
 }
@@ -217,13 +255,13 @@ async function prOpenHandler(context) {
      * true: add failure message if its not a fix or doc pr else success
      */
     const { data: releaseIssue } = await context.github.search.issues({
-        q: "label:release label:post-release",
+        q: `label:${RELEASE_LABEL} label:${POST_RELEASE_LABEL}`,
         sort: "created"
     });
 
     const allCommits = await context.github.pullRequests.getCommits(context.issue());
     const statusFunc =
-        releaseIssue.total_count === 0 || isMessageValidForPatchRelease(getCommitMessageForPR(allCommits, context))
+        releaseIssue.total_count === 0 || isMessageValidForPatchRelease(getCommitMessageForPR(allCommits, context.payload.pull_request))
             ? createSuccessPRStatus
             : createPendingPRStatus;
 
@@ -233,5 +271,13 @@ async function prOpenHandler(context) {
 module.exports = robot => {
     robot.on("issues.labeled", issueLabeledHandler);
     robot.on("issues.closed", issueCloseHandler);
-    robot.on(["pull_request.opened", "pull_request.reopened"], prOpenHandler);
+    robot.on(
+        [
+            "pull_request.opened",
+            "pull_request.reopened",
+            "pull_request.synchronize",
+            "pull_request.edited"
+        ],
+        prOpenHandler
+    );
 };
