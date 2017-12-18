@@ -191,6 +191,16 @@ function hasReleaseLabel(labels) {
 }
 
 /**
+ * Post Release label is present
+ * @param {Array<Object>} labels - collection of label objects
+ * @returns {boolean} True if post release label is present
+ * @private
+ */
+function hasPostReleaseLabel(labels) {
+    return labels.some(({ name }) => name === POST_RELEASE_LABEL);
+}
+
+/**
  * Handler for issue label event
  * @param {Object} context - probot context object
  * @returns {Promise} promise
@@ -198,27 +208,16 @@ function hasReleaseLabel(labels) {
  */
 async function issueLabeledHandler(context) {
 
-    // check if the label is post-release
-    if (context.payload.label.name !== POST_RELEASE_LABEL) {
-        return;
+    // check if the label is post-release and the same issue has release label
+    if (hasPostReleaseLabel([context.payload.label]) && hasReleaseLabel(context.payload.issue.labels)) {
+
+        // put pending status on every PR which doesn't have fix or docs status.
+        await createStatusOnPRs({
+            context,
+            prs: await getNonSemverPatchPRs(context),
+            isSuccess: false
+        });
     }
-
-    // get the open release issues. Mostly it should only be one
-    const { data: allOpenReleaseIssue } = await context.github.issues.getForRepo(context.repo({
-        state: "open",
-        labels: RELEASE_LABEL
-    }));
-
-    if (allOpenReleaseIssue.length === 0) {
-        return;
-    }
-
-    // put pending status on every PR which doesn't have fix or docs status.
-    await createStatusOnPRs({
-        context,
-        prs: await getNonSemverPatchPRs(context),
-        isSuccess: false
-    });
 }
 
 /**
@@ -230,15 +229,14 @@ async function issueLabeledHandler(context) {
 async function issueCloseHandler(context) {
 
     // check if the closed issue is a release issue
-    if (!hasReleaseLabel(context.payload.issue.labels)) {
-        return;
-    }
+    if (hasReleaseLabel(context.payload.issue.labels)) {
 
-    // remove all the error status from any pr out their
-    await createStatusOnAllPRs({
-        context,
-        isSuccess: true
-    });
+        // remove all the error status from any pr out their
+        await createStatusOnAllPRs({
+            context,
+            isSuccess: true
+        });
+    }
 }
 
 /**
@@ -254,14 +252,15 @@ async function prOpenHandler(context) {
      * false: add success status to pr
      * true: add failure message if its not a fix or doc pr else success
      */
-    const { data: releaseIssue } = await context.github.search.issues({
-        q: `label:${RELEASE_LABEL} label:${POST_RELEASE_LABEL}`,
-        sort: "created"
-    });
+    const { data: releaseIssue } = await context.github.issues.getForRepo(
+        context.repo({
+            labels: `${RELEASE_LABEL},${POST_RELEASE_LABEL}`
+        })
+    );
 
     const allCommits = await context.github.pullRequests.getCommits(context.issue());
     const statusFunc =
-        releaseIssue.total_count === 0 || isMessageValidForPatchRelease(getCommitMessageForPR(allCommits, context.payload.pull_request))
+        releaseIssue.length === 0 || isMessageValidForPatchRelease(getCommitMessageForPR(allCommits, context.payload.pull_request))
             ? createSuccessPRStatus
             : createPendingPRStatus;
 
