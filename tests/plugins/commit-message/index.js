@@ -90,6 +90,10 @@ describe("commit-message", () => {
         commitMessage(bot);
     });
 
+    beforeEach(() => {
+        nock.disableNetConnect();
+    });
+
     afterEach(() => {
         nock.cleanAll();
     });
@@ -173,6 +177,18 @@ describe("commit-message", () => {
 
                 await emitBotEvent(bot, { action, pull_request: { number: 1, title: `Update: ${"A".repeat(72)}` } });
                 expect(nockScope.isDone()).toBeTruthy();
+            });
+
+            test("Does not post a status if the repository is excluded", async() => {
+                await emitBotEvent(bot, {
+                    action: "opened",
+                    repository: {
+                        name: "tsc-meetings",
+                        owner: {
+                            login: "test"
+                        }
+                    }
+                });
             });
         });
     });

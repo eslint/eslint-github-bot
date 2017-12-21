@@ -9,6 +9,11 @@
 const TAG_REGEX = /^(?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade):/;
 const MESSAGE_LENGTH_LIMIT = 72;
 
+const EXCLUDED_REPOSITORY_NAMES = new Set([
+    "eslint.github.io",
+    "tsc-meetings"
+]);
+
 /**
  * Apply different checks on the commit message
  * @param {string} message - commit message
@@ -34,6 +39,11 @@ async function processCommitMessage(context) {
      * is the title of the PR.
      */
     const { payload, github } = context;
+
+    if (EXCLUDED_REPOSITORY_NAMES.has(payload.repository.name)) {
+        return;
+    }
+
     const allCommits = await github.pullRequests.getCommits(context.issue());
     const messageToCheck = allCommits.data.length === 1
         ? allCommits.data[0].commit.message
@@ -55,7 +65,7 @@ async function processCommitMessage(context) {
     }
 
     // only check first commit message
-    return github.repos.createStatus(
+    await github.repos.createStatus(
         context.repo({
             sha: allCommits.data[allCommits.data.length - 1].sha,
             state,
