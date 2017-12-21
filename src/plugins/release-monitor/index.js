@@ -50,7 +50,7 @@ function pluckLatestCommitSha(allCommits) {
  */
 function getAllOpenPRs(context) {
     return context.github.pullRequests.getAll(
-        context.issue({
+        context.repo({
             state: "open"
         })
     );
@@ -113,7 +113,7 @@ function createPendingPRStatus(context, sha) {
  * Get all the commits for a PR
  * @param {Object} context - probot context object
  * @param {string} number - pr number
- * @returns {Promise} Resolves when the status is created on the PR
+ * @returns {Promise} Resolves when the all PR objects are retrieved
  * @private
  */
 function getAllCommitForPR(context, number) {
@@ -129,7 +129,7 @@ function getAllCommitForPR(context, number) {
  * @param {Object} context - probot context object
  * @param {Array<Object>} prs - Collection of prs
  * @param {boolean} isSuccess - to create a success status
- * @returns {Promise} Resolves when the status is created on the PR
+ * @returns {Promise} Resolves when the status is created on the PRs
  * @private
  */
 async function createStatusOnPRs({ context, prs, isSuccess }) {
@@ -168,16 +168,18 @@ async function createStatusOnAllPRs({ context, isSuccess }) {
 async function getNonSemverPatchPRs(context) {
     const { data: allOpenPrs } = await getAllOpenPRs(context);
 
-    return allOpenPrs.reduce(async(previousPromise, pr) => {
-        const coll = await previousPromise;
-        const allCommits = await getAllCommitForPR(context, pr.number);
+    return Promise.all(
+        allOpenPrs.map(async pr => {
+            const allCommits = await getAllCommitForPR(context, pr.number);
 
-        if (!isMessageValidForPatchRelease(getCommitMessageForPR(allCommits, pr))) {
-            coll.push(pr);
-        }
+            if (!isMessageValidForPatchRelease(getCommitMessageForPR(allCommits, pr))) {
+                return pr;
+            }
 
-        return coll;
-    }, Promise.resolve([]));
+            return null;
+        })
+    )
+        .then(results => results.filter(result => result !== null));
 }
 
 /**
@@ -191,13 +193,13 @@ function hasReleaseLabel(labels) {
 }
 
 /**
- * Post Release label is present
- * @param {Array<Object>} labels - collection of label objects
- * @returns {boolean} True if post release label is present
+ * Check if it is Post Release label
+ * @param {Object} label - label object
+ * @returns {boolean} True if its post release label
  * @private
  */
-function hasPostReleaseLabel(labels) {
-    return labels.some(({ name }) => name === POST_RELEASE_LABEL);
+function isPostReleaseLabel({ name }) {
+    return name === POST_RELEASE_LABEL;
 }
 
 /**
@@ -209,7 +211,7 @@ function hasPostReleaseLabel(labels) {
 async function issueLabeledHandler(context) {
 
     // check if the label is post-release and the same issue has release label
-    if (hasPostReleaseLabel([context.payload.label]) && hasReleaseLabel(context.payload.issue.labels)) {
+    if (isPostReleaseLabel(context.payload.label) && hasReleaseLabel(context.payload.issue.labels)) {
 
         // put pending status on every PR which doesn't have fix or docs status.
         await createStatusOnPRs({
