@@ -50,7 +50,10 @@ function mockAllOpenPrWithCommits(mockData = []) {
  * @private
  */
 function assertPendingStatus(_, payload) {
-    expect(JSON.parse(payload).state).toBe("pending");
+    const data = JSON.parse(payload);
+
+    expect(data.state).toBe("pending");
+    expect(data.description).toBe("A patch release is pending");
 }
 
 /**
@@ -60,8 +63,25 @@ function assertPendingStatus(_, payload) {
  * @returns {undefined}
  * @private
  */
-function assertSuccessStatus(_, payload) {
+function assertSuccessStatusWithNoPendingRelease(_, payload) {
+    const data = JSON.parse(payload);
+
     expect(JSON.parse(payload).state).toBe("success");
+    expect(data.description).toBe("No patch release is pending");
+}
+
+/**
+ * Asserts that the state value is success
+ * @param {string} _ - ignored param
+ * @param {string} payload - payload sent ot the API
+ * @returns {undefined}
+ * @private
+ */
+function assertSuccessStatusWithPendingRelease(_, payload) {
+    const data = JSON.parse(payload);
+
+    expect(JSON.parse(payload).state).toBe("success");
+    expect(data.description).toBe("This change is semver-patch");
 }
 
 describe("release-monitor", () => {
@@ -435,27 +455,27 @@ describe("release-monitor", () => {
             ]);
             const newPrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/111")
-                .reply(200, assertSuccessStatus);
+                .reply(200, assertSuccessStatusWithNoPendingRelease);
 
             const fixPrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/222")
-                .reply(200, assertSuccessStatus);
+                .reply(200, assertSuccessStatusWithNoPendingRelease);
 
             const updatePrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/333")
-                .reply(200, assertSuccessStatus);
+                .reply(200, assertSuccessStatusWithNoPendingRelease);
 
             const breakingPrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/444")
-                .reply(200, assertSuccessStatus);
+                .reply(200, assertSuccessStatusWithNoPendingRelease);
 
             const randomPrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/555")
-                .reply(200, assertSuccessStatus);
+                .reply(200, assertSuccessStatusWithNoPendingRelease);
 
             const docPrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/666")
-                .reply(200, assertSuccessStatus);
+                .reply(200, assertSuccessStatusWithNoPendingRelease);
 
             await bot.receive({
                 event: "issues",
@@ -630,7 +650,7 @@ describe("release-monitor", () => {
 
                 const newPrStatus = nock("https://api.github.com")
                     .post("/repos/test/repo-test/statuses/111")
-                    .reply(200, assertSuccessStatus);
+                    .reply(200, assertSuccessStatusWithPendingRelease);
 
                 await bot.receive({
                     event: "pull_request",
@@ -677,7 +697,7 @@ describe("release-monitor", () => {
 
                 const newPrStatus = nock("https://api.github.com")
                     .post("/repos/test/repo-test/statuses/111")
-                    .reply(200, assertSuccessStatus);
+                    .reply(200, assertSuccessStatusWithNoPendingRelease);
 
                 await bot.receive({
                     event: "pull_request",

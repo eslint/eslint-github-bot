@@ -84,11 +84,11 @@ function createStatusOnPR({ context, state, sha, description }) {
  * @returns {Promise} Resolves when the status is created on the PR
  * @private
  */
-function createSuccessPRStatus(context, sha) {
+function createSuccessPRStatus({ context, sha, description = "No patch release is pending" }) {
     return createStatusOnPR({
         context,
         state: "success",
-        description: "No patch release is pending",
+        description,
         sha
     });
 }
@@ -100,7 +100,7 @@ function createSuccessPRStatus(context, sha) {
  * @returns {Promise} Resolves when the status is created on the PR
  * @private
  */
-function createPendingPRStatus(context, sha) {
+function createPendingPRStatus({ context, sha }) {
     return createStatusOnPR({
         context,
         state: "pending",
@@ -138,7 +138,10 @@ async function createStatusOnPRs({ context, prs, isSuccess }) {
     await Promise.all(prs.map(async pr => {
         const allCommits = await getAllCommitForPR(context, pr.number);
 
-        await statusFunc(context, pluckLatestCommitSha(allCommits));
+        await statusFunc({
+            context,
+            sha: pluckLatestCommitSha(allCommits)
+        });
     }));
 }
 
@@ -261,12 +264,17 @@ async function prOpenHandler(context) {
     );
 
     const allCommits = await context.github.pullRequests.getCommits(context.issue());
+    const isSemverPatchPr = isMessageValidForPatchRelease(getCommitMessageForPR(allCommits, context.payload.pull_request));
     const statusFunc =
-        releaseIssue.length === 0 || isMessageValidForPatchRelease(getCommitMessageForPR(allCommits, context.payload.pull_request))
+        releaseIssue.length === 0 || isSemverPatchPr
             ? createSuccessPRStatus
             : createPendingPRStatus;
 
-    await statusFunc(context, pluckLatestCommitSha(allCommits));
+    await statusFunc({
+        context,
+        sha: pluckLatestCommitSha(allCommits),
+        description: isSemverPatchPr ? "This change is semver-patch" : undefined // eslint-disable-line no-undefined
+    });
 }
 
 module.exports = robot => {
