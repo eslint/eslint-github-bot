@@ -1,11 +1,11 @@
 /**
- * @fileoverview Adds fail status to all non-semver pr's after release
+ * @fileoverview Handle PR status after the release and when the release is complete
  * @author Gyandeep Singh
  */
 
 "use strict";
 
-const COMMIT_MESSAGE_REGEX = /^(?:Build|Chore|Docs|Fix):/;
+const PATCH_COMMIT_MESSAGE_REGEX = /^(?:Build|Chore|Docs|Fix):/;
 const POST_RELEASE_LABEL = "post-release";
 const RELEASE_LABEL = "release";
 
@@ -16,7 +16,7 @@ const RELEASE_LABEL = "release";
  * @private
  */
 function isMessageValidForPatchRelease(message) {
-    return COMMIT_MESSAGE_REGEX.test(message);
+    return PATCH_COMMIT_MESSAGE_REGEX.test(message);
 }
 
 /**
@@ -45,7 +45,7 @@ function pluckLatestCommitSha(allCommits) {
 /**
  * Gets all the open PR
  * @param {Object} context - context object
- * @returns {Promise} collection of release objects
+ * @returns {Promise} collection of pr objects
  * @private
  */
 function getAllOpenPRs(context) {
@@ -163,7 +163,7 @@ async function createStatusOnAllPRs({ context, isSuccess }) {
 }
 
 /**
- * Returns collection of all the PRs which do not have fix or docs tag on it
+ * Returns collection of all the PRs which are not semver-patch
  * @param {Object} context - probot context object
  * @returns {Promise} promise
  * @private
@@ -236,7 +236,7 @@ async function issueCloseHandler(context) {
     // check if the closed issue is a release issue
     if (hasReleaseLabel(context.payload.issue.labels)) {
 
-        // remove all the error status from any pr out their
+        // remove pending status and add success status on all PRs
         await createStatusOnAllPRs({
             context,
             isSuccess: true

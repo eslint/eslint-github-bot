@@ -104,7 +104,7 @@ describe("release-monitor", () => {
     });
 
     describe("issue labeled", () => {
-        test("with post release then add pending on nom semver minor", async() => {
+        test("in post release phase then add pending on non semver patch pr", async() => {
             mockAllOpenPrWithCommits([
                 {
                     number: 1,
@@ -675,7 +675,7 @@ describe("release-monitor", () => {
                 expect(newPrStatus.isDone()).toBeTruthy();
             });
 
-            test("put success for all PR under non post release phase", async() => {
+            test("put success for all PR under outside release phase", async() => {
                 mockAllOpenPrWithCommits([
                     {
                         number: 1,
