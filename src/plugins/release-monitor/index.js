@@ -273,7 +273,7 @@ async function prOpenHandler(context) {
     await statusFunc({
         context,
         sha: pluckLatestCommitSha(allCommits),
-        description: isSemverPatchPr ? "This change is semver-patch" : undefined // eslint-disable-line no-undefined
+        description: isSemverPatchPr ? "This change is semver-patch" : void 0
     });
 }
 

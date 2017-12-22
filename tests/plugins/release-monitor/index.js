@@ -628,7 +628,7 @@ describe("release-monitor", () => {
                 expect(newPrStatus.isDone()).toBeTruthy();
             });
 
-            test("put success for non semver patch PR under post release phase", async() => {
+            test("put success for semver patch PR under post release phase", async() => {
                 mockAllOpenPrWithCommits([
                     {
                         number: 1,
