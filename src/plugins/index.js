@@ -11,5 +11,6 @@ module.exports = {
     prReadyToMerge: require("./pr-ready-to-merge"),
     needsInfo: require("./needs-info"),
     triage: require("./triage"),
-    recurringIssues: require("./recurring-issues")
+    recurringIssues: require("./recurring-issues"),
+    releaseMonitor: require("./release-monitor")
 };
