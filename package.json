@@ -32,7 +32,6 @@
     "eslint"
   ],
   "jest": {
-    "testEnvironment": "node",
     "testMatch": [
       "<rootDir>/tests/**/*.js"
     ],
