@@ -43,17 +43,18 @@ function mockAllOpenPrWithCommits(mockData = []) {
 }
 
 /**
- * Asserts that the state value is pending
+ * Asserts that the state value is pending and that it links to an issue.
  * @param {string} _ - ignored param
  * @param {string} payload - payload sent ot the API
  * @returns {undefined}
  * @private
  */
-function assertPendingStatus(_, payload) {
+function assertPendingStatusWithIssueLink(_, payload) {
     const data = JSON.parse(payload);
 
     expect(data.state).toBe("pending");
     expect(data.description).toBe("A patch release is pending");
+    expect(data.target_url).toBe("https://github.com/test/repo-test/issues/1");
 }
 
 /**
@@ -68,6 +69,7 @@ function assertSuccessStatusWithNoPendingRelease(_, payload) {
 
     expect(JSON.parse(payload).state).toBe("success");
     expect(data.description).toBe("No patch release is pending");
+    expect(data.target_url).toBe("");
 }
 
 /**
@@ -181,7 +183,7 @@ describe("release-monitor", () => {
             ]);
             const newPrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/111")
-                .reply(200, assertPendingStatus);
+                .reply(200, assertPendingStatusWithIssueLink);
 
             const fixPrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/222")
@@ -219,7 +221,8 @@ describe("release-monitor", () => {
                                 name: POST_RELEASE_LABEL
                             }
                         ],
-                        number: 5
+                        number: 1,
+                        html_url: "https://github.com/test/repo-test/issues/1"
                     },
                     label: {
                         name: POST_RELEASE_LABEL
@@ -490,7 +493,8 @@ describe("release-monitor", () => {
                                 name: RELEASE_LABEL
                             }
                         ],
-                        number: 5
+                        number: 5,
+                        html_url: "https://github.com/test/repo-test/issues/1"
                     },
                     repository: {
                         name: "repo-test",
@@ -557,7 +561,8 @@ describe("release-monitor", () => {
                                 name: "test"
                             }
                         ],
-                        number: 5
+                        number: 5,
+                        html_url: "https://github.com/test/repo-test/issues/5"
                     },
                     repository: {
                         name: "repo-test",
@@ -599,11 +604,15 @@ describe("release-monitor", () => {
 
                 nock("https://api.github.com")
                     .get("/repos/test/repo-test/issues?labels=release%2Cpost-release")
-                    .reply(200, [{}]);
+                    .reply(200, [
+                        {
+                            html_url: "https://github.com/test/repo-test/issues/1"
+                        }
+                    ]);
 
                 const newPrStatus = nock("https://api.github.com")
                     .post("/repos/test/repo-test/statuses/111")
-                    .reply(200, assertPendingStatus);
+                    .reply(200, assertPendingStatusWithIssueLink);
 
                 await bot.receive({
                     event: "pull_request",
@@ -646,7 +655,11 @@ describe("release-monitor", () => {
 
                 nock("https://api.github.com")
                     .get("/repos/test/repo-test/issues?labels=release%2Cpost-release")
-                    .reply(200, [{}]);
+                    .reply(200, [
+                        {
+                            html_url: "https://github.com/test/repo-test/issues/1"
+                        }
+                    ]);
 
                 const newPrStatus = nock("https://api.github.com")
                     .post("/repos/test/repo-test/statuses/111")
