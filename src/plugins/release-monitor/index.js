@@ -72,7 +72,7 @@ function createStatusOnPR({ context, state, sha, description }) {
             state,
             target_url: "",
             description,
-            context: "Release monitor"
+            context: "release-monitor"
         })
     );
 }
