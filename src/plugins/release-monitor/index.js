@@ -62,15 +62,16 @@ function getAllOpenPRs(context) {
  * @param {string} state - state can be either success or failure
  * @param {string} sha - sha for the commit
  * @param {string} description - description for the status
+ * @param {string} targetUrl The URL that the status should link to
  * @returns {Promise} Resolves when the status is created on the PR
  * @private
  */
-function createStatusOnPR({ context, state, sha, description }) {
+function createStatusOnPR({ context, state, sha, description, targetUrl }) {
     return context.github.repos.createStatus(
         context.repo({
             sha,
             state,
-            target_url: "",
+            target_url: targetUrl || "",
             description,
             context: "release-monitor"
         })
@@ -81,15 +82,17 @@ function createStatusOnPR({ context, state, sha, description }) {
  * Create success status on the PR
  * @param {Object} context - probot context object
  * @param {string} sha - sha for the commit
+ * @param {string|null} targetUrl A link to the pending release issue, if it exists
  * @returns {Promise} Resolves when the status is created on the PR
  * @private
  */
-function createSuccessPRStatus({ context, sha, description = "No patch release is pending" }) {
+function createSuccessPRStatus({ context, sha, description = "No patch release is pending", targetUrl }) {
     return createStatusOnPR({
         context,
         state: "success",
         description,
-        sha
+        sha,
+        targetUrl
     });
 }
 
@@ -97,15 +100,17 @@ function createSuccessPRStatus({ context, sha, description = "No patch release i
  * Create pending status on the PR
  * @param {Object} context - probot context object
  * @param {string} sha - sha for the commit
+ * @param {string|null} targetUrl A link to the pending release issue, if it exists
  * @returns {Promise} Resolves when the status is created on the PR
  * @private
  */
-function createPendingPRStatus({ context, sha }) {
+function createPendingPRStatus({ context, sha, targetUrl }) {
     return createStatusOnPR({
         context,
         state: "pending",
         description: "A patch release is pending",
-        sha
+        sha,
+        targetUrl
     });
 }
 
@@ -129,10 +134,11 @@ function getAllCommitForPR(context, number) {
  * @param {Object} context - probot context object
  * @param {Array<Object>} prs - Collection of prs
  * @param {boolean} isSuccess - to create a success status
+ * @param {string|null} releaseIssueUrl A link to the pending release issue, if it exists
  * @returns {Promise} Resolves when the status is created on the PRs
  * @private
  */
-async function createStatusOnPRs({ context, prs, isSuccess }) {
+async function createStatusOnPRs({ context, prs, isSuccess, releaseIssueUrl }) {
     const statusFunc = isSuccess ? createSuccessPRStatus : createPendingPRStatus;
 
     await Promise.all(prs.map(async pr => {
@@ -140,7 +146,8 @@ async function createStatusOnPRs({ context, prs, isSuccess }) {
 
         await statusFunc({
             context,
-            sha: pluckLatestCommitSha(allCommits)
+            sha: pluckLatestCommitSha(allCommits),
+            targetUrl: releaseIssueUrl
         });
     }));
 }
@@ -149,16 +156,18 @@ async function createStatusOnPRs({ context, prs, isSuccess }) {
  * Get all the commits for a PR
  * @param {Object} context - probot context object
  * @param {boolean} isSuccess - to create a success status
+ * @param {string|null} releaseIssueUrl A link to the pending release issue, if it exists
  * @returns {Promise} Resolves when the status is created on the PR
  * @private
  */
-async function createStatusOnAllPRs({ context, isSuccess }) {
+async function createStatusOnAllPRs({ context, isSuccess, releaseIssueUrl }) {
     const { data: allOpenPrs } = await getAllOpenPRs(context);
 
     return createStatusOnPRs({
         context,
         prs: allOpenPrs,
-        isSuccess
+        isSuccess,
+        releaseIssueUrl
     });
 }
 
@@ -220,7 +229,8 @@ async function issueLabeledHandler(context) {
         await createStatusOnPRs({
             context,
             prs: await getNonSemverPatchPRs(context),
-            isSuccess: false
+            isSuccess: false,
+            releaseIssueUrl: context.payload.issue.html_url
         });
     }
 }
@@ -239,7 +249,8 @@ async function issueCloseHandler(context) {
         // remove pending status and add success status on all PRs
         await createStatusOnAllPRs({
             context,
-            isSuccess: true
+            isSuccess: true,
+            releaseIssueUrl: null
         });
     }
 }
@@ -257,7 +268,7 @@ async function prOpenHandler(context) {
      * false: add success status to pr
      * true: add failure message if its not a fix or doc pr else success
      */
-    const { data: releaseIssue } = await context.github.issues.getForRepo(
+    const { data: releaseIssues } = await context.github.issues.getForRepo(
         context.repo({
             labels: `${RELEASE_LABEL},${POST_RELEASE_LABEL}`
         })
@@ -266,14 +277,15 @@ async function prOpenHandler(context) {
     const allCommits = await context.github.pullRequests.getCommits(context.issue());
     const isSemverPatchPr = isMessageValidForPatchRelease(getCommitMessageForPR(allCommits, context.payload.pull_request));
     const statusFunc =
-        releaseIssue.length === 0 || isSemverPatchPr
+        releaseIssues.length === 0 || isSemverPatchPr
             ? createSuccessPRStatus
             : createPendingPRStatus;
 
     await statusFunc({
         context,
         sha: pluckLatestCommitSha(allCommits),
-        description: isSemverPatchPr ? "This change is semver-patch" : void 0
+        description: isSemverPatchPr ? "This change is semver-patch" : void 0,
+        targetUrl: releaseIssues.length && releaseIssues[0].html_url
     });
 }
 
