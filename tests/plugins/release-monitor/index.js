@@ -5,7 +5,7 @@ const nock = require("nock");
 const { createRobot } = require("probot");
 const GitHubApi = require("github");
 
-const POST_RELEASE_LABEL = "post-release";
+const POST_RELEASE_LABEL = "patch release pending";
 const RELEASE_LABEL = "release";
 
 /**
@@ -603,7 +603,7 @@ describe("release-monitor", () => {
                 ]);
 
                 nock("https://api.github.com")
-                    .get("/repos/test/repo-test/issues?labels=release%2Cpost-release")
+                    .get(`/repos/test/repo-test/issues?labels=release%2C${encodeURIComponent(POST_RELEASE_LABEL)}`)
                     .reply(200, [
                         {
                             html_url: "https://github.com/test/repo-test/issues/1"
@@ -654,7 +654,7 @@ describe("release-monitor", () => {
                 ]);
 
                 nock("https://api.github.com")
-                    .get("/repos/test/repo-test/issues?labels=release%2Cpost-release")
+                    .get(`/repos/test/repo-test/issues?labels=release%2C${encodeURIComponent(POST_RELEASE_LABEL)}`)
                     .reply(200, [
                         {
                             html_url: "https://github.com/test/repo-test/issues/1"
@@ -705,7 +705,7 @@ describe("release-monitor", () => {
                 ]);
 
                 nock("https://api.github.com")
-                    .get("/repos/test/repo-test/issues?labels=release%2Cpost-release")
+                    .get(`/repos/test/repo-test/issues?labels=release%2C${encodeURIComponent(POST_RELEASE_LABEL)}`)
                     .reply(200, []);
 
                 const newPrStatus = nock("https://api.github.com")
