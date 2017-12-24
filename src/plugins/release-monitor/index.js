@@ -146,7 +146,13 @@ async function createAppropriateStatusForPR({ context, pr, pendingReleaseIssueUr
 async function createStatusOnAllPRs({ context, pendingReleaseIssueUrl }) {
     const { data: allOpenPrs } = await getAllOpenPRs(context);
 
-    return Promise.all(allOpenPrs.map(pr => createAppropriateStatusForPR({ context, pr, pendingReleaseIssueUrl })));
+    return Promise.all(allOpenPrs.map(pr =>
+        createAppropriateStatusForPR({
+            context,
+            pr,
+            pendingReleaseIssueUrl
+        })
+    ));
 }
 
 /**
@@ -179,7 +185,10 @@ async function issueLabeledHandler(context) {
 
     // check if the label is post-release and the same issue has release label
     if (isPostReleaseLabel(context.payload.label) && hasReleaseLabel(context.payload.issue.labels)) {
-        await createStatusOnAllPRs({ context, pendingReleaseIssueUrl: context.payload.issue.html_url });
+        await createStatusOnAllPRs({
+            context,
+            pendingReleaseIssueUrl: context.payload.issue.html_url
+        });
     }
 }
 
@@ -193,7 +202,10 @@ async function issueCloseHandler(context) {
 
     // check if the closed issue is a release issue
     if (hasReleaseLabel(context.payload.issue.labels)) {
-        await createStatusOnAllPRs({ context, pendingReleaseIssueUrl: null });
+        await createStatusOnAllPRs({
+            context,
+            pendingReleaseIssueUrl: null
+        });
     }
 }
 
