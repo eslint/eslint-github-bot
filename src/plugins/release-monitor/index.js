@@ -6,7 +6,7 @@
 "use strict";
 
 const PATCH_COMMIT_MESSAGE_REGEX = /^(?:Build|Chore|Docs|Fix):/;
-const POST_RELEASE_LABEL = "post-release";
+const POST_RELEASE_LABEL = "patch release pending";
 const RELEASE_LABEL = "release";
 
 /**
