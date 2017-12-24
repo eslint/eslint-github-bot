@@ -106,7 +106,7 @@ describe("release-monitor", () => {
     });
 
     describe("issue labeled", () => {
-        test("in post release phase then add pending on non semver patch pr", async() => {
+        test("in post release phase then add appropriate status check to all PRs", async() => {
             mockAllOpenPrWithCommits([
                 {
                     number: 1,
@@ -187,23 +187,23 @@ describe("release-monitor", () => {
 
             const fixPrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/222")
-                .reply(200, {});
+                .reply(200, assertSuccessStatusWithPendingRelease);
 
             const updatePrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/333")
-                .reply(200, {});
+                .reply(200, assertPendingStatusWithIssueLink);
 
             const breakingPrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/444")
-                .reply(200, {});
+                .reply(200, assertPendingStatusWithIssueLink);
 
             const randomPrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/555")
-                .reply(200, {});
+                .reply(200, assertPendingStatusWithIssueLink);
 
             const docPrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/666")
-                .reply(200, {});
+                .reply(200, assertSuccessStatusWithPendingRelease);
 
             await bot.receive({
                 event: "issues",
@@ -236,12 +236,12 @@ describe("release-monitor", () => {
                 }
             });
 
-            expect(newPrStatus.isDone()).toBeTruthy();
-            expect(fixPrStatus.isDone()).toBeFalsy();
-            expect(docPrStatus.isDone()).toBeFalsy();
-            expect(updatePrStatus.isDone()).toBeTruthy();
-            expect(breakingPrStatus.isDone()).toBeTruthy();
-            expect(randomPrStatus.isDone()).toBeTruthy();
+            expect(newPrStatus.isDone()).toBe(true);
+            expect(fixPrStatus.isDone()).toBe(true);
+            expect(updatePrStatus.isDone()).toBe(true);
+            expect(breakingPrStatus.isDone()).toBe(true);
+            expect(randomPrStatus.isDone()).toBe(true);
+            expect(docPrStatus.isDone()).toBe(true);
         });
 
         test("with no post release label nothing happens", async() => {
