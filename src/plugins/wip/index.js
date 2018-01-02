@@ -1,0 +1,184 @@
+/**
+ * @fileoverview Handle PR status for works in progress, using either "WIP" in title or "do not merge" label
+ * @author Kevin Partington
+ */
+
+"use strict";
+
+const WIP_IN_TITLE_REGEX = /^WIP:|\(WIP\)/i;
+const DO_NOT_MERGE_LABEL = "do not merge";
+
+/**
+ * Create status on the PR
+ * @param {Object} context - probot context object
+ * @param {string} state - state can be either success or failure
+ * @param {string} sha - sha for the commit
+ * @param {string} description - description for the status
+ * @param {string} targetUrl The URL that the status should link to
+ * @returns {Promise} Resolves when the status is created on the PR
+ * @private
+ */
+function createStatusOnPR({ context, state, sha, description, targetUrl }) {
+    return context.github.repos.createStatus(
+        context.repo({
+            sha,
+            state,
+            target_url: targetUrl || "",
+            description,
+            context: "wip"
+        })
+    );
+}
+
+/**
+ * Creates a pending status on the PR to indicate it is a WIP.
+ * @param {Object} context Probot context object
+ * @param {string} sha The SHA hash representing the latest commit to the PR.
+ * @returns {Promise} A Promise that will fulfill when the status check is created
+ */
+async function createPendingWipStatusOnPR(context, sha) {
+    return createStatusOnPR({
+        context,
+        sha,
+        state: "pending",
+        description: "This PR appears to be a work in progress"
+    });
+}
+
+/**
+ * Creates a pending status on the PR to indicate it is WIP.
+ * @param {Object} context Probot context object
+ * @param {string} sha The SHA hash representing the latest commit to the PR.
+ * @returns {Promise} A Promise that will fulfill when the status check is created
+ */
+async function createSuccessWipStatusOnPR(context, sha) {
+    return createStatusOnPR({
+        context,
+        sha,
+        state: "success",
+        description: "This PR is no longer a work in progress"
+    });
+}
+
+/**
+ * Check to see if there is an existing pending wip status check on the PR.
+ * If so, create a success wip status check.
+ * @param {Object} context Probot context object
+ * @param {string} sha Commit SHA hash associated with the status check
+ * @returns {Promise} A Promise which will resolve when a success status check
+ * is created on the PR, or an immediately-resolved Promise if no status check
+ * is needed.
+ */
+async function maybeResolveWipStatusOnPR(context, sha) {
+    const repoAndRef = context.repo({
+        ref: sha
+    });
+
+    let statusCheckExists = false;
+
+    context.github.paginate(
+        context.github.repos.getCombinedStatusForRef(repoAndRef),
+        (res, done) => {
+            for (const status of res.statuses) {
+                if (status.context === "wip") {
+                    statusCheckExists = true;
+                    done();
+                }
+            }
+        }
+    );
+
+    if (statusCheckExists) {
+        return createSuccessWipStatusOnPR(context, sha);
+    }
+
+    return null;
+}
+
+/**
+ * Get all the commits for a PR
+ * @param {Object} context Probot context object
+ * @param {Object} pr pull request object from GitHub's API
+ * @returns {Promise<Object[]>} A Promise that fulfills with a list of commit objects from GitHub's API
+ * @private
+ */
+async function getAllCommitsForPR({ context, pr }) {
+    const { data: commitList } = await context.github.pullRequests.getCommits(
+        context.repo({ number: pr.number })
+    );
+
+    return commitList;
+}
+
+/**
+ * Checks to see if a PR has the "do not merge" label.
+ * @param {Array<Object>} labels - collection of label objects
+ * @returns {boolean} True if release label is present
+ * @private
+ */
+function hasDoNotMergeLabel(labels) {
+    return labels.some(({ name }) => name === DO_NOT_MERGE_LABEL);
+}
+
+/**
+ * Get the sha value from the latest commit
+ * @param {Object[]} allCommits A list of commit objects from GitHub's API
+ * @returns {string} latest commit sha
+ * @private
+ */
+function pluckLatestCommitSha(allCommits) {
+    return allCommits[allCommits.length - 1].sha;
+}
+
+/**
+ * Checks to see if a PR's title has a WIP indication.
+ * @param {Object} pr Pull request object
+ * @returns {boolean} True if the PR title indicates WIP
+ * @private
+ */
+function prHasWipTitle(pr) {
+    return WIP_IN_TITLE_REGEX.test(pr.title);
+}
+
+/**
+ * Handler for PR events (opened, reopened, synchronized, edited, labeled,
+ * unlabeled).
+ * @param {Object} context - probot context object
+ * @returns {Promise} promise
+ * @private
+ */
+async function prChangedHandler(context) {
+    const pr = context.payload.pull_request;
+
+    const allCommits = await getAllCommitsForPR({
+        context,
+        pr
+    });
+
+    const sha = pluckLatestCommitSha(allCommits);
+
+    const prTitleHasWip = prHasWipTitle(pr);
+    const hasWipLabel = hasDoNotMergeLabel(pr.labels);
+
+    const isWip = prTitleHasWip || hasWipLabel;
+
+    if (isWip) {
+        return createPendingWipStatusOnPR(context, sha);
+    }
+
+    return maybeResolveWipStatusOnPR(context, sha);
+}
+
+module.exports = robot => {
+    robot.on(
+        [
+            "pull_request.opened",
+            "pull_request.reopened",
+            "pull_request.synchronize",
+            "pull_request.edited",
+            "pull_request.labeled",
+            "pull_request.unlabeled"
+        ],
+        prChangedHandler
+    );
+};
