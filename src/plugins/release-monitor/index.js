@@ -5,7 +5,7 @@
 
 "use strict";
 
-const utils = require("../../utils");
+const { getCommitMessageForPR } = require("../utils");
 
 const PATCH_COMMIT_MESSAGE_REGEX = /^(?:Build|Chore|Docs|Fix):/;
 const POST_RELEASE_LABEL = "patch release pending";
@@ -106,7 +106,7 @@ async function createAppropriateStatusForPR({ context, pr, pendingReleaseIssueUr
             state: "success",
             description: "No patch release is pending"
         });
-    } else if (isMessageValidForPatchRelease(utils.getCommitMessageForPR(allCommits, pr))) {
+    } else if (isMessageValidForPatchRelease(getCommitMessageForPR(allCommits, pr))) {
         await createStatusOnPR({
             context,
             sha,

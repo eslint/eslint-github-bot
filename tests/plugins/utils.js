@@ -1,6 +1,6 @@
 "use strict";
 
-const utils = require("../src/utils");
+const utils = require("../../src/plugins/utils");
 
 const COMMIT_MESSAGE = "Commit message";
 const PULL_REQUEST_TITLE = "PR title";

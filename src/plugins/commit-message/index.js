@@ -6,7 +6,7 @@
 
 "use strict";
 
-const utils = require("../../utils");
+const { getCommitMessageForPR } = require("../utils");
 
 const TAG_REGEX = /^(?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade):/;
 const MESSAGE_LENGTH_LIMIT = 72;
@@ -47,7 +47,7 @@ async function processCommitMessage(context) {
     }
 
     const allCommits = await github.pullRequests.getCommits(context.issue());
-    const messageToCheck = utils.getCommitMessageForPR(allCommits.data, payload.pull_request);
+    const messageToCheck = getCommitMessageForPR(allCommits.data, payload.pull_request);
     const isValid = checkCommitMessage(messageToCheck);
     let description;
     let state;
