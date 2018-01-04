@@ -5,6 +5,8 @@
 
 "use strict";
 
+const { getCommitMessageForPR } = require("../utils");
+
 const PATCH_COMMIT_MESSAGE_REGEX = /^(?:Build|Chore|Docs|Fix):/;
 const POST_RELEASE_LABEL = "patch release pending";
 const RELEASE_LABEL = "release";
@@ -17,19 +19,6 @@ const RELEASE_LABEL = "release";
  */
 function isMessageValidForPatchRelease(message) {
     return PATCH_COMMIT_MESSAGE_REGEX.test(message);
-}
-
-/**
- * Get the correct commit message for a PR
- * @param {Object[]} allCommits A list of commit objects from GitHub's API
- * @param {Object} pr - Pull request object
- * @returns {string} Commit message
- * @private
- */
-function getCommitMessageForPR(allCommits, pr) {
-    return allCommits.length === 1
-        ? allCommits[0].commit.message
-        : pr.title;
 }
 
 /**
