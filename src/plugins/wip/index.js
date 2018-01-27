@@ -76,10 +76,10 @@ async function maybeResolveWipStatusOnPR(context, sha) {
 
     let statusCheckExists = false;
 
-    context.github.paginate(
+    await context.github.paginate(
         context.github.repos.getCombinedStatusForRef(repoAndRef),
         (res, done) => {
-            for (const status of res.statuses) {
+            for (const status of res.data.statuses) {
                 if (status.context === "wip") {
                     statusCheckExists = true;
                     done();

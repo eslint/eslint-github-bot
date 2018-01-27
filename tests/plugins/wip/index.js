@@ -298,7 +298,7 @@ describe("wip", () => {
                     }
                 });
 
-                expect(createStatusOnPR.isDone()).toBeFalsy();
+                expect(createStatusOnPR.isDone()).toBeTruthy();
             });
         });
     });
