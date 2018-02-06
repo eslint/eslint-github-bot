@@ -55,9 +55,20 @@ describe("issue-archiver", () => {
     });
 
     it("performs a search, and labels/archives all returned issues", async() => {
-        const search = nock("https://api.github.com")
+        const labelSearch = nock("https://api.github.com")
+            .get("/repos/test/repo-test/labels")
+            .reply(200, [
+                {
+                    name: "foo"
+                },
+                {
+                    name: "archived due to age"
+                }
+            ]);
+
+        const issueSearch = nock("https://api.github.com")
             .get("/search/issues")
-            .query({ q: "is:closed repo:test/repo-test -label:\"archived due to age\" closed:<2017-08-10", per_page: 100 })
+            .query(true)
             .reply(200, {
                 total_count: 2,
                 incomplete_results: false,
@@ -101,10 +112,42 @@ describe("issue-archiver", () => {
             }
         });
 
-        expect(search.isDone()).toBe(true);
+        expect(labelSearch.isDone()).toBe(true);
+        expect(issueSearch.isDone()).toBe(true);
         expect(firstLock.isDone()).toBe(true);
         expect(firstLabels.isDone()).toBe(true);
         expect(secondLock.isDone()).toBe(true);
         expect(secondLabels.isDone()).toBe(true);
+    });
+
+    it("does not lock any issues if the appropriate label does not exist", async() => {
+        const labelSearch = nock("https://api.github.com")
+            .get("/repos/test/repo-test/labels")
+            .reply(200, [
+                {
+                    name: "foo"
+                },
+                {
+                    name: "bar"
+                }
+            ]);
+
+        await new Promise(resolve => setTimeout(resolve, 500));
+        await bot.receive({
+            event: "schedule.repository",
+            payload: {
+                installation: {
+                    id: 1
+                },
+                repository: {
+                    name: "repo-test",
+                    owner: {
+                        login: "test"
+                    }
+                }
+            }
+        });
+
+        expect(labelSearch.isDone()).toBe(true);
     });
 });

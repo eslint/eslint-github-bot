@@ -8,6 +8,21 @@ const ARCHIVAL_AGE_DAYS = 180;
 const ARCHIVED_LABEL = "archived due to age";
 
 /**
+ * Checks whether the current repository has a `ARCHIVED_LABEL` label
+ * @param {probot.Context} context Probot context for the current repository
+ * @returns {Promise<boolean>} `true` if the repository has a label with appropriate name
+ */
+async function hasArchivedLabel(context) {
+    const allLabels = await context.github.paginate(
+        context.github.issues.getLabels(context.repo()),
+        res => res.data
+    );
+
+    return allLabels.some(label => label.name === ARCHIVED_LABEL);
+}
+
+
+/**
  * Creates a search query to look for issuesin a given repo which have been closed for at least
  * `ARCHIVAL_AGE_DAYS` days since the current date, and have not yet been archived.
  * @param {string} options.owner The owner of the repo where issues should be searched
@@ -41,7 +56,7 @@ async function archiveIssue(context, issueNum) {
 /**
  * Gets all archived issues on the current repository
  * @param {probot.Context} context Probot context for the current repository
- * @param {*} searchQuery A search query to send to the GitHub API
+ * @param {string} searchQuery A search query to send to the GitHub API
  * @returns {Promise<number[]>} A list of issue numbers that match the query
  */
 async function getAllSearchResults(context) {
@@ -69,6 +84,10 @@ async function getAllSearchResults(context) {
  * @returns {Promise<void>} A Promise that fulfills when the search is complete
  */
 async function archiveOldIssues(context) {
+    if (!await hasArchivedLabel(context)) {
+        return;
+    }
+
     const issueNumbersToArchive = await getAllSearchResults(context);
 
     await Promise.all(issueNumbersToArchive.map(issueNum => archiveIssue(context, issueNum)));
