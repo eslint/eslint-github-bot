@@ -200,4 +200,44 @@ describe("triage", () => {
             expect(issueLabelReq.isDone()).not.toBeTruthy();
         });
     });
+
+    describe("When a pull request is opened", () => {
+        test("Adds the label if there are no labels present", async() => {
+            const issueLabelGetReq = nock("https://api.github.com")
+                .get("/repos/test/repo-test/issues/1")
+                .reply(200, {
+                    labels: []
+                });
+
+            const issueLabelPostReq = nock("https://api.github.com")
+                .post("/repos/test/repo-test/issues/1/labels", body => {
+                    expect(body).toEqual(["triage"]);
+                    return true;
+                })
+                .reply(200);
+
+            await bot.receive({
+                event: "pull_request",
+                payload: {
+                    action: "opened",
+                    installation: {
+                        id: 1
+                    },
+                    issue: {
+                        labels: [],
+                        number: 1
+                    },
+                    repository: {
+                        name: "repo-test",
+                        owner: {
+                            login: "test"
+                        }
+                    }
+                }
+            });
+
+            expect(issueLabelGetReq.isDone()).toBe(true);
+            expect(issueLabelPostReq.isDone()).toBe(true);
+        });
+    });
 });
