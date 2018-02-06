@@ -29,6 +29,7 @@ const bot = probot({
 });
 const enabledPlugins = new Set([
     "commitMessage",
+    "issueArchiver",
     "needsInfo",
     "triage",
     "recurringIssues",

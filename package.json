@@ -17,7 +17,8 @@
   "dependencies": {
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
-    "probot": "^4.0.0"
+    "probot": "^4.0.0",
+    "probot-scheduler": "^1.0.3"
   },
   "devDependencies": {
     "eslint": "^4.13.1",
