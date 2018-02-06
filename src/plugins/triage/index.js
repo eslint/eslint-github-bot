@@ -35,4 +35,6 @@ async function triage(context) {
 module.exports = robot => {
     robot.on("issues.opened", triage);
     robot.on("issues.reopened", triage);
+    robot.on("pull_request.opened", triage);
+    robot.on("pull_request.reopened", triage);
 };
