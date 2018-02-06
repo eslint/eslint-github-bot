@@ -224,7 +224,6 @@ describe("triage", () => {
                         id: 1
                     },
                     pull_request: {
-                        labels: [],
                         number: 1
                     },
                     repository: {

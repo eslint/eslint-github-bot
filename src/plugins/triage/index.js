@@ -12,9 +12,7 @@
  * @private
  */
 async function triage(context) {
-    const payloadIssue = context.payload.issue || context.payload.pull_request;
-
-    if (payloadIssue.labels.length === 0) {
+    if (!context.payload.issue || context.payload.issue.labels.length === 0) {
 
         /*
          * Fetch the issue again to double-check that it has no labels.
