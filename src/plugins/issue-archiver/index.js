@@ -3,7 +3,7 @@
 const createScheduler = require("probot-scheduler");
 const moment = require("moment");
 
-const SEARCH_INTERVAL_MS = 6 * 60 * 60 * 1000; // 6 hours
+const SEARCH_INTERVAL_MS = 24 * 60 * 60 * 1000; // 24 hours
 const ARCHIVAL_AGE_DAYS = 180;
 const ARCHIVED_LABEL = "archived due to age";
 
