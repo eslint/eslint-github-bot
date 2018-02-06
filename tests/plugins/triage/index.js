@@ -223,8 +223,7 @@ describe("triage", () => {
                     installation: {
                         id: 1
                     },
-                    issue: {
-                        labels: [],
+                    pull_request: {
                         number: 1
                     },
                     repository: {
