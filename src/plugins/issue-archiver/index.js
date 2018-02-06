@@ -62,19 +62,10 @@ async function archiveIssue(context, issueNum) {
 async function getAllSearchResults(context) {
     const searchQuery = createSearchQuery(context.repo());
 
-    const issueNumbers = [];
-    let lastSearchResult;
-
-    do {
-        if (lastSearchResult) {
-            lastSearchResult = await context.github.getNextPage(lastSearchResult);
-        } else {
-            lastSearchResult = await context.github.search.issues({ q: searchQuery, per_page: 100 });
-        }
-        issueNumbers.push(...lastSearchResult.data.items.map(item => item.number));
-    } while (context.github.hasNextPage(lastSearchResult));
-
-    return issueNumbers;
+    return context.github.paginate(
+        context.github.search.issues({ q: searchQuery, per_page: 100 }),
+        result => result.data.items.map(item => item.number)
+    );
 }
 
 /**
