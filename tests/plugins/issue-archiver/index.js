@@ -73,8 +73,9 @@ describe("issue-archiver", () => {
                 total_count: 2,
                 incomplete_results: false,
                 items: [
-                    { number: 7 },
-                    { number: 5 }
+                    { number: 7, locked: false },
+                    { number: 6, locked: true },
+                    { number: 5, locked: false }
                 ]
             }, {
             });

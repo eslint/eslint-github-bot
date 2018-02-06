@@ -64,7 +64,15 @@ async function getAllSearchResults(context) {
 
     return context.github.paginate(
         context.github.search.issues({ q: searchQuery, per_page: 100 }),
-        result => result.data.items.map(item => item.number)
+        result => result.data.items
+
+            /*
+             * Do not label issues which are already locked.
+             * Ideally this would be handled as part of the search filter, but this doesn't seem to
+             * work (https://api.github.com/search/issues?q=-is%3Alocked returns a 500 error).
+             */
+            .filter(issue => !issue.locked)
+            .map(issue => issue.number)
     );
 }
 
