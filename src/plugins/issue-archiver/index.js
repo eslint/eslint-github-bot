@@ -75,7 +75,7 @@ async function archiveOldIssues(context) {
 }
 
 module.exports = robot => {
-    createScheduler(robot, { interval: SEARCH_INTERVAL_MS });
+    createScheduler(robot, { interval: SEARCH_INTERVAL_MS, delay: false });
 
     robot.on("schedule.repository", archiveOldIssues);
 };
