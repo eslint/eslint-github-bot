@@ -223,7 +223,7 @@ describe("triage", () => {
                     installation: {
                         id: 1
                     },
-                    issue: {
+                    pull_request: {
                         labels: [],
                         number: 1
                     },
