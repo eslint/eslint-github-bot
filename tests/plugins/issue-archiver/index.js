@@ -4,7 +4,7 @@ const { issueArchiver } = require("../../../src/plugins/index");
 
 const nock = require("nock");
 const probot = require("probot");
-const GitHubApi = require("github");
+const GitHubApi = require("@octokit/rest");
 
 process.on("unhandledRejection", console.error); // eslint-disable-line
 
@@ -35,6 +35,7 @@ describe("issue-archiver", () => {
 
         nock("https://api.github.com")
             .get("/installation/repositories")
+            .query(true)
             .reply(200, {
                 total_count: 1,
                 repositories: [

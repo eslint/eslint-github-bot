@@ -3,7 +3,7 @@
 const { triage } = require("../../../src/plugins/index");
 const nock = require("nock");
 const { createRobot } = require("probot");
-const GitHubApi = require("github");
+const GitHubApi = require("@octokit/rest");
 
 describe("triage", () => {
     let bot = null;
