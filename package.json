@@ -15,16 +15,16 @@
   "repository": "eslint/eslint-github-bot",
   "bugs": "https://github.com/eslint/eslint-github-bot/issues/",
   "dependencies": {
-    "moment": "^2.20.1",
+    "moment": "^2.21.0",
     "moment-timezone": "^0.5.14",
-    "probot": "^4.0.0",
+    "probot": "^6.0.0",
     "probot-scheduler": "^1.0.3"
   },
   "devDependencies": {
-    "eslint": "^4.13.1",
+    "eslint": "^4.18.2",
     "eslint-config-eslint": "^4.0.0",
-    "jest": "^22.0.4",
-    "nock": "^9.1.5"
+    "jest": "^22.4.2",
+    "nock": "^9.2.3"
   },
   "keywords": [
     "bot",
