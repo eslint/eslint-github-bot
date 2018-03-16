@@ -81,7 +81,7 @@ describe("wip", () => {
         nock.cleanAll();
     });
 
-    ["opened", "reopened", "synchronize", "edited", "labeled", "unlabeled"].forEach(action => {
+    ["opened", "reopened", "edited", "labeled", "unlabeled"].forEach(action => {
         describe(`pull request ${action}`, () => {
             test("create pending status if PR title starts with 'WIP:'", async() => {
                 mockGetAllCommitsForPR({

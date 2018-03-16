@@ -171,7 +171,6 @@ module.exports = robot => {
         [
             "pull_request.opened",
             "pull_request.reopened",
-            "pull_request.synchronize",
             "pull_request.edited",
             "pull_request.labeled",
             "pull_request.unlabeled"
