@@ -36,7 +36,7 @@ function createStatusOnPR({ context, state, sha, description, targetUrl }) {
  * @param {string} sha The SHA hash representing the latest commit to the PR.
  * @returns {Promise} A Promise that will fulfill when the status check is created
  */
-async function createPendingWipStatusOnPR(context, sha) {
+function createPendingWipStatusOnPR(context, sha) {
     return createStatusOnPR({
         context,
         sha,
@@ -51,7 +51,7 @@ async function createPendingWipStatusOnPR(context, sha) {
  * @param {string} sha The SHA hash representing the latest commit to the PR.
  * @returns {Promise} A Promise that will fulfill when the status check is created
  */
-async function createSuccessWipStatusOnPR(context, sha) {
+function createSuccessWipStatusOnPR(context, sha) {
     return createStatusOnPR({
         context,
         sha,
@@ -157,10 +157,7 @@ async function prChangedHandler(context) {
 
     const sha = pluckLatestCommitSha(allCommits);
 
-    const prTitleHasWip = prHasWipTitle(pr);
-    const hasWipLabel = hasDoNotMergeLabel(pr.labels);
-
-    const isWip = prTitleHasWip || hasWipLabel;
+    const isWip = prHasWipTitle(pr) || hasDoNotMergeLabel(pr.labels);
 
     if (isWip) {
         return createPendingWipStatusOnPR(context, sha);
