@@ -13,5 +13,6 @@ module.exports = {
     needsInfo: require("./needs-info"),
     triage: require("./triage"),
     recurringIssues: require("./recurring-issues"),
-    releaseMonitor: require("./release-monitor")
+    releaseMonitor: require("./release-monitor"),
+    wip: require("./wip")
 };
