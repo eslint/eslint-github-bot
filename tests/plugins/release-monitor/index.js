@@ -30,15 +30,29 @@ const RELEASE_LABEL = "release";
  * @private
  */
 function mockAllOpenPrWithCommits(mockData = []) {
-    nock("https://api.github.com")
-        .get("/repos/test/repo-test/pulls?state=open")
-        .reply(200, mockData);
+    mockData.forEach((pullRequest, index) => {
+        const linkHeaders = [];
 
-    mockData.forEach(({ number, commits }) => {
+        if (index !== mockData.length - 1) {
+            linkHeaders.push(`<https://api.github.com/repos/test/repo-test/pulls?state=open&page=${index + 2}>; rel="next"`);
+            linkHeaders.push(`<https://api.github.com/repos/test/repo-test/pulls?state=open&page=${mockData.length}>; rel="last"`);
+        }
+
+        if (index !== 0) {
+            linkHeaders.push(`<https://api.github.com/repos/test/repo-test/pulls?state=open&page=${index}>; rel="prev"`);
+            linkHeaders.push("<https://api.github.com/repos/test/repo-test/pulls?state=open&page=1>; rel=\"first\"");
+        }
+
+        nock("https://api.github.com")
+            .get(`/repos/test/repo-test/pulls?state=open${index === 0 ? "" : `&page=${index + 1}`}`)
+            .reply(200, [pullRequest], {
+                Link: linkHeaders.join(", ")
+            });
+
         nock("https://api.github.com")
             .persist()
-            .get(`/repos/test/repo-test/pulls/${number}/commits`)
-            .reply(200, commits);
+            .get(`/repos/test/repo-test/pulls/${pullRequest.number}/commits`)
+            .reply(200, pullRequest.commits);
     });
 }
 
@@ -89,15 +103,19 @@ function assertSuccessStatusWithPendingRelease(_, payload) {
 describe("release-monitor", () => {
     let bot = null;
 
-    beforeAll(() => {
+    beforeAll(async() => {
         bot = createRobot({
             id: "test",
             cert: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
-            }
+            },
+            app: () => "test"
         });
-        bot.auth = () => new GitHubApi();
+
+        const { paginate } = await bot.auth();
+
+        bot.auth = () => Object.assign(new GitHubApi(), { paginate });
         releaseMonitor(bot);
     });
 
