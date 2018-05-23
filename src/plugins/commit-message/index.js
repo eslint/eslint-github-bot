@@ -9,6 +9,12 @@
 const { getCommitMessageForPR } = require("../utils");
 
 const TAG_REGEX = /^((?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade):|Revert )/;
+
+const POTENTIAL_ISSUE_REF_REGEX = /#\d+/;
+
+const VALID_ISSUE_REF = "(?:(?:fixes|refs) #\\d+)";
+const CORRECT_ISSUE_REF_REGEX = new RegExp(` \\(${VALID_ISSUE_REF}(?:, ${VALID_ISSUE_REF})*\\)$`);
+
 const MESSAGE_LENGTH_LIMIT = 72;
 
 const EXCLUDED_REPOSITORY_NAMES = new Set([
@@ -23,7 +29,21 @@ const EXCLUDED_REPOSITORY_NAMES = new Set([
  * @private
  */
 function checkCommitMessage(message) {
-    return TAG_REGEX.test(message) && message.split(/\r?\n/)[0].length <= MESSAGE_LENGTH_LIMIT;
+
+    // First, check tag and summary length
+    let isValid = TAG_REGEX.test(message) && message.split(/\r?\n/)[0].length <= MESSAGE_LENGTH_LIMIT;
+
+    // Then, if there appears to be an issue reference, test for correctness
+    if (isValid && POTENTIAL_ISSUE_REF_REGEX.test(message)) {
+        const issueSuffixMatch = CORRECT_ISSUE_REF_REGEX.exec(message);
+
+        // If no suffix, or issue ref occurs before suffix, message is invalid
+        if (!issueSuffixMatch || POTENTIAL_ISSUE_REF_REGEX.test(message.slice(0, issueSuffixMatch.index))) {
+            isValid = false;
+        }
+    }
+
+    return isValid;
 }
 
 /**
