@@ -13,6 +13,7 @@ The bot can perform the following tasks:
 * **Release/TSC meeting issues** - creates a new issue with the `release`/`tsc meeting` label scheduled two weeks later, after another release/TSC meeting issue is closed.
 * **Release monitor** - searches the repository for an issue with the `release` and `patch release pending` labels, indicating that a patch release might soon be created from `master`. If an issue is found, adds a pending status check to all PRs that would require a semver-minor release, to prevent anyone from accidentally merging them.
 * **Issue Archiver** - Locks and adds a label to issues which have been closed for awhile
+* **WIP Tracking** - adds pending status check for PRs with WIP in the title or with "do not merge" label, and marks the status check as successful once the WIP indicators are removed.
 * **PR ready to merge** (experimental) - adds a label to all PRs which are "ready to merge", defined by the following criteria:
     * At least one review is approved.
     * Build status is `success`.
