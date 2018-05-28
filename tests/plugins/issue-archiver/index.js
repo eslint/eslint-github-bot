@@ -22,9 +22,12 @@ describe("issue-archiver", () => {
 
         });
 
-        const { paginate } = await bot.auth();
+        const githubApi = new GitHubApi();
 
-        bot.auth = () => Object.assign(new GitHubApi(), { paginate });
+        // TODO: Improve! (Is the probot addPaginate function exposed?)
+        githubApi.paginate = async(initialPromise, callback) => callback(await initialPromise);
+
+        bot.auth = () => Promise.resolve(githubApi);
 
         nock.disableNetConnect();
 
