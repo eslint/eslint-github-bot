@@ -8,7 +8,7 @@
 
 const { getCommitMessageForPR } = require("../utils");
 
-const TAG_REGEX = /^(?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade):/;
+const TAG_REGEX = /^(?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade|Revert):/;
 const MESSAGE_LENGTH_LIMIT = 72;
 
 const EXCLUDED_REPOSITORY_NAMES = new Set([
