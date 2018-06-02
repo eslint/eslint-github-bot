@@ -123,7 +123,7 @@ describe("commit-message", () => {
             });
 
             test("Posts success status if commit message beginning with `Revert`", async() => {
-                mockSingleCommitWithMessage("Revert: \"New: standard commit message\"");
+                mockSingleCommitWithMessage("Revert \"Chore: add test for commit tag Revert\"");
 
                 const nockScope = nock("https://api.github.com")
                     .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
