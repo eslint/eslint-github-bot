@@ -19,7 +19,6 @@ describe("issue-archiver", () => {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             },
             app: () => "test"
-
         });
 
         const { paginate } = await bot.auth();
@@ -31,7 +30,12 @@ describe("issue-archiver", () => {
         nock("https://api.github.com")
             .get("/app/installations")
             .query(true)
-            .reply(200, [{}]);
+            .reply(200, [{
+                id: 1,
+                account: {
+                    login: "test"
+                }
+            }]);
 
         nock("https://api.github.com")
             .get("/installation/repositories")
