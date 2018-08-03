@@ -122,6 +122,17 @@ describe("commit-message", () => {
                 expect(nockScope.isDone()).toBeTruthy();
             });
 
+            test("Posts success status if commit message beginning with `Revert`", async() => {
+                mockSingleCommitWithMessage("Revert \"Chore: add test for commit tag Revert\"");
+
+                const nockScope = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
+                    .reply(201);
+
+                await emitBotEvent(bot, { action });
+                expect(nockScope.isDone()).toBeTruthy();
+            });
+
             test("Posts failure status if the commit message is longer than 72 chars", async() => {
                 mockSingleCommitWithMessage("New: standard commit message very very very long message and its beond 72");
 
