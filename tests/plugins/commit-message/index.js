@@ -190,6 +190,75 @@ describe("commit-message", () => {
                 expect(nockScope.isDone()).toBeTruthy();
             });
 
+            // Tests for malformed issue references
+            [
+                "#1",
+                "fixes #1",
+                "(fix #1)",
+                "(ref #1)",
+                "(closes #1)",
+                "(fixes #1, #2)",
+
+                // Unexpected issue number with valid suffix should fail
+                "#1 (fixes #1)"
+            ].forEach(suffix => {
+                test(`Posts failure status if the commit message references issue improperly: ${suffix}`, async() => {
+                    mockSingleCommitWithMessage(
+                        `New: foo ${suffix}`
+                    );
+
+                    const nockScope = nock("https://api.github.com")
+                        .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "failure")
+                        .reply(201);
+
+                    await emitBotEvent(bot, { action });
+                    expect(nockScope.isDone()).toBeTruthy();
+                });
+
+                test(`Posts failure status if multiple commits and PR title references issue improperly: ${suffix}`, async() => {
+                    mockMultipleCommits();
+
+                    const nockScope = nock("https://api.github.com")
+                        .post("/repos/test/repo-test/statuses/second-sha", req => req.state === "failure")
+                        .reply(201);
+
+                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: `New: foo ${suffix}` } });
+                    expect(nockScope.isDone()).toBeTruthy();
+                });
+            });
+
+            // Tests for correct issue references
+            [
+                "(fixes #1)",
+                "(refs #1)",
+                "(fixes #1, fixes #2)",
+                "(fixes #1, refs #2, fixes #3)"
+            ].forEach(suffix => {
+                test(`Posts success status if the commit message references issue correctly: ${suffix}`, async() => {
+                    mockSingleCommitWithMessage(
+                        `New: foo ${suffix}`
+                    );
+
+                    const nockScope = nock("https://api.github.com")
+                        .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
+                        .reply(201);
+
+                    await emitBotEvent(bot, { action });
+                    expect(nockScope.isDone()).toBeTruthy();
+                });
+
+                test(`Posts success status if multiple commits and PR title references issue correctly: ${suffix}`, async() => {
+                    mockMultipleCommits();
+
+                    const nockScope = nock("https://api.github.com")
+                        .post("/repos/test/repo-test/statuses/second-sha", req => req.state === "success")
+                        .reply(201);
+
+                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: `New: foo ${suffix}` } });
+                    expect(nockScope.isDone()).toBeTruthy();
+                });
+            });
+
             test("Does not post a status if the repository is excluded", async() => {
                 await emitBotEvent(bot, {
                     action: "opened",
