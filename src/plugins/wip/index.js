@@ -173,7 +173,8 @@ module.exports = robot => {
             "pull_request.reopened",
             "pull_request.edited",
             "pull_request.labeled",
-            "pull_request.unlabeled"
+            "pull_request.unlabeled",
+            "pull_request.synchronized"
         ],
         prChangedHandler
     );
