@@ -21,7 +21,7 @@ if (!process.env.APP_ID) {
 }
 
 const port = process.env.PORT || 8000;
-const bot = probot({
+const bot = probot.createProbot({
     port,
     secret: process.env.SECRET,
     cert: process.env.PRIVATE_KEY,

@@ -19,7 +19,7 @@ describe("recurring-issues", () => {
     function runBot({ issueTitle, labelNames, eventTypes }) {
         issueWasCreated = false;
 
-        const bot = probot.createRobot({
+        const bot = new probot.Application({
             id: "test",
             cert: "test",
             cache: {
@@ -82,7 +82,7 @@ describe("recurring-issues", () => {
             });
 
         return bot.receive({
-            event: "issues",
+            name: "issues",
             payload: {
                 installation: {
                     id: 1

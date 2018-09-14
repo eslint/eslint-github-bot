@@ -6,13 +6,11 @@ const nock = require("nock");
 const probot = require("probot");
 const GitHubApi = require("@octokit/rest");
 
-process.on("unhandledRejection", console.error); // eslint-disable-line
-
 describe("issue-archiver", () => {
     let bot;
 
     beforeEach(async() => {
-        bot = probot.createRobot({
+        bot = new probot.Application({
             id: "test",
             cert: "test",
             cache: {
@@ -103,21 +101,6 @@ describe("issue-archiver", () => {
 
         await new Promise(resolve => setTimeout(resolve, 500));
 
-        await bot.receive({
-            event: "schedule.repository",
-            payload: {
-                installation: {
-                    id: 1
-                },
-                repository: {
-                    name: "repo-test",
-                    owner: {
-                        login: "test"
-                    }
-                }
-            }
-        });
-
         expect(labelSearch.isDone()).toBe(true);
         expect(issueSearch.isDone()).toBe(true);
         expect(firstLock.isDone()).toBe(true);
@@ -139,20 +122,6 @@ describe("issue-archiver", () => {
             ]);
 
         await new Promise(resolve => setTimeout(resolve, 500));
-        await bot.receive({
-            event: "schedule.repository",
-            payload: {
-                installation: {
-                    id: 1
-                },
-                repository: {
-                    name: "repo-test",
-                    owner: {
-                        login: "test"
-                    }
-                }
-            }
-        });
 
         expect(labelSearch.isDone()).toBe(true);
     });

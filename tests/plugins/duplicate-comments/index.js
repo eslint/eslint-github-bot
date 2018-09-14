@@ -55,7 +55,7 @@ function mockComments(moreComments = []) {
  */
 function emitBotEvent(bot, state = "open") {
     return bot.receive({
-        event: "issue_comment",
+        name: "issue_comment",
         payload: {
             installation: {
                 id: 1
@@ -84,7 +84,7 @@ describe("duplicate-comments", () => {
     let nockScope = null;
 
     beforeAll(() => {
-        bot = probot.createRobot({
+        bot = new probot.Application({
             id: "test",
             cert: "test",
             cache: {

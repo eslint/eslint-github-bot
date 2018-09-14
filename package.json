@@ -17,7 +17,7 @@
   "dependencies": {
     "moment": "^2.21.0",
     "moment-timezone": "^0.5.14",
-    "probot": "^6.0.0",
+    "probot": "^7.1.2",
     "probot-scheduler": "^1.0.3"
   },
   "devDependencies": {
