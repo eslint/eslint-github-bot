@@ -32,7 +32,7 @@ function mockPrWithFiles(url) {
  */
 function emitBotEvent(bot, { action, title }) {
     return bot.receive({
-        event: "pull_request",
+        name: "pull_request",
         payload: {
             installation: {
                 id: 1
@@ -61,7 +61,7 @@ describe("check-unit-test", () => {
     let nockScope = null;
 
     beforeAll(() => {
-        bot = probot.createRobot({
+        bot = new probot.Application({
             id: "test",
             cert: "test",
             cache: {

@@ -10,7 +10,7 @@ describe("needs-info", () => {
     let issueCommentReq = null;
 
     beforeAll(() => {
-        bot = probot.createRobot({
+        bot = new probot.Application({
             id: "test",
             cert: "test",
             cache: {
@@ -34,7 +34,7 @@ describe("needs-info", () => {
     describe("issue labeled", () => {
         test("Adds the comment if there needs info is added", async() => {
             await bot.receive({
-                event: "issues",
+                name: "issues",
                 payload: {
                     action: "labeled",
                     installation: {
@@ -68,7 +68,7 @@ describe("needs-info", () => {
 
         test("Do not add the comment if needs label label is not present", async() => {
             await bot.receive({
-                event: "issues",
+                name: "issues",
                 payload: {
                     action: "labeled",
                     installation: {

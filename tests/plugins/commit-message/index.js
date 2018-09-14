@@ -54,7 +54,7 @@ function mockMultipleCommits() {
  */
 function emitBotEvent(bot, payload = {}) {
     return bot.receive({
-        event: "pull_request",
+        name: "pull_request",
         payload: Object.assign({
             installation: {
                 id: 1
@@ -79,7 +79,7 @@ describe("commit-message", () => {
     let bot = null;
 
     beforeAll(() => {
-        bot = probot.createRobot({
+        bot = new probot.Application({
             id: "test",
             cert: "test",
             cache: {

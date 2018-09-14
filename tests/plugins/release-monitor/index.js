@@ -2,7 +2,7 @@
 
 const { releaseMonitor } = require("../../../src/plugins/index");
 const nock = require("nock");
-const { createRobot } = require("probot");
+const { Application } = require("probot");
 const GitHubApi = require("@octokit/rest");
 
 const POST_RELEASE_LABEL = "patch release pending";
@@ -104,7 +104,7 @@ describe("release-monitor", () => {
     let bot = null;
 
     beforeAll(async() => {
-        bot = createRobot({
+        bot = new Application({
             id: "test",
             cert: "test",
             cache: {
@@ -224,7 +224,7 @@ describe("release-monitor", () => {
                 .reply(200, assertSuccessStatusWithPendingRelease);
 
             await bot.receive({
-                event: "issues",
+                name: "issues",
                 payload: {
                     action: "labeled",
                     installation: {
@@ -298,7 +298,7 @@ describe("release-monitor", () => {
                 .reply(200, {});
 
             await bot.receive({
-                event: "issues",
+                name: "issues",
                 payload: {
                     action: "labeled",
                     installation: {
@@ -364,7 +364,7 @@ describe("release-monitor", () => {
                 .reply(200, {});
 
             await bot.receive({
-                event: "issues",
+                name: "issues",
                 payload: {
                     action: "labeled",
                     installation: {
@@ -499,7 +499,7 @@ describe("release-monitor", () => {
                 .reply(200, assertSuccessStatusWithNoPendingRelease);
 
             await bot.receive({
-                event: "issues",
+                name: "issues",
                 payload: {
                     action: "closed",
                     installation: {
@@ -567,7 +567,7 @@ describe("release-monitor", () => {
                 .reply(200, {});
 
             await bot.receive({
-                event: "issues",
+                name: "issues",
                 payload: {
                     action: "closed",
                     installation: {
@@ -633,7 +633,7 @@ describe("release-monitor", () => {
                     .reply(200, assertPendingStatusWithIssueLink);
 
                 await bot.receive({
-                    event: "pull_request",
+                    name: "pull_request",
                     payload: {
                         action: "opened",
                         installation: {
@@ -684,7 +684,7 @@ describe("release-monitor", () => {
                     .reply(200, assertSuccessStatusWithPendingRelease);
 
                 await bot.receive({
-                    event: "pull_request",
+                    name: "pull_request",
                     payload: {
                         action: "opened",
                         installation: {
@@ -731,7 +731,7 @@ describe("release-monitor", () => {
                     .reply(200, assertSuccessStatusWithNoPendingRelease);
 
                 await bot.receive({
-                    event: "pull_request",
+                    name: "pull_request",
                     payload: {
                         action: "opened",
                         installation: {

@@ -2,7 +2,7 @@
 
 const { wip } = require("../../../src/plugins");
 const nock = require("nock");
-const { createRobot } = require("probot");
+const { Application } = require("probot");
 
 const DO_NOT_MERGE_LABEL = "do not merge";
 
@@ -67,7 +67,7 @@ describe("wip", () => {
     let bot = null;
 
     beforeAll(() => {
-        bot = createRobot({
+        bot = new Application({
             id: "test",
             cert: "test",
             cache: {
@@ -101,7 +101,7 @@ describe("wip", () => {
                     .reply(200, assertPendingStatusForWip);
 
                 await bot.receive({
-                    event: "pull_request",
+                    name: "pull_request",
                     payload: {
                         action,
                         installation: {
@@ -142,7 +142,7 @@ describe("wip", () => {
                     .reply(200, assertPendingStatusForWip);
 
                 await bot.receive({
-                    event: "pull_request",
+                    name: "pull_request",
                     payload: {
                         action,
                         installation: {
@@ -183,7 +183,7 @@ describe("wip", () => {
                     .reply(200, assertPendingStatusForWip);
 
                 await bot.receive({
-                    event: "pull_request",
+                    name: "pull_request",
                     payload: {
                         action,
                         installation: {
@@ -229,7 +229,7 @@ describe("wip", () => {
                     .reply(200, {});
 
                 await bot.receive({
-                    event: "pull_request",
+                    name: "pull_request",
                     payload: {
                         action,
                         installation: {
@@ -278,7 +278,7 @@ describe("wip", () => {
                     .reply(200, assertSuccessStatusForWip);
 
                 await bot.receive({
-                    event: "pull_request",
+                    name: "pull_request",
                     payload: {
                         action,
                         installation: {

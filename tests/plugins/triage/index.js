@@ -2,14 +2,14 @@
 
 const { triage } = require("../../../src/plugins/index");
 const nock = require("nock");
-const { createRobot } = require("probot");
+const { Application } = require("probot");
 const GitHubApi = require("@octokit/rest");
 
 describe("triage", () => {
     let bot = null;
 
     beforeAll(() => {
-        bot = createRobot({
+        bot = new Application({
             id: "test",
             cert: "test",
             cache: {
@@ -40,7 +40,7 @@ describe("triage", () => {
                 .reply(200);
 
             await bot.receive({
-                event: "issues",
+                name: "issues",
                 payload: {
                     action: "opened",
                     installation: {
@@ -74,7 +74,7 @@ describe("triage", () => {
                 .reply(200);
 
             await bot.receive({
-                event: "issues",
+                name: "issues",
                 payload: {
                     action: "opened",
                     installation: {
@@ -110,7 +110,7 @@ describe("triage", () => {
                 .reply(200);
 
             await bot.receive({
-                event: "issues",
+                name: "issues",
                 payload: {
                     action: "opened",
                     installation: {
@@ -147,7 +147,7 @@ describe("triage", () => {
                 .reply(200);
 
             await bot.receive({
-                event: "issues",
+                name: "issues",
                 payload: {
                     action: "reopened",
                     installation: {
@@ -176,7 +176,7 @@ describe("triage", () => {
                 .reply(200);
 
             await bot.receive({
-                event: "issues",
+                name: "issues",
                 payload: {
                     action: "reopened",
                     installation: {
@@ -217,7 +217,7 @@ describe("triage", () => {
                 .reply(200);
 
             await bot.receive({
-                event: "pull_request",
+                name: "pull_request",
                 payload: {
                     action: "opened",
                     installation: {
