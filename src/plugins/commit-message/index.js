@@ -29,16 +29,17 @@ const EXCLUDED_REPOSITORY_NAMES = new Set([
  * @private
  */
 function checkCommitMessage(message) {
+    const commitTitle = message.split(/\r?\n/)[0];
 
     // First, check tag and summary length
-    let isValid = TAG_REGEX.test(message) && message.split(/\r?\n/)[0].length <= MESSAGE_LENGTH_LIMIT;
+    let isValid = TAG_REGEX.test(commitTitle) && commitTitle.length <= MESSAGE_LENGTH_LIMIT;
 
     // Then, if there appears to be an issue reference, test for correctness
-    if (isValid && POTENTIAL_ISSUE_REF_REGEX.test(message)) {
-        const issueSuffixMatch = CORRECT_ISSUE_REF_REGEX.exec(message);
+    if (isValid && POTENTIAL_ISSUE_REF_REGEX.test(commitTitle)) {
+        const issueSuffixMatch = CORRECT_ISSUE_REF_REGEX.exec(commitTitle);
 
         // If no suffix, or issue ref occurs before suffix, message is invalid
-        if (!issueSuffixMatch || POTENTIAL_ISSUE_REF_REGEX.test(message.slice(0, issueSuffixMatch.index))) {
+        if (!issueSuffixMatch || POTENTIAL_ISSUE_REF_REGEX.test(commitTitle.slice(0, issueSuffixMatch.index))) {
             isValid = false;
         }
     }
