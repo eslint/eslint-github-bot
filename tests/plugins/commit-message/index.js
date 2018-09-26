@@ -232,7 +232,8 @@ describe("commit-message", () => {
                 "(fixes #1)",
                 "(refs #1)",
                 "(fixes #1, fixes #2)",
-                "(fixes #1, refs #2, fixes #3)"
+                "(fixes #1, refs #2, fixes #3)",
+                "(fixes #1234)\n\nMore info here"
             ].forEach(suffix => {
                 test(`Posts success status if the commit message references issue correctly: ${suffix}`, async() => {
                     mockSingleCommitWithMessage(
@@ -254,7 +255,7 @@ describe("commit-message", () => {
                         .post("/repos/test/repo-test/statuses/second-sha", req => req.state === "success")
                         .reply(201);
 
-                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: `New: foo ${suffix}` } });
+                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: `New: foo ${suffix.replace(/\n[\s\S]*/, "")}` } });
                     expect(nockScope.isDone()).toBeTruthy();
                 });
             });
