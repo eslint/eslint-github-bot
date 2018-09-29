@@ -5,10 +5,6 @@ node_js:
 
 sudo: false
 
-branches:
-    only:
-    - master
-
 install:
     - npm ci
 
