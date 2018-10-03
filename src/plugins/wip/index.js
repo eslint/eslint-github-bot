@@ -141,7 +141,7 @@ function prHasWipTitle(pr) {
 }
 
 /**
- * Handler for PR events (opened, reopened, synchronized, edited, labeled,
+ * Handler for PR events (opened, reopened, synchronize, edited, labeled,
  * unlabeled).
  * @param {Object} context - probot context object
  * @returns {Promise} promise
@@ -174,7 +174,7 @@ module.exports = robot => {
             "pull_request.edited",
             "pull_request.labeled",
             "pull_request.unlabeled",
-            "pull_request.synchronized"
+            "pull_request.synchronize"
         ],
         prChangedHandler
     );
