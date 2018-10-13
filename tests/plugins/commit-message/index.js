@@ -271,6 +271,23 @@ describe("commit-message", () => {
                     }
                 });
             });
+
+            // Tests for commit messages starting with 'Revert "'
+            [
+                "Revert \"New: do something (#123)\"",
+                "Revert \"Very long commit message with lots and lots of characters (more than 72!)\"",
+                "Revert \"blah\"\n\nbaz"
+            ].forEach(message => {
+                test("Posts a success status", async() => {
+                    const nockScope = nock("https://api.github.com")
+                        .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
+                        .reply(201);
+
+                    mockSingleCommitWithMessage(message);
+                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: message.replace(/\n[\s\S]*/, "") } });
+                    expect(nockScope.isDone()).toBe(true);
+                });
+            });
         });
     });
 });
