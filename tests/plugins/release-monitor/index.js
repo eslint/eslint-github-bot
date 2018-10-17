@@ -197,6 +197,18 @@ describe("release-monitor", () => {
                             }
                         }
                     ]
+                },
+                {
+                    number: 7,
+                    title: "Upgrade: message",
+                    commits: [
+                        {
+                            sha: "777",
+                            commit: {
+                                message: "Upgrade: message"
+                            }
+                        }
+                    ]
                 }
             ]);
             const newPrStatus = nock("https://api.github.com")
@@ -221,6 +233,10 @@ describe("release-monitor", () => {
 
             const docPrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/666")
+                .reply(200, assertSuccessStatusWithPendingRelease);
+
+            const upgradePrStatus = nock("https://api.github.com")
+                .post("/repos/test/repo-test/statuses/777")
                 .reply(200, assertSuccessStatusWithPendingRelease);
 
             await bot.receive({
@@ -260,7 +276,8 @@ describe("release-monitor", () => {
             expect(breakingPrStatus.isDone()).toBe(true);
             expect(randomPrStatus.isDone()).toBe(true);
             expect(docPrStatus.isDone()).toBe(true);
-        });
+            expect(upgradePrStatus.isDone()).toBe(true);
+        }, 10000);
 
         test("with no post release label nothing happens", async() => {
             mockAllOpenPrWithCommits([
@@ -472,6 +489,18 @@ describe("release-monitor", () => {
                             }
                         }
                     ]
+                },
+                {
+                    number: 7,
+                    title: "Upgrade: message",
+                    commits: [
+                        {
+                            sha: "777",
+                            commit: {
+                                message: "Upgrade: message"
+                            }
+                        }
+                    ]
                 }
             ]);
             const newPrStatus = nock("https://api.github.com")
@@ -496,6 +525,10 @@ describe("release-monitor", () => {
 
             const docPrStatus = nock("https://api.github.com")
                 .post("/repos/test/repo-test/statuses/666")
+                .reply(200, assertSuccessStatusWithNoPendingRelease);
+
+            const upgradePrStatus = nock("https://api.github.com")
+                .post("/repos/test/repo-test/statuses/777")
                 .reply(200, assertSuccessStatusWithNoPendingRelease);
 
             await bot.receive({
@@ -529,7 +562,8 @@ describe("release-monitor", () => {
             expect(updatePrStatus.isDone()).toBeTruthy();
             expect(breakingPrStatus.isDone()).toBeTruthy();
             expect(randomPrStatus.isDone()).toBeTruthy();
-        });
+            expect(upgradePrStatus.isDone()).toBeTruthy();
+        }, 10000);
 
         test("is not a release issue", async() => {
             mockAllOpenPrWithCommits([
