@@ -23,7 +23,7 @@
   "devDependencies": {
     "eslint": "^4.18.2",
     "eslint-config-eslint": "^4.0.0",
-    "jest": "^22.4.2",
+    "jest": "^23.6.0",
     "nock": "^9.2.3"
   },
   "keywords": [
