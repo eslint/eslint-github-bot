@@ -131,7 +131,7 @@ async function closeIssue(context, issueNum, commentText) {
  * @param {string} searchQuery A search query to send to the GitHub API
  * @returns {Promise<issue>} A list of issues that match the query
  */
-async function queryIssues(context, searchQuery) {
+function queryIssues(context, searchQuery) {
     return context.github.paginate(
         context.github.search.issues({ q: searchQuery, per_page: 100 }),
         result => result.data.items
