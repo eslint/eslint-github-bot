@@ -107,7 +107,7 @@ describe("issue-archiver", () => {
         expect(firstLabels.isDone()).toBe(true);
         expect(secondLock.isDone()).toBe(true);
         expect(secondLabels.isDone()).toBe(true);
-    });
+    }, 6000);
 
     it("does not lock any issues if the appropriate label does not exist", async() => {
         const labelSearch = nock("https://api.github.com")
@@ -124,5 +124,5 @@ describe("issue-archiver", () => {
         await new Promise(resolve => setTimeout(resolve, 5000));
 
         expect(labelSearch.isDone()).toBe(true);
-    });
+    }, 6000);
 });
