@@ -34,8 +34,7 @@ function getCommentHash(comment) {
     const startIdx = comment.indexOf("[//]: # (") + 9;
     const endIndex = comment.indexOf(")", startIdx);
 
-    // eslint-disable-next-line
-    return comment.substring(startIdx, endIndex);
+    return comment.slice(startIdx, endIndex);
 }
 
 /**
