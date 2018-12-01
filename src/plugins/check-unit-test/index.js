@@ -46,7 +46,7 @@ function areUnitTestFilesPresent(files, repoUrl) {
     return files
         .map(file => file.blob_url)
         .map(url => path.dirname(url))
-        .map(url => url.substring(repoUrl.length))
+        .map(url => url.slice(repoUrl.length))
         .some(url => url.includes("test"));
 }
 

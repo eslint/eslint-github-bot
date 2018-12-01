@@ -107,4 +107,3 @@ async function isPrReviewSuccess(context, sha) {
 module.exports = {
     isPrReviewSuccess
 };
-

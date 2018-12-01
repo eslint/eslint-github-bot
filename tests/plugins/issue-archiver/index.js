@@ -99,7 +99,7 @@ describe("issue-archiver", () => {
             .post("/repos/test/repo-test/issues/5/labels")
             .reply(200);
 
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 5000));
 
         expect(labelSearch.isDone()).toBe(true);
         expect(issueSearch.isDone()).toBe(true);
@@ -121,7 +121,7 @@ describe("issue-archiver", () => {
                 }
             ]);
 
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 5000));
 
         expect(labelSearch.isDone()).toBe(true);
     });
