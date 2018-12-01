@@ -99,7 +99,26 @@ describe("issue-archiver", () => {
             .post("/repos/test/repo-test/issues/5/labels")
             .reply(200);
 
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        await bot.receive({
+            name: "schedule.repository",
+            payload: {
+                installation: {
+                    id: 1
+                },
+                pull_request: {
+                    number: 1
+                },
+                sender: {
+                    login: "user-a"
+                },
+                repository: {
+                    name: "repo-test",
+                    owner: {
+                        login: "test"
+                    }
+                }
+            }
+        });
 
         expect(labelSearch.isDone()).toBe(true);
         expect(issueSearch.isDone()).toBe(true);
@@ -107,7 +126,7 @@ describe("issue-archiver", () => {
         expect(firstLabels.isDone()).toBe(true);
         expect(secondLock.isDone()).toBe(true);
         expect(secondLabels.isDone()).toBe(true);
-    }, 6000);
+    });
 
     it("does not lock any issues if the appropriate label does not exist", async() => {
         const labelSearch = nock("https://api.github.com")
@@ -121,8 +140,27 @@ describe("issue-archiver", () => {
                 }
             ]);
 
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        await bot.receive({
+            name: "schedule.repository",
+            payload: {
+                installation: {
+                    id: 1
+                },
+                pull_request: {
+                    number: 1
+                },
+                sender: {
+                    login: "user-a"
+                },
+                repository: {
+                    name: "repo-test",
+                    owner: {
+                        login: "test"
+                    }
+                }
+            }
+        });
 
         expect(labelSearch.isDone()).toBe(true);
-    }, 6000);
+    });
 });
