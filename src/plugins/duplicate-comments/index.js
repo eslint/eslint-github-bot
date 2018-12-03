@@ -34,7 +34,7 @@ function getCommentHash(comment) {
     const startIdx = comment.indexOf("[//]: # (") + 9;
     const endIndex = comment.indexOf(")", startIdx);
 
-    return comment.substring(startIdx, endIndex);
+    return comment.slice(startIdx, endIndex);
 }
 
 /**

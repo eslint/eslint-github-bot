@@ -143,8 +143,7 @@ async function createStatusOnAllPRs({ context, pendingReleaseIssueUrl }) {
             context,
             pr,
             pendingReleaseIssueUrl
-        })
-    ));
+        })));
 }
 
 /**

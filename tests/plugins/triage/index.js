@@ -34,7 +34,7 @@ describe("triage", () => {
 
             const issueLabelPostReq = nock("https://api.github.com")
                 .post("/repos/test/repo-test/issues/1/labels", body => {
-                    expect(body).toEqual(["triage"]);
+                    expect(body).toEqual({ labels: ["triage"] });
                     return true;
                 })
                 .reply(200);
@@ -141,7 +141,7 @@ describe("triage", () => {
                 .reply(200, { labels: [] });
             const issueLabelPostReq = nock("https://api.github.com")
                 .post("/repos/test/repo-test/issues/1/labels", body => {
-                    expect(body).toEqual(["triage"]);
+                    expect(body).toEqual({ labels: ["triage"] });
                     return true;
                 })
                 .reply(200);
@@ -211,7 +211,7 @@ describe("triage", () => {
 
             const issueLabelPostReq = nock("https://api.github.com")
                 .post("/repos/test/repo-test/issues/1/labels", body => {
-                    expect(body).toEqual(["triage"]);
+                    expect(body).toEqual({ labels: ["triage"] });
                     return true;
                 })
                 .reply(200);
