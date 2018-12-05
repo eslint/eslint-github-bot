@@ -20,7 +20,7 @@ const AUTO_CLOSE_LABEL = "auto closed";
  */
 async function hasAutoCloseLabel(context) {
     const allLabels = await context.github.paginate(
-        context.github.issues.getLabels(context.repo()),
+        context.github.issues.listLabelsForRepo(context.repo()),
         res => res.data
     );
 
@@ -119,7 +119,7 @@ Thanks for contributing to ESLint and we appreciate your understanding.
  */
 async function closeIssue(context, issueNum, commentText) {
     await Promise.all([
-        context.github.issues.edit(context.repo({ number: issueNum, state: "closed" })),
+        context.github.issues.update(context.repo({ number: issueNum, state: "closed" })),
         context.github.issues.addLabels(context.repo({ number: issueNum, labels: [AUTO_CLOSE_LABEL] })),
         context.github.issues.createComment(context.repo({ number: issueNum, body: commentText }))
     ]);

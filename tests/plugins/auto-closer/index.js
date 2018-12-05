@@ -28,9 +28,9 @@ let githubNock = nock("https://api.github.com");
  */
 function checkNockLabelRequest(issueNum) {
     return githubNock
-        .post(`/repos/test/repo-test/issues/${issueNum}/labels`,
-            ["auto closed"]
-        )
+        .post(`/repos/test/repo-test/issues/${issueNum}/labels`, {
+            labels: ["auto closed"]
+        })
         .reply(200);
 }
 
@@ -60,6 +60,35 @@ function checkNockCommentRequest(issueNum) {
         .reply(200);
 }
 
+/**
+ * Triggers the schedule on which the bot runs.
+ * @param {*} bot The bot to trigger a schedule on.
+ * @returns {Promise} A promise to trigger the schedule.
+ */
+function triggerSchedule(bot) {
+    return bot.receive({
+        name: "schedule.repository",
+        payload: {
+            installation: {
+                id: 1
+            },
+            pull_request: {
+                number: 1
+            },
+            sender: {
+                login: "user-a"
+            },
+            repository: {
+                name: "repo-test",
+                owner: {
+                    login: "test"
+                }
+            }
+        }
+    });
+
+}
+
 //-----------------------------------------------------------------------------
 // Tests
 //-----------------------------------------------------------------------------
@@ -84,31 +113,7 @@ describe("auto-closer", () => {
 
         nock.disableNetConnect();
 
-        githubNock
-            .get("/app/installations")
-            .query(true)
-            .reply(200, [{
-                id: 1,
-                account: {
-                    login: "test"
-                }
-            }]);
-
-        githubNock
-            .get("/installation/repositories")
-            .query(true)
-            .reply(200, {
-                total_count: 1,
-                repositories: [
-                    {
-                        owner: {
-                            login: "test"
-                        },
-                        name: "repo-test"
-                    }
-                ]
-            });
-
+        autoCloser(bot);
     });
 
     afterEach(() => {
@@ -116,7 +121,7 @@ describe("auto-closer", () => {
     });
 
     it("performs a search, and closes all returned issues", async() => {
-        const labelSearch = githubNock
+        githubNock
             .get("/repos/test/repo-test/labels")
             .reply(200, [
                 {
@@ -127,7 +132,7 @@ describe("auto-closer", () => {
                 }
             ]);
 
-        const acceptedIssueSearch = githubNock
+        githubNock
             .get("/search/issues")
             .query(value => value.q.includes(" label:accepted"))
             .reply(200, {
@@ -140,7 +145,7 @@ describe("auto-closer", () => {
             }, {
             });
 
-        const unacceptedIssueSearch = nock("https://api.github.com")
+        nock("https://api.github.com")
             .get("/search/issues")
             .query(value => value.q.includes(" -label:accepted"))
             .reply(200, {
@@ -155,32 +160,17 @@ describe("auto-closer", () => {
 
         // check that labels are updated
         const issueNumbers = [1, 2, 3, 4];
-        const labelRequests = issueNumbers.map(issueNum => checkNockLabelRequest(issueNum));
-        const closedRequests = issueNumbers.map(issueNum => checkNockClosedRequest(issueNum));
-        const commentRequests = issueNumbers.map(issueNum => checkNockCommentRequest(issueNum));
 
-        autoCloser(bot);
-        await new Promise(resolve => setTimeout(resolve, 500));
+        issueNumbers.map(issueNum => checkNockLabelRequest(issueNum));
+        issueNumbers.map(issueNum => checkNockClosedRequest(issueNum));
+        issueNumbers.map(issueNum => checkNockCommentRequest(issueNum));
 
-        expect(acceptedIssueSearch.isDone()).toBe(true);
-        expect(unacceptedIssueSearch.isDone()).toBe(true);
-        expect(labelSearch.isDone()).toBe(true);
-
-        for (const labelRequest of labelRequests) {
-            expect(labelRequest.isDone()).toBe(true);
-        }
-
-        for (const closedRequest of closedRequests) {
-            expect(closedRequest.isDone()).toBe(true);
-        }
-
-        for (const commentRequest of commentRequests) {
-            expect(commentRequest.isDone()).toBe(true);
-        }
+        await triggerSchedule(bot);
+        expect(githubNock.isDone()).toBe(true);
     });
 
     it("does not close any issues if the appropriate label does not exist", async() => {
-        const labelSearch = githubNock
+        githubNock
             .get("/repos/test/repo-test/labels")
             .reply(200, [
                 {
@@ -191,9 +181,7 @@ describe("auto-closer", () => {
                 }
             ]);
 
-        autoCloser(bot);
-        await new Promise(resolve => setTimeout(resolve, 500));
-
-        expect(labelSearch.isDone()).toBe(true);
+        await triggerSchedule(bot);
+        expect(githubNock.isDone()).toBe(true);
     });
 });
