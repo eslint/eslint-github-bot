@@ -28,6 +28,7 @@ const bot = probot.createProbot({
     id: process.env.APP_ID
 });
 const enabledPlugins = new Set([
+    "autoCloser",
     "commitMessage",
     "issueArchiver",
     "needsInfo",
