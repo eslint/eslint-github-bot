@@ -151,8 +151,8 @@ async function closeInactiveIssues(context) {
     }
 
     const [acceptedIssues, unacceptedIssues] = await Promise.all([
-        queryIssues(context, createAutoCloseAcceptedSearchQuery(context)),
-        queryIssues(context, createAutoCloseUnacceptedSearchQuery(context))
+        queryIssues(context, createAutoCloseAcceptedSearchQuery(context.repo())),
+        queryIssues(context, createAutoCloseUnacceptedSearchQuery(context.repo()))
     ]);
 
     await Promise.all(acceptedIssues.map(
