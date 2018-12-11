@@ -134,7 +134,12 @@ describe("auto-closer", () => {
 
         githubNock
             .get("/search/issues")
-            .query(value => value.q.includes(" label:accepted"))
+            .query(value => {
+
+                // GitHub API requires queries to be <=256 chars
+                expect(value.q.length).toBeLessThanOrEqual(256);
+                return value.q.includes(" label:accepted");
+            })
             .reply(200, {
                 total_count: 2,
                 incomplete_results: false,
@@ -147,7 +152,12 @@ describe("auto-closer", () => {
 
         nock("https://api.github.com")
             .get("/search/issues")
-            .query(value => value.q.includes(" -label:accepted"))
+            .query(value => {
+
+                // GitHub API requires queries to be <=256 chars
+                expect(value.q.length).toBeLessThanOrEqual(256);
+                return value.q.includes(" -label:accepted");
+            })
             .reply(200, {
                 total_count: 2,
                 incomplete_results: false,
