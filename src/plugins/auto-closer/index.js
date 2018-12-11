@@ -41,7 +41,7 @@ function createAutoCloseAcceptedSearchQuery({ owner, repo }) {
     const activityCutoffDate = moment().subtract({ days: ACTIVITY_AUTO_CLOSE_DAYS });
 
     return [
-        "is:open",
+        "is:open is:issue",
         `repo:${owner}/${repo}`,
         "no:assignee no:milestone no:project label:accepted",
         `created:<${creationCutoffDate.format("YYYY-MM-DD")}`,
@@ -61,7 +61,7 @@ function createAutoCloseUnacceptedSearchQuery({ owner, repo }) {
     const activityCutoffDate = moment().subtract({ days: ACTIVITY_AUTO_CLOSE_DAYS });
 
     return [
-        "is:open",
+        "is:open is:issue",
         `repo:${owner}/${repo}`,
         "no:assignee no:milestone no:project -label:accepted",
         `updated:<${activityCutoffDate.format("YYYY-MM-DD")}`

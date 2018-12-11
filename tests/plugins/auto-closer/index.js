@@ -138,7 +138,7 @@ describe("auto-closer", () => {
 
                 // GitHub API requires queries to be <=256 chars
                 expect(value.q.length).toBeLessThanOrEqual(256);
-                return value.q.includes(" label:accepted");
+                return value.q.includes(" label:accepted") && value.q.includes("is:issue");
             })
             .reply(200, {
                 total_count: 2,
@@ -156,7 +156,7 @@ describe("auto-closer", () => {
 
                 // GitHub API requires queries to be <=256 chars
                 expect(value.q.length).toBeLessThanOrEqual(256);
-                return value.q.includes(" -label:accepted");
+                return value.q.includes(" -label:accepted") && value.q.includes("is:issue");
             })
             .reply(200, {
                 total_count: 2,
