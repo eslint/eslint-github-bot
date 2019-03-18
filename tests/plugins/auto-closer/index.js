@@ -50,12 +50,14 @@ function checkNockClosedRequest(issueNum) {
 /**
  * Creates a Nock mock for commenting on issues.
  * @param {number} issueNum The issue number that should be commented on.
+ * @param {RegExp} [textMatch=/days/] The regex that the body of the comment
+ *      must match.
  * @returns {Nock} The Nock instance.
  */
-function checkNockCommentRequest(issueNum) {
+function checkNockCommentRequest(issueNum, textMatch = /days/) {
     return githubNock
         .post(`/repos/test/repo-test/issues/${issueNum}/comments`, {
-            body: /days/
+            body: textMatch
         })
         .reply(200);
 }
@@ -132,6 +134,7 @@ describe("auto-closer", () => {
                 }
             ]);
 
+        // accepted issues
         githubNock
             .get("/search/issues")
             .query(value => {
@@ -150,13 +153,14 @@ describe("auto-closer", () => {
             }, {
             });
 
-        nock("https://api.github.com")
+        // unaccepted issues
+        githubNock
             .get("/search/issues")
             .query(value => {
 
                 // GitHub API requires queries to be <=256 chars
                 expect(value.q.length).toBeLessThanOrEqual(256);
-                return value.q.includes(" -label:accepted") && value.q.includes("is:issue");
+                return value.q.includes(" -label:accepted") && value.q.includes(" -label:question") && value.q.includes("is:issue");
             })
             .reply(200, {
                 total_count: 2,
@@ -168,12 +172,38 @@ describe("auto-closer", () => {
             }, {
             });
 
+        // questions
+        githubNock
+            .get("/search/issues")
+            .query(value => {
+
+                // GitHub API requires queries to be <=256 chars
+                expect(value.q.length).toBeLessThanOrEqual(256);
+                return value.q.includes(" -label:accepted") && value.q.includes("label:question") && value.q.includes("is:issue");
+            })
+            .reply(200, {
+                total_count: 2,
+                incomplete_results: false,
+                items: [
+                    { number: 5 },
+                    { number: 6 }
+                ]
+            }, {
+            });
+
         // check that labels are updated
-        const issueNumbers = [1, 2, 3, 4];
+        const issueNumbers = [1, 2, 3, 4, 5, 6];
 
         issueNumbers.map(issueNum => checkNockLabelRequest(issueNum));
         issueNumbers.map(issueNum => checkNockClosedRequest(issueNum));
-        issueNumbers.map(issueNum => checkNockCommentRequest(issueNum));
+        issueNumbers.map(issueNum => {
+            if (issueNum === 5 || issueNum === 6) {
+                return checkNockCommentRequest(issueNum, /question/);
+            }
+
+            return checkNockCommentRequest(issueNum);
+        });
+
 
         await triggerSchedule(bot);
         expect(githubNock.isDone()).toBe(true);

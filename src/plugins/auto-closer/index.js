@@ -63,7 +63,26 @@ function createAutoCloseUnacceptedSearchQuery({ owner, repo }) {
     return [
         "is:open is:issue",
         `repo:${owner}/${repo}`,
-        "no:assignee no:milestone no:project -label:accepted",
+        "no:assignee no:milestone no:project -label:accepted -label:question",
+        `updated:<${activityCutoffDate.format("YYYY-MM-DD")}`
+    ].join(" ");
+}
+
+/**
+ * Creates a search query to look for issues in a given repo that have not been
+ * labeled "accepted", don't have an assignee/project/milestone, have been
+ * inactive for 30 days, and are labeled "question".
+ * @param {string} options.owner The owner of the repo where issues should be searched
+ * @param {string} options.repo The name of the repo where issues should be searched
+ * @returns {string} A search query to send to the GitHub API
+ */
+function createAutoCloseQuestionSearchQuery({ owner, repo }) {
+    const activityCutoffDate = moment().subtract({ days: ACTIVITY_AUTO_CLOSE_DAYS });
+
+    return [
+        "is:open is:issue",
+        `repo:${owner}/${repo}`,
+        "no:assignee no:milestone no:project -label:accepted label:question",
         `updated:<${activityCutoffDate.format("YYYY-MM-DD")}`
     ].join(" ");
 }
@@ -111,6 +130,22 @@ Thanks for contributing to ESLint and we appreciate your understanding.
 }
 
 /**
+ * Creates the bot comment to leave on auto-closed questions.
+ * @returns {string} comment message
+ * @private
+ */
+function createQuestionAutoCloseMessage() {
+    return `
+It looks like the conversation is stalled here. As this is a question rather
+than an action item, I'm closing the issue. If you still need help, please send
+a message to our [mailing list](https://groups.google.com/group/eslint) or 
+[chatroom](https://gitter.im/eslint/eslint). Thanks!
+[//]: # (auto-close)
+`;
+}
+
+
+/**
  * Closes an issue and adds the auto-close label.
  * @param {probot.Context} context Probot context for the current repository
  * @param {number} issueNum The issue number on the current repository
@@ -150,9 +185,10 @@ async function closeInactiveIssues(context) {
         return;
     }
 
-    const [acceptedIssues, unacceptedIssues] = await Promise.all([
+    const [acceptedIssues, unacceptedIssues, questionIssues] = await Promise.all([
         queryIssues(context, createAutoCloseAcceptedSearchQuery(context.repo())),
-        queryIssues(context, createAutoCloseUnacceptedSearchQuery(context.repo()))
+        queryIssues(context, createAutoCloseUnacceptedSearchQuery(context.repo())),
+        queryIssues(context, createAutoCloseQuestionSearchQuery(context.repo()))
     ]);
 
     await Promise.all(acceptedIssues.map(
@@ -161,6 +197,10 @@ async function closeInactiveIssues(context) {
 
     await Promise.all(unacceptedIssues.map(
         issue => closeIssue(context, issue.number, createUnacceptedAutoCloseMessage())
+    ));
+
+    await Promise.all(questionIssues.map(
+        issue => closeIssue(context, issue.number, createQuestionAutoCloseMessage())
     ));
 }
 
