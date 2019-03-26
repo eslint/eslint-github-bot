@@ -43,7 +43,7 @@ function createAutoCloseAcceptedSearchQuery({ owner, repo }) {
     return [
         "is:open is:issue",
         `repo:${owner}/${repo}`,
-        "no:assignee no:milestone no:project label:accepted",
+        "no:assignee no:milestone no:project label:accepted -label:blocked",
         `created:<${creationCutoffDate.format("YYYY-MM-DD")}`,
         `updated:<${activityCutoffDate.format("YYYY-MM-DD")}`
     ].join(" ");
@@ -63,7 +63,8 @@ function createAutoCloseUnacceptedSearchQuery({ owner, repo }) {
     return [
         "is:open is:issue",
         `repo:${owner}/${repo}`,
-        "no:assignee no:milestone no:project -label:accepted -label:question",
+        "no:assignee no:milestone no:project",
+        "-label:accepted -label:question -label:blocked",
         `updated:<${activityCutoffDate.format("YYYY-MM-DD")}`
     ].join(" ");
 }
@@ -82,7 +83,8 @@ function createAutoCloseQuestionSearchQuery({ owner, repo }) {
     return [
         "is:open is:issue",
         `repo:${owner}/${repo}`,
-        "no:assignee no:milestone no:project -label:accepted label:question",
+        "no:assignee no:milestone no:project",
+        "-label:accepted label:question -label:blocked",
         `updated:<${activityCutoffDate.format("YYYY-MM-DD")}`
     ].join(" ");
 }
