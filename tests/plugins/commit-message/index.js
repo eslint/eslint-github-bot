@@ -200,7 +200,11 @@ describe("commit-message", () => {
                 "(fixes #1, #2)",
 
                 // Unexpected issue number with valid suffix should fail
-                "#1 (fixes #1)"
+                "#1 (fixes #1)",
+
+                // Invalid repo names
+                "(fixes eslint#1)",
+                "(refs eslint/nested/group#1)"
             ].forEach(suffix => {
                 test(`Posts failure status if the commit message references issue improperly: ${suffix}`, async() => {
                     mockSingleCommitWithMessage(
@@ -233,7 +237,9 @@ describe("commit-message", () => {
                 "(refs #1)",
                 "(fixes #1, fixes #2)",
                 "(fixes #1, refs #2, fixes #3)",
-                "(fixes #1234)\n\nMore info here"
+                "(fixes #1234)\n\nMore info here",
+                "(fixes eslint/rfcs#1)",
+                "(refs eslint/rfcs#1)"
             ].forEach(suffix => {
                 test(`Posts success status if the commit message references issue correctly: ${suffix}`, async() => {
                     mockSingleCommitWithMessage(
