@@ -12,7 +12,7 @@ const TAG_REGEX = /^((?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade):)/;
 
 const POTENTIAL_ISSUE_REF_REGEX = /#\d+/;
 
-const VALID_ISSUE_REF = "(?:(?:fixes|refs) #\\d+)";
+const VALID_ISSUE_REF = "(?:(?:fixes|refs) (?:[^/]+[/][^/]+)?#\\d+)";
 const CORRECT_ISSUE_REF_REGEX = new RegExp(` \\(${VALID_ISSUE_REF}(?:, ${VALID_ISSUE_REF})*\\)$`);
 
 const MESSAGE_LENGTH_LIMIT = 72;
