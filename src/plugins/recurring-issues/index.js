@@ -17,8 +17,7 @@ async function getReleaseIssueBody(releaseDate) {
 
 The scheduled release on ${releaseDate.format("dddd, MMMM Do, YYYY")} is assigned to:
 
-* (needs volunteers)
-* (needs volunteers)
+* (needs volunteer)
 
 Please use this issue to document how the release went, any problems during the release, and anything the team might want to know about the release process. This issue should be closed after all patch releases have been completed (or there was no patch release needed).
 
