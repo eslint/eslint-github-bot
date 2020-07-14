@@ -88,7 +88,7 @@ UTC ${moment.utc(meetingDate).format(timeFormatString)}:
 
 # Location
 
-https://gitter.im/eslint/tsc-meetings
+https://eslint.org/chat/tsc-meetings
 
 # Agenda
 
