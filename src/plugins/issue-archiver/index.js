@@ -14,7 +14,7 @@ const ARCHIVED_LABEL = "archived due to age";
  */
 async function hasArchivedLabel(context) {
     const allLabels = await context.github.paginate(
-        context.github.issues.getLabels(context.repo()),
+        context.github.issues.listLabelsForRepo(context.repo()),
         res => res.data
     );
 

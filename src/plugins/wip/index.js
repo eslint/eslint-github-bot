@@ -103,7 +103,7 @@ async function maybeResolveWipStatusOnPR(context, sha) {
  * @private
  */
 async function getAllCommitsForPR({ context, pr }) {
-    const { data: commitList } = await context.github.pullRequests.getCommits(
+    const { data: commitList } = await context.github.pullRequests.listCommits(
         context.repo({ number: pr.number })
     );
 

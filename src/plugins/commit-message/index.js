@@ -71,7 +71,7 @@ async function processCommitMessage(context) {
         return;
     }
 
-    const allCommits = await github.pullRequests.getCommits(context.issue());
+    const allCommits = await github.pullRequests.listCommits(context.issue());
     const messageToCheck = getCommitMessageForPR(allCommits.data, payload.pull_request);
     const isValid = checkCommitMessage(messageToCheck);
     let description;
