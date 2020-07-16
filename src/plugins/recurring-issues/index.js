@@ -47,7 +47,7 @@ async function getTeamMembers({ github, organizationName, teamName }) {
         throw new Error(`No team with name ${teamName} found`);
     }
 
-    const teamMembers = await github.teams.listMembers({ id: desiredTeam.id, per_page: 100 }).then(res => res.data);
+    const teamMembers = await github.teams.listMembers({ team_id: desiredTeam.id, per_page: 100 }).then(res => res.data);
 
     return Promise.all(teamMembers.map(async member => ({
         login: member.login,
