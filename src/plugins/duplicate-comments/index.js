@@ -105,12 +105,12 @@ async function duplicateCheck(context) {
     const { payload, github } = context;
 
     if (payload.issue.state === "open") {
-        const allComments = await github.issues.getComments(context.issue());
+        const allComments = await github.issues.listComments(context.issue());
 
         await Promise.all(processComments(allComments.data)
             .map(
                 comment => github.issues.deleteComment(
-                    context.repo({ id: comment.id })
+                    context.repo({ comment_id: comment.id })
                 )
             ));
     }

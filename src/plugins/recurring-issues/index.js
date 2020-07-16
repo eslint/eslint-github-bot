@@ -40,14 +40,14 @@ async function getTeamMembers({ github, organizationName, teamName }) {
      * close to being a problem right now, so it hasn't been worth figuring out a good
      * way to paginate yet, but that would be a good enhancement in the future.
      */
-    const teams = await github.orgs.getTeams({ org: organizationName, per_page: 100 }).then(res => res.data);
+    const teams = await github.teams.list({ org: organizationName, per_page: 100 }).then(res => res.data);
     const desiredTeam = teams.find(team => team.slug === teamName);
 
     if (!desiredTeam) {
         throw new Error(`No team with name ${teamName} found`);
     }
 
-    const teamMembers = await github.orgs.getTeamMembers({ id: desiredTeam.id, per_page: 100 }).then(res => res.data);
+    const teamMembers = await github.teams.listMembers({ id: desiredTeam.id, per_page: 100 }).then(res => res.data);
 
     return Promise.all(teamMembers.map(async member => ({
         login: member.login,
@@ -118,7 +118,7 @@ Anyone is welcome to attend the meeting as observers. We ask that you refrain fr
  * @returns {Promise<boolean>} A Promise that fulfills with `true` if the issue was closed multiple times
  */
 async function issueWasClosedMultipleTimes(github, { owner, repo, number }) {
-    const issueEvents = await github.issues.getEvents({
+    const issueEvents = await github.issues.listEvents({
         owner,
         repo,
         number,
