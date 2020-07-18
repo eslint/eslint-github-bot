@@ -190,6 +190,81 @@ describe("commit-message", () => {
                 expect(nockScope.isDone()).toBeTruthy();
             });
 
+            // Tests for invalid or malformed tag prefixes
+            [
+                ": ",
+                "Foo: ",
+                "Revert: ",
+                "Neww: ",
+                "nNew: ",
+                " New: ",
+                "new: ",
+                "New:",
+                "New : ",
+                "New ",
+                "New"
+            ].forEach(prefix => {
+                const message = `${prefix}foo`;
+
+                test(`Posts failure status if the commit message has invalid tag prefix: "${prefix}"`, async() => {
+                    mockSingleCommitWithMessage(message);
+
+                    const nockScope = nock("https://api.github.com")
+                        .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "failure")
+                        .reply(201);
+
+                    await emitBotEvent(bot, { action });
+                    expect(nockScope.isDone()).toBeTruthy();
+                });
+
+                test(`Posts failure status if PR with multiple commits has invalid tag prefix in the title: "${prefix}"`, async() => {
+                    mockMultipleCommits();
+
+                    const nockScope = nock("https://api.github.com")
+                        .post("/repos/test/repo-test/statuses/second-sha", req => req.state === "failure")
+                        .reply(201);
+
+                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: message } });
+                    expect(nockScope.isDone()).toBeTruthy();
+                });
+            });
+
+            // Tests for valid tag prefixes
+            [
+                "Breaking: ",
+                "Build: ",
+                "Chore: ",
+                "Docs: ",
+                "Fix: ",
+                "New: ",
+                "Upgrade: ",
+                "Update: "
+            ].forEach(prefix => {
+                const message = `${prefix}foo`;
+
+                test(`Posts success status if the commit message has valid tag prefix: "${prefix}"`, async() => {
+                    mockSingleCommitWithMessage(message);
+
+                    const nockScope = nock("https://api.github.com")
+                        .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
+                        .reply(201);
+
+                    await emitBotEvent(bot, { action });
+                    expect(nockScope.isDone()).toBeTruthy();
+                });
+
+                test(`Posts success status if PR with multiple commits has valid tag prefix in the title: "${prefix}"`, async() => {
+                    mockMultipleCommits();
+
+                    const nockScope = nock("https://api.github.com")
+                        .post("/repos/test/repo-test/statuses/second-sha", req => req.state === "success")
+                        .reply(201);
+
+                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: message } });
+                    expect(nockScope.isDone()).toBeTruthy();
+                });
+            });
+
             // Tests for malformed issue references
             [
                 "#1",

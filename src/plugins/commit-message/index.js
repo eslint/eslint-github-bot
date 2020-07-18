@@ -8,7 +8,7 @@
 
 const { getCommitMessageForPR } = require("../utils");
 
-const TAG_REGEX = /^((?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade):)/;
+const TAG_REGEX = /^(?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade): /;
 
 const POTENTIAL_ISSUE_REF_REGEX = /#\d+/;
 
