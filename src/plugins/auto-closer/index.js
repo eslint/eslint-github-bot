@@ -140,8 +140,9 @@ function createQuestionAutoCloseMessage() {
     return `
 It looks like the conversation is stalled here. As this is a question rather
 than an action item, I'm closing the issue. If you still need help, please send
-a message to our [mailing list](https://groups.google.com/group/eslint) or 
-[chatroom](https://gitter.im/eslint/eslint). Thanks!
+a message to our [mailing list](https://groups.google.com/group/eslint) or
+[chatroom](https://eslint.org/chat). Thanks!
+
 [//]: # (auto-close)
 `;
 }
