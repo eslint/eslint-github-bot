@@ -20,9 +20,11 @@ Hi @${username}, thanks for the issue. It looks like there's not enough informat
 If you're reporting a bug, please be sure to include:
 
 1. The version of ESLint you are using (run \`eslint -v\`)
-2. What you did (the source code and ESLint configuration)
-3. The actual ESLint output complete with numbers
-4. What you expected to happen instead
+2. Is it a bug or enhancement ?
+3. What you did (the source code and ESLint configuration) ?
+4. The actual ESLint output complete with numbers
+5. What you expected to happen instead ?
+6. Are you willing to submit a pull request if this issue is accepted ?
 
 Requesting a new rule? Please see [Proposing a New Rule](http://eslint.org/docs/developer-guide/contributing/new-rules) for instructions.
 
