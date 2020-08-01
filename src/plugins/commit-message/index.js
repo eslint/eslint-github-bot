@@ -10,6 +10,8 @@ const { getCommitMessageForPR } = require("../utils");
 
 const TAG_REGEX = /^(?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade): /;
 
+const TAG_SPACE_REGEX = /^(?:[A-Z][a-z]+: )/;
+
 const POTENTIAL_ISSUE_REF_REGEX = /#\d+/;
 
 const VALID_ISSUE_REF = "(?:(?:fixes|refs) (?:[^/]+[/][^/]+)?#\\d+)";
@@ -22,6 +24,39 @@ const EXCLUDED_REPOSITORY_NAMES = new Set([
     "tsc-meetings"
 ]);
 
+const ERR_CODES_MAPS = {
+    SPACE_AFTER_TAG_COLON: "- There should be only one whitespace after tag followed by colon i.e `<tag>: `.",
+    NON_MATCHED_TAG: `- The commit message tag doesnt match the tags mentioned below
+
+  The \`Tag\` is one of the following:
+
+  - Fix - for a bug fix.
+  - Update - either for a backwards-compatible enhancement or for a rule change that adds reported problems.
+  - New - implemented a new feature.
+  - Breaking - for a backwards-incompatible enhancement or feature.
+  - Docs - changes to documentation only.
+  - Build - changes to build process only.
+  - Upgrade - for a dependency upgrade.
+  - Chore - for refactoring, adding tests, etc. (anything that isn't user-facing).
+
+  Use the [labels of the issue you are working](https://eslint.org/docs/developer-guide/contributing/working-on-issues#issue-labels) on to determine the best tag.
+`,
+    LONG_MESSAGE: `- The lenght of the commit message should be less than or equal to ${MESSAGE_LENGTH_LIMIT}`,
+    WRONG_REF: `- The issue reference is not as per the format.
+
+  If the pull request addresses an issue, then the issue number should be mentioned at the end. If the commit doesn't completely fix the issue, then use \`(refs #1234)\` instead of \`(fixes #1234)\`.
+
+  Here are some good commit message summary examples:
+
+  \`\`\`
+  Build: Update Travis to only test Node 0.10 (refs #734)
+  Fix: Semi rule incorrectly flagging extra semicolon (fixes #840)
+  Upgrade: Esprima to 1.2, switch to using comment attachment (fixes #730)
+  \`\`\`
+`
+};
+
+
 /**
  * Apply different checks on the commit message
  * @param {string} message - commit message
@@ -30,13 +65,30 @@ const EXCLUDED_REPOSITORY_NAMES = new Set([
  */
 function checkCommitMessage(message) {
     const commitTitle = message.split(/\r?\n/)[0];
+    const errCode = [];
 
     if (message.startsWith("Revert \"")) {
-        return true;
+        return [true, []];
     }
 
+    let isValid = true;
+
     // First, check tag and summary length
-    let isValid = TAG_REGEX.test(commitTitle) && commitTitle.length <= MESSAGE_LENGTH_LIMIT;
+    if (!TAG_REGEX.test(commitTitle)) {
+        isValid = false;
+        errCode.push("NON_MATCHED_TAG");
+    }
+
+    // Check if there is any whitespace after the <Tag>:
+    if (!TAG_SPACE_REGEX.test(commitTitle)) {
+        isValid = false;
+        errCode.push("SPACE_AFTER_TAG_COLON");
+    }
+
+    if (!(commitTitle.length <= MESSAGE_LENGTH_LIMIT)) {
+        isValid = false;
+        errCode.push("LONG_MESSAGE");
+    }
 
     // Then, if there appears to be an issue reference, test for correctness
     if (isValid && POTENTIAL_ISSUE_REF_REGEX.test(commitTitle)) {
@@ -45,10 +97,41 @@ function checkCommitMessage(message) {
         // If no suffix, or issue ref occurs before suffix, message is invalid
         if (!issueSuffixMatch || POTENTIAL_ISSUE_REF_REGEX.test(commitTitle.slice(0, issueSuffixMatch.index))) {
             isValid = false;
+            errCode.push("WRONG_REF");
         }
     }
 
-    return isValid;
+    return [isValid, errCode];
+}
+
+/**
+ * Create a comment message body with the error details
+ * @param {Array<string>} errCodes - list of the error codes
+ * @param {boolean} isTitle - whether it is for title or the commit message
+ * @param {string} username - username of the PR author
+ * @returns {string} the message to comment
+ * @private
+ */
+function commentMessage(errCodes = [], isTitle = false, username) {
+    const errorMessages = [];
+
+    errCodes.forEach(err => {
+        if (ERR_CODES_MAPS[err]) {
+            errorMessages.push(ERR_CODES_MAPS[err]);
+        }
+    });
+
+    return `Hi @${username}!, thanks for the Pull Request
+
+The ${isTitle ? "PR title" : "first commit message"} format is not according to our format.
+
+#### Here are the following errors
+
+${errorMessages.join("\n")}
+
+Read more about contributing to Eslint [here](https://eslint.org/docs/developer-guide/contributing/)
+`;
+
 }
 
 /**
@@ -73,7 +156,7 @@ async function processCommitMessage(context) {
 
     const allCommits = await github.pullRequests.listCommits(context.issue());
     const messageToCheck = getCommitMessageForPR(allCommits.data, payload.pull_request);
-    const isValid = checkCommitMessage(messageToCheck);
+    const [isValid, errCodes] = checkCommitMessage(messageToCheck);
     let description;
     let state;
 
@@ -99,6 +182,13 @@ async function processCommitMessage(context) {
             context: "commit-message"
         })
     );
+
+    if (state === "failure") {
+        await github.issues.createComment(context.issue({
+            body: commentMessage(errCodes, allCommits.data.length !== 1, payload.pull_request.user.login)
+        }));
+    }
+
 }
 
 /**
