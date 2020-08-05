@@ -153,7 +153,7 @@ describe("recurring-issues", () => {
 
             expect(issueWasCreated).toBe(true);
             expect(issue.title).toBe("Scheduled release for November 10th, 2017");
-            expect(issue.body.startsWith("The scheduled release on Friday, November 10th, 2017")).toBe(true);
+            expect(issue.body.startsWith("The next scheduled release will occur on Friday, November 10th, 2017")).toBe(true);
         });
     });
 

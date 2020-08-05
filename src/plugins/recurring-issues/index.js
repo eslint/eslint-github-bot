@@ -15,9 +15,40 @@ const moment = require("moment-timezone");
 async function getReleaseIssueBody(releaseDate) {
     return `
 
-The scheduled release on ${releaseDate.format("dddd, MMMM Do, YYYY")} is assigned to:
+The next scheduled release will occur on ${releaseDate.format("dddd, MMMM Do, YYYY")}.
 
-* (needs volunteer)
+## Release Day Checklist
+
+- [ ] Remove the 'tsc agenda' label on this issue
+- [ ] Review open pull requests and merge any that are ready
+- [ ] Start the release on [Jenkings](https://jenkins.eslint.org)
+- [ ] Update the release blog post with a "Highlights" section
+- [ ] Make a release announcement on Twitter
+- [ ] Make a release announcement in the Discord '#announcements' channel
+- [ ] Add a comment to this issue saying the release is out
+- [ ] Add the 'patch release pending' label to this issue
+
+## Monday After Release Day Checklist
+
+- [ ] Check the issues list for any regression issues
+
+## No Regressions Checklist
+
+- [ ] Remove the 'patch release pending' label from this issue
+- [ ] Close this issue
+
+## Patch Release Checklist
+
+- [ ] Resolve the regression by merging any necessary fixes
+- [ ] Start the release on [Jenkings](https://jenkins.eslint.org)
+- [ ] Update the release blog post with a "Highlights" section
+- [ ] Make a release announcement on Twitter
+- [ ] Make a release announcement in the Discord '#announcements' channel
+- [ ] Add a comment to this issue saying the release is out
+- [ ] Remove the 'patch release pending' label from this issue
+- [ ] Close this issue
+
+## Followup
 
 Please use this issue to document how the release went, any problems during the release, and anything the team might want to know about the release process. This issue should be closed after all patch releases have been completed (or there was no patch release needed).
 
