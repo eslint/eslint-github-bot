@@ -47,7 +47,7 @@ Typically Monday for regular releases; two days after patch releases.
 - [ ] Make a release announcement on Twitter
 - [ ] Make a release announcement in the Discord '#announcements' channel
 - [ ] Add a comment to this issue saying the release is out
-- [ ] Remove the 'patch release pending' label from this issue
+- [ ] Wait two days and repeat the Two Days After a Release checklist
 - [ ] Close this issue
 
 ## Followup
