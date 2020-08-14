@@ -28,7 +28,9 @@ The next scheduled release will occur on ${releaseDate.format("dddd, MMMM Do, YY
 - [ ] Add a comment to this issue saying the release is out
 - [ ] Add the 'patch release pending' label to this issue
 
-## Monday After Release Day Checklist
+## Two Days After Release Day Checklist
+
+Typically Monday for regular releases; two days after patch releases.
 
 - [ ] Check the issues list for any regression issues
 
