@@ -33,12 +33,12 @@ const EXCLUDED_REPOSITORY_NAMES = new Set([
  * @returns {boolean} `true` if the commit message is valid
  * @private
  */
-function checkCommitMessage(message) {
+function getCommitMessageErrors(message) {
     const commitTitle = message.split(/\r?\n/)[0];
     const errors = [];
 
     if (message.startsWith("Revert \"")) {
-        return { errors };
+        return errors;
     }
 
     // First, check tag and summary length
@@ -69,7 +69,7 @@ function checkCommitMessage(message) {
         }
     }
 
-    return { errors };
+    return errors;
 }
 
 /**
@@ -94,7 +94,7 @@ async function processCommitMessage(context) {
 
     const allCommits = await github.pullRequests.listCommits(context.issue());
     const messageToCheck = getCommitMessageForPR(allCommits.data, payload.pull_request);
-    const { errors } = checkCommitMessage(messageToCheck);
+    const errors = getCommitMessageErrors(messageToCheck);
     let description;
     let state;
 
