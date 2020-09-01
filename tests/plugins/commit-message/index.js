@@ -60,7 +60,10 @@ function emitBotEvent(bot, payload = {}) {
                 id: 1
             },
             pull_request: {
-                number: 1
+                number: 1,
+                user: {
+                    login: "user-a"
+                }
             },
             sender: {
                 login: "user-a"
@@ -107,8 +110,16 @@ describe("commit-message", () => {
                     .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "failure")
                     .reply(201);
 
+                const nockScope2 = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/issues/1/comments", req => {
+                        expect(req.body).toMatchSnapshot();
+                        return true;
+                    })
+                    .reply(200);
+
                 await emitBotEvent(bot, { action });
                 expect(nockScope.isDone()).toBeTruthy();
+                expect(nockScope2.isDone()).toBeTruthy();
             });
 
             test("Posts success status if commit message is correct", async() => {
@@ -140,8 +151,16 @@ describe("commit-message", () => {
                     .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "failure")
                     .reply(201);
 
+                const nockScope2 = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/issues/1/comments", req => {
+                        expect(req.body).toMatchSnapshot();
+                        return true;
+                    })
+                    .reply(200);
+
                 await emitBotEvent(bot, { action });
                 expect(nockScope.isDone()).toBeTruthy();
+                expect(nockScope2.isDone()).toBeTruthy();
             });
 
             test("Posts success status if the commit message is longer than 72 chars after the newline", async() => {
@@ -175,8 +194,16 @@ describe("commit-message", () => {
                     .post("/repos/test/repo-test/statuses/second-sha", req => req.state === "failure")
                     .reply(201);
 
-                await emitBotEvent(bot, { action, pull_request: { number: 1, title: "foo" } });
+                const nockScope2 = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/issues/1/comments", req => {
+                        expect(req.body).toMatchSnapshot();
+                        return true;
+                    })
+                    .reply(200);
+
+                await emitBotEvent(bot, { action, pull_request: { number: 1, title: "foo", user: { login: "user-a" } } });
                 expect(nockScope.isDone()).toBeTruthy();
+                expect(nockScope2.isDone()).toBeTruthy();
             });
 
             test("Posts failure status if there are multiple commit messages and the title is too long", async() => {
@@ -186,8 +213,16 @@ describe("commit-message", () => {
                     .post("/repos/test/repo-test/statuses/second-sha", req => req.state === "failure")
                     .reply(201);
 
-                await emitBotEvent(bot, { action, pull_request: { number: 1, title: `Update: ${"A".repeat(72)}` } });
+                const nockScope2 = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/issues/1/comments", req => {
+                        expect(req.body).toMatchSnapshot();
+                        return true;
+                    })
+                    .reply(200);
+
+                await emitBotEvent(bot, { action, pull_request: { number: 1, title: `Update: ${"A".repeat(72)}`, user: { login: "user-a" } } });
                 expect(nockScope.isDone()).toBeTruthy();
+                expect(nockScope2.isDone()).toBeTruthy();
             });
 
             // Tests for invalid or malformed tag prefixes
@@ -213,8 +248,16 @@ describe("commit-message", () => {
                         .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "failure")
                         .reply(201);
 
+                    const nockScope2 = nock("https://api.github.com")
+                        .post("/repos/test/repo-test/issues/1/comments", req => {
+                            expect(req.body).toMatchSnapshot();
+                            return true;
+                        })
+                        .reply(200);
+
                     await emitBotEvent(bot, { action });
                     expect(nockScope.isDone()).toBeTruthy();
+                    expect(nockScope2.isDone()).toBeTruthy();
                 });
 
                 test(`Posts failure status if PR with multiple commits has invalid tag prefix in the title: "${prefix}"`, async() => {
@@ -224,8 +267,16 @@ describe("commit-message", () => {
                         .post("/repos/test/repo-test/statuses/second-sha", req => req.state === "failure")
                         .reply(201);
 
-                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: message } });
+                    const nockScope2 = nock("https://api.github.com")
+                        .post("/repos/test/repo-test/issues/1/comments", req => {
+                            expect(req.body).toMatchSnapshot();
+                            return true;
+                        })
+                        .reply(200);
+
+                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: message, user: { login: "user-a" } } });
                     expect(nockScope.isDone()).toBeTruthy();
+                    expect(nockScope2.isDone()).toBeTruthy();
                 });
             });
 
@@ -290,8 +341,16 @@ describe("commit-message", () => {
                         .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "failure")
                         .reply(201);
 
+                    const nockScope2 = nock("https://api.github.com")
+                        .post("/repos/test/repo-test/issues/1/comments", req => {
+                            expect(req.body).toMatchSnapshot();
+                            return true;
+                        })
+                        .reply(200);
+
                     await emitBotEvent(bot, { action });
                     expect(nockScope.isDone()).toBeTruthy();
+                    expect(nockScope2.isDone()).toBeTruthy();
                 });
 
                 test(`Posts failure status if multiple commits and PR title references issue improperly: ${suffix}`, async() => {
@@ -301,8 +360,16 @@ describe("commit-message", () => {
                         .post("/repos/test/repo-test/statuses/second-sha", req => req.state === "failure")
                         .reply(201);
 
-                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: `New: foo ${suffix}` } });
+                    const nockScope2 = nock("https://api.github.com")
+                        .post("/repos/test/repo-test/issues/1/comments", req => {
+                            expect(req.body).toMatchSnapshot();
+                            return true;
+                        })
+                        .reply(200);
+
+                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: `New: foo ${suffix}`, user: { login: "user-a" } } });
                     expect(nockScope.isDone()).toBeTruthy();
+                    expect(nockScope2.isDone()).toBeTruthy();
                 });
             });
 

@@ -7,8 +7,13 @@
 "use strict";
 
 const { getCommitMessageForPR } = require("../utils");
+const commentMessage = require("./createMessage");
 
 const TAG_REGEX = /^(?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade): /;
+
+const TAG_SPACE_REGEX = /^(?:[A-Z][a-z]+: )/;
+
+const UPPERCASE_TAG_REGEX = /^[A-Z]/;
 
 const POTENTIAL_ISSUE_REF_REGEX = /#\d+/;
 
@@ -28,27 +33,43 @@ const EXCLUDED_REPOSITORY_NAMES = new Set([
  * @returns {boolean} `true` if the commit message is valid
  * @private
  */
-function checkCommitMessage(message) {
+function getCommitMessageErrors(message) {
     const commitTitle = message.split(/\r?\n/)[0];
+    const errors = [];
 
     if (message.startsWith("Revert \"")) {
-        return true;
+        return errors;
     }
 
     // First, check tag and summary length
-    let isValid = TAG_REGEX.test(commitTitle) && commitTitle.length <= MESSAGE_LENGTH_LIMIT;
+    if (!TAG_REGEX.test(commitTitle)) {
+        errors.push("NON_MATCHED_TAG");
+    }
+
+    // Check if there is any whitespace after the <Tag>:
+    if (!TAG_SPACE_REGEX.test(commitTitle)) {
+        errors.push("SPACE_AFTER_TAG_COLON");
+    }
+
+    if (!UPPERCASE_TAG_REGEX.test(commitTitle)) {
+        errors.push("NON_UPPERCASE_FIRST_LETTER_TAG");
+    }
+
+    if (!(commitTitle.length <= MESSAGE_LENGTH_LIMIT)) {
+        errors.push("LONG_MESSAGE");
+    }
 
     // Then, if there appears to be an issue reference, test for correctness
-    if (isValid && POTENTIAL_ISSUE_REF_REGEX.test(commitTitle)) {
+    if (errors.length === 0 && POTENTIAL_ISSUE_REF_REGEX.test(commitTitle)) {
         const issueSuffixMatch = CORRECT_ISSUE_REF_REGEX.exec(commitTitle);
 
         // If no suffix, or issue ref occurs before suffix, message is invalid
         if (!issueSuffixMatch || POTENTIAL_ISSUE_REF_REGEX.test(commitTitle.slice(0, issueSuffixMatch.index))) {
-            isValid = false;
+            errors.push("WRONG_REF");
         }
     }
 
-    return isValid;
+    return errors;
 }
 
 /**
@@ -73,11 +94,11 @@ async function processCommitMessage(context) {
 
     const allCommits = await github.pullRequests.listCommits(context.issue());
     const messageToCheck = getCommitMessageForPR(allCommits.data, payload.pull_request);
-    const isValid = checkCommitMessage(messageToCheck);
+    const errors = getCommitMessageErrors(messageToCheck);
     let description;
     let state;
 
-    if (isValid) {
+    if (errors.length === 0) {
         state = "success";
         description = allCommits.data.length === 1
             ? "Commit message follows guidelines"
@@ -99,6 +120,13 @@ async function processCommitMessage(context) {
             context: "commit-message"
         })
     );
+
+    if (state === "failure") {
+        await github.issues.createComment(context.issue({
+            body: commentMessage(errors, allCommits.data.length !== 1, payload.pull_request.user.login)
+        }));
+    }
+
 }
 
 /**
