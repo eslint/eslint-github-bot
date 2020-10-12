@@ -21,7 +21,7 @@ The next scheduled release will occur on ${releaseDate.format("dddd, MMMM Do, YY
 
 - [ ] Remove the 'tsc agenda' label on this issue
 - [ ] Review open pull requests and merge any that are [ready](https://eslint.org/docs/maintainer-guide/pullrequests#when-to-merge-a-pull-request)
-- [ ] Start the release on [Jenkings](https://jenkins.eslint.org)
+- [ ] Start the release on [Jenkins](https://jenkins.eslint.org)
 - [ ] Update the release blog post with a "Highlights" section
 - [ ] Make a release announcement on Twitter
 - [ ] Make a release announcement in the Discord '#announcements' channel
