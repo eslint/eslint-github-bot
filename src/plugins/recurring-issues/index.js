@@ -42,7 +42,7 @@ Typically Monday for regular releases; two days after patch releases.
 ## Patch Release Checklist
 
 - [ ] Resolve the regression by merging any necessary fixes
-- [ ] Start the release on [Jenkings](https://jenkins.eslint.org)
+- [ ] Start the release on [Jenkins](https://jenkins.eslint.org)
 - [ ] Update the release blog post with a "Highlights" section
 - [ ] Make a release announcement on Twitter
 - [ ] Make a release announcement in the Discord '#announcements' channel
