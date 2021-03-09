@@ -42,3 +42,7 @@ To add a plugin:
 1. Create the plugin as a new file in `src/plugins`.
 1. Add the plugin to the list in `src/plugins/index.js`.
 1. Add the plugin to the list in `src/app.js` to enable it by default.
+
+## Deployment
+
+The bot is deployed to a [Dokku](https://dokku.com) instance named github-bot.eslint.org and is installed as a GitHub Application at the organization level.
