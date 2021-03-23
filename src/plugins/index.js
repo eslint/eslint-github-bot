@@ -13,6 +13,7 @@
  */
 
 module.exports = {
+    addToTriageProject: require("./add-to-triage-project"),
     autoCloser: require("./auto-closer"),
     checkUnitTest: require("./check-unit-test"),
     commitMessage: require("./commit-message"),
