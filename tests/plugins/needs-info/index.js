@@ -36,7 +36,7 @@ describe("needs-info", () => {
             await bot.receive({
                 name: "issues",
                 payload: {
-                    action: "labeled",
+                    action: "closed",
                     installation: {
                         id: 1
                     },
@@ -70,7 +70,7 @@ describe("needs-info", () => {
             await bot.receive({
                 name: "issues",
                 payload: {
-                    action: "labeled",
+                    action: "closed",
                     installation: {
                         id: 1
                     },

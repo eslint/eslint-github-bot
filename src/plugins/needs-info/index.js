@@ -9,26 +9,14 @@ const needInfoLabel = "needs info";
 
 /**
  * Create the comment for the need info
- * @param {string} username - user to tag on the comment
  * @returns {string} comment message
  * @private
  */
-function commentMessage(username) {
+function commentMessage() {
     return `
-Hi @${username}, thanks for the issue. It looks like there's not enough information for us to know how to help you.
+It looks like there wasn't enough information for us to know how to help you, so we're closing the issue.
 
-If you're reporting a bug, please be sure to include:
-
-1. The version of ESLint you are using (run \`eslint -v\`)
-2. What you did (the source code and ESLint configuration)
-3. The actual ESLint output complete with numbers
-4. What you expected to happen instead
-
-Requesting a new rule? Please see [Proposing a New Rule](http://eslint.org/docs/developer-guide/contributing/new-rules) for instructions.
-
-Requesting a rule change? Please see [Proposing a Rule Change](http://eslint.org/docs/developer-guide/contributing/rule-changes) for instructions.
-
-If it's something else, please just provide as much additional information as possible. Thanks!
+Thanks for your understanding.
 
 [//]: # (needs-info)
 `;
@@ -65,5 +53,5 @@ async function check(context) {
  */
 
 module.exports = robot => {
-    robot.on("issues.labeled", check);
+    robot.on("issues.closed", check);
 };
