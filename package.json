@@ -7,13 +7,19 @@
     "lint": "eslint src tests .eslintrc.js",
     "lint:fix": "npm run lint -- --fix",
     "start": "node ./src/app.js",
-    "test": "npm run lint && jest --colors --verbose",
+    "test": "jest --colors --verbose",
     "test:cover": "jest --colors --coverage"
   },
   "author": "Gyandeep Singh <gyandeeps@gmail.com>",
   "license": "MIT",
   "repository": "eslint/eslint-github-bot",
   "bugs": "https://github.com/eslint/eslint-github-bot/issues/",
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix"
+  },
   "dependencies": {
     "moment": "^2.21.0",
     "moment-timezone": "^0.5.23",
@@ -25,7 +31,9 @@
     "eslint-config-eslint": "^5.0.1",
     "eslint-plugin-node": "^8.0.0",
     "jest": "^26.1.0",
-    "nock": "^10.0.2"
+    "lint-staged": "^11.1.2",
+    "nock": "^10.0.2",
+    "yorkie": "^2.0.0"
   },
   "keywords": [
     "bot",
@@ -46,6 +54,6 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": ">=7.7"
+    "node": ">=12"
   }
 }
