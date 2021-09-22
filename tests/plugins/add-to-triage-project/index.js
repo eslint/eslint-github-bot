@@ -63,7 +63,15 @@ describe("add-to-triage-project", () => {
 
         test("doesn't add the issue to the project when 'triage:no' label is present", async() => {
 
-            // no nock because we don't want any API calls
+            const addIssueToTriageProject = nock("https://api.github.com")
+                .post(`/projects/columns/${NEEDS_TRIAGE_COLUMN_ID}/cards`, body => {
+                    expect(body).toEqual({
+                        content_id: 1234,
+                        content_type: "Issue"
+                    });
+                    return true;
+                })
+                .reply(200);
 
             await bot.receive({
                 name: "issues",
@@ -89,6 +97,8 @@ describe("add-to-triage-project", () => {
                     }
                 }
             });
+
+            expect(addIssueToTriageProject.isDone()).toBeFalsy();
 
         });
     });
