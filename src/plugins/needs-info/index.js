@@ -41,7 +41,7 @@ function hasNeedInfoLabel(label) {
 async function check(context) {
     const { payload, github } = context;
 
-    if (hasNeedInfoLabel(payload.label)) {
+    if (payload.issue.labels.some(hasNeedInfoLabel)) {
         await github.issues.createComment(context.issue({
             body: commentMessage(payload.issue.user.login)
         }));
