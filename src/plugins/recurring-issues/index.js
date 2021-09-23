@@ -217,7 +217,7 @@ function createIssueHandler({ labelTrigger, newLabels, shouldCreateNewIssue, get
 const RELEASE_ISSUE_TITLE_FORMAT = "[Scheduled release for ]MMMM Do, YYYY";
 const releaseIssueHandler = createIssueHandler({
     labelTrigger: "release",
-    newLabels: ["release", "tsc agenda"],
+    newLabels: ["release", "tsc agenda", "triage:no"],
     async shouldCreateNewIssue({ title }) {
         return moment.utc(title, RELEASE_ISSUE_TITLE_FORMAT, true).isValid();
     },
@@ -235,7 +235,7 @@ const releaseIssueHandler = createIssueHandler({
 const TSC_MEETING_TITLE_FORMAT = "[TSC meeting ]DD-MMMM-YYYY";
 const tscMeetingIssueHandler = createIssueHandler({
     labelTrigger: "tsc meeting",
-    newLabels: ["tsc meeting"],
+    newLabels: ["tsc meeting", "triage:no"],
     async shouldCreateNewIssue({ title }) {
         return moment.utc(title, TSC_MEETING_TITLE_FORMAT, true).isValid();
     },

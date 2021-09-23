@@ -17,6 +17,11 @@ async function triage(context) {
 
     const issue = context.payload.issue;
 
+    // issues with "triage:no" label are exempt
+    if (issue.labels.some(label => label.name === "triage:no")) {
+        return;
+    }
+
     await context.github.projects.createCard({
         column_id: NEEDS_TRIAGE_COLUMN_ID,
         content_id: issue.id,
