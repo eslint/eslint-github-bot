@@ -36,7 +36,7 @@ describe("needs-info", () => {
             await bot.receive({
                 name: "issues",
                 payload: {
-                    action: "labeled",
+                    action: "closed",
                     installation: {
                         id: 1
                     },
@@ -50,9 +50,6 @@ describe("needs-info", () => {
                             login: "user-a"
                         },
                         number: 1
-                    },
-                    label: {
-                        name: "needs info"
                     },
                     repository: {
                         name: "repo-test",
@@ -70,7 +67,7 @@ describe("needs-info", () => {
             await bot.receive({
                 name: "issues",
                 payload: {
-                    action: "labeled",
+                    action: "closed",
                     installation: {
                         id: 1
                     },
@@ -84,9 +81,6 @@ describe("needs-info", () => {
                             login: "user-a"
                         },
                         number: 1
-                    },
-                    label: {
-                        name: "triage"
                     },
                     repository: {
                         name: "repo-test",
