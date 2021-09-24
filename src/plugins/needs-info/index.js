@@ -43,7 +43,7 @@ async function check(context) {
 
     if (payload.issue.labels.some(hasNeedInfoLabel)) {
         await github.issues.createComment(context.issue({
-            body: commentMessage(payload.issue.user.login)
+            body: commentMessage()
         }));
     }
 }
