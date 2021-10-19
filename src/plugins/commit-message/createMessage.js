@@ -8,36 +8,10 @@
 const MESSAGE_LENGTH_LIMIT = 72;
 
 const ERROR_MESSAGES = {
-    SPACE_AFTER_TAG_COLON: "- There should be a space following the initial tag and colon, for example 'New: Message'.",
-    NON_UPPERCASE_FIRST_LETTER_TAG: "- The first letter of the tag should be in uppercase",
-    NON_MATCHED_TAG: `- The commit message tag must be one of the following:
-
-  The \`Tag\` is one of the following:
-
-  - Fix - for a bug fix.
-  - Update - either for a backwards-compatible enhancement or for a rule change that adds reported problems.
-  - New - implements a new feature.
-  - Breaking - for a backwards-incompatible enhancement or feature.
-  - Docs - changes to documentation only.
-  - Build - changes to build process only.
-  - Upgrade - for a dependency upgrade.
-  - Chore - for anything that isn't user-facing (for example, refactoring, adding tests, etc.).
-
-  You can use the [labels of the issue you are working on](https://eslint.org/docs/developer-guide/contributing/working-on-issues#issue-labels) to determine the best tag.
-`,
-    LONG_MESSAGE: `- The length of the commit message must be less than or equal to ${MESSAGE_LENGTH_LIMIT}`,
-    WRONG_REF: `- The issue reference must be formatted as follows:
-
-  If the pull request addresses an issue, then the issue number should be mentioned at the end. If the commit doesn't completely fix the issue, then use \`(refs #1234)\` instead of \`(fixes #1234)\`.
-
-  Here are some good commit message summary examples:
-
-  \`\`\`
-  Build: Update Travis to only test Node 0.10 (refs #734)
-  Fix: Semi rule incorrectly flagging extra semicolon (fixes #840)
-  Upgrade: Esprima to 1.2, switch to using comment attachment (fixes #730)
-  \`\`\`
-`
+    SPACE_AFTER_TAG_COLON: "- There should be a space following the initial tag and colon, for example 'feat: Message'.",
+    NON_LOWERCASE_FIRST_LETTER_TAG: "- The first letter of the tag should be in lowercase",
+    NON_MATCHED_TAG: "- The commit message tag wasn't recognized. Did you mean \"docs\", \"fix\", or \"feat\"?",
+    LONG_MESSAGE: `- The length of the commit message must be less than or equal to ${MESSAGE_LENGTH_LIMIT}`
 };
 
 /**
