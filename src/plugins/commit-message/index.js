@@ -9,16 +9,11 @@
 const { getCommitMessageForPR } = require("../utils");
 const commentMessage = require("./createMessage");
 
-const TAG_REGEX = /^(?:Breaking|Build|Chore|Docs|Fix|New|Update|Upgrade): /;
+const TAG_REGEX = /^(?:feat|build|chore|docs|fix|refactor|test|ci|perf)!?: /;
 
-const TAG_SPACE_REGEX = /^(?:[A-Z][a-z]+: )/;
+const TAG_SPACE_REGEX = /^(?:[a-z]+!?: )/;
 
-const UPPERCASE_TAG_REGEX = /^[A-Z]/;
-
-const POTENTIAL_ISSUE_REF_REGEX = /#\d+/;
-
-const VALID_ISSUE_REF = "(?:(?:fixes|refs) (?:[^/]+[/][^/]+)?#\\d+)";
-const CORRECT_ISSUE_REF_REGEX = new RegExp(` \\(${VALID_ISSUE_REF}(?:, ${VALID_ISSUE_REF})*\\)$`);
+const LOWERCASE_TAG_REGEX = /^[a-z]/;
 
 const MESSAGE_LENGTH_LIMIT = 72;
 
@@ -51,22 +46,12 @@ function getCommitMessageErrors(message) {
         errors.push("SPACE_AFTER_TAG_COLON");
     }
 
-    if (!UPPERCASE_TAG_REGEX.test(commitTitle)) {
-        errors.push("NON_UPPERCASE_FIRST_LETTER_TAG");
+    if (!LOWERCASE_TAG_REGEX.test(commitTitle)) {
+        errors.push("NON_LOWERCASE_FIRST_LETTER_TAG");
     }
 
     if (!(commitTitle.length <= MESSAGE_LENGTH_LIMIT)) {
         errors.push("LONG_MESSAGE");
-    }
-
-    // Then, if there appears to be an issue reference, test for correctness
-    if (errors.length === 0 && POTENTIAL_ISSUE_REF_REGEX.test(commitTitle)) {
-        const issueSuffixMatch = CORRECT_ISSUE_REF_REGEX.exec(commitTitle);
-
-        // If no suffix, or issue ref occurs before suffix, message is invalid
-        if (!issueSuffixMatch || POTENTIAL_ISSUE_REF_REGEX.test(commitTitle.slice(0, issueSuffixMatch.index))) {
-            errors.push("WRONG_REF");
-        }
     }
 
     return errors;
