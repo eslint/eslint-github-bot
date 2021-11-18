@@ -1,6 +1,7 @@
 "use strict";
 
 const { commitMessage } = require("../../../src/plugins/index");
+const { TAG_LABELS } = require("../../../src/plugins/commit-message/util");
 const nock = require("nock");
 const probot = require("probot");
 const GitHubApi = require("@octokit/rest");
@@ -21,6 +22,20 @@ function mockSingleCommitWithMessage(message) {
                 sha: "first-sha"
             }
         ]);
+}
+
+/**
+ * Mocks a labels request.
+ * @param {Array<string>} labels The labels to check for on the PR.
+ * @returns {Nock} The mock for the labels request.
+ */
+function mockLabels(labels) {
+    return nock("https://api.github.com")
+        .post("/repos/test/repo-test/issues/1/labels", body => {
+            expect(body).toEqual({ labels });
+            return true;
+        })
+        .reply(200);
 }
 
 /**
@@ -124,6 +139,7 @@ describe("commit-message", () => {
 
             test("Posts success status if commit message is correct", async() => {
                 mockSingleCommitWithMessage("feat: standard commit message");
+                const labelsScope = mockLabels(["feature"]);
 
                 const nockScope = nock("https://api.github.com")
                     .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
@@ -131,6 +147,7 @@ describe("commit-message", () => {
 
                 await emitBotEvent(bot, { action });
                 expect(nockScope.isDone()).toBeTruthy();
+                expect(labelsScope.isDone()).toBeTruthy();
             });
 
             test("Posts success status if commit message beginning with `Revert`", async() => {
@@ -144,9 +161,10 @@ describe("commit-message", () => {
                 expect(nockScope.isDone()).toBeTruthy();
             });
 
-            test("Posts failure status if the commit message is longer than 72 chars", async() => {
-                mockSingleCommitWithMessage("feat: standard commit message very very very long message and its beond 72");
+            test("Posts failure status if the commit message is longer than 72 chars and don't set labels", async() => {
+                mockSingleCommitWithMessage("feat!: standard commit message very very very long message and its beond 72");
 
+                const labelsScope = mockLabels(["feature", "breaking"]);
                 const nockScope = nock("https://api.github.com")
                     .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "failure")
                     .reply(201);
@@ -161,12 +179,15 @@ describe("commit-message", () => {
                 await emitBotEvent(bot, { action });
                 expect(nockScope.isDone()).toBeTruthy();
                 expect(nockScope2.isDone()).toBeTruthy();
+                expect(labelsScope.isDone()).toBeFalsy();
             });
 
             test("Posts success status if the commit message is longer than 72 chars after the newline", async() => {
                 mockSingleCommitWithMessage(
-                    `feat: foo\n\n${"A".repeat(72)}`
+                    `fix: foo\n\n${"A".repeat(72)}`
                 );
+
+                const labelsScope = mockLabels(["bug"]);
 
                 const nockScope = nock("https://api.github.com")
                     .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
@@ -174,6 +195,7 @@ describe("commit-message", () => {
 
                 await emitBotEvent(bot, { action });
                 expect(nockScope.isDone()).toBeTruthy();
+                expect(labelsScope.isDone()).toBeTruthy();
             });
 
             test("Posts success status if there are multiple commit messages and the title is valid", async() => {
@@ -183,8 +205,15 @@ describe("commit-message", () => {
                     .post("/repos/test/repo-test/statuses/second-sha", req => req.state === "success")
                     .reply(201);
 
+                const labelsScope = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/issues/1/labels", {
+                        labels: ["feature"]
+                    })
+                    .reply(201);
+
                 await emitBotEvent(bot, { action, pull_request: { number: 1, title: "feat: foo" } });
                 expect(nockScope.isDone()).toBeTruthy();
+                expect(labelsScope.isDone()).toBeTruthy();
             });
 
             test("Posts failure status if there are multiple commit messages and the title is invalid", async() => {
@@ -281,29 +310,20 @@ describe("commit-message", () => {
             });
 
             // Tests for valid tag prefixes
-            [
-                "feat!: ",
-                "build: ",
-                "chore: ",
-                "docs: ",
-                "fix: ",
-                "fix!: ",
-                "feat: ",
-                "ci: ",
-                "refactor: ",
-                "test: "
-            ].forEach(prefix => {
-                const message = `${prefix}foo`;
+            TAG_LABELS.forEach((labels, prefix) => {
+                const message = `${prefix} foo`;
 
                 test(`Posts success status if the commit message has valid tag prefix: "${prefix}"`, async() => {
                     mockSingleCommitWithMessage(message);
 
+                    const labelsScope = mockLabels(labels);
                     const nockScope = nock("https://api.github.com")
                         .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
                         .reply(201);
 
                     await emitBotEvent(bot, { action });
                     expect(nockScope.isDone()).toBeTruthy();
+                    expect(labelsScope.isDone()).toBeTruthy();
                 });
 
                 test(`Posts success status if PR with multiple commits has valid tag prefix in the title: "${prefix}"`, async() => {
@@ -313,8 +333,11 @@ describe("commit-message", () => {
                         .post("/repos/test/repo-test/statuses/second-sha", req => req.state === "success")
                         .reply(201);
 
+                    const labelsScope = mockLabels(labels);
+
                     await emitBotEvent(bot, { action, pull_request: { number: 1, title: message } });
                     expect(nockScope.isDone()).toBeTruthy();
+                    expect(labelsScope.isDone()).toBeTruthy();
                 });
             });
 

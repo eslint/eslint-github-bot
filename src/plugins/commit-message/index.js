@@ -6,8 +6,17 @@
 
 "use strict";
 
+//-----------------------------------------------------------------------------
+// Requirements
+//-----------------------------------------------------------------------------
+
 const { getCommitMessageForPR } = require("../utils");
 const commentMessage = require("./createMessage");
+const { TAG_LABELS } = require("./util");
+
+//-----------------------------------------------------------------------------
+// Helpers
+//-----------------------------------------------------------------------------
 
 const TAG_REGEX = /^(?:feat|build|chore|docs|fix|refactor|test|ci|perf)!?: /;
 
@@ -21,6 +30,10 @@ const EXCLUDED_REPOSITORY_NAMES = new Set([
     "eslint.github.io",
     "tsc-meetings"
 ]);
+
+//-----------------------------------------------------------------------------
+// Functions
+//-----------------------------------------------------------------------------
 
 /**
  * Apply different checks on the commit message
@@ -58,6 +71,19 @@ function getCommitMessageErrors(message) {
 }
 
 /**
+ * Apply different checks on the commit message
+ * @param {string} message - commit message
+ * @returns {Array<string>} The labels to add to the PR.
+ * @private
+ */
+function getCommitMessageLabels(message) {
+    const commitTitle = message.split(/\r?\n/)[0];
+    const [tag] = commitTitle.match(TAG_REGEX) || [""];
+
+    return TAG_LABELS.get(tag.trim());
+}
+
+/**
  * If the first commit message is not legal then it adds a comment
  * @param {Object} context - context given by the probot
  * @returns {Promise.<void>} promise
@@ -88,6 +114,13 @@ async function processCommitMessage(context) {
         description = allCommits.data.length === 1
             ? "Commit message follows guidelines"
             : "PR title follows commit message guidelines";
+
+        const labels = getCommitMessageLabels(messageToCheck);
+
+        if (labels) {
+            await context.github.issues.addLabels(context.issue({ labels }));
+        }
+
     } else {
         state = "failure";
         description = allCommits.data.length === 1

@@ -33,9 +33,11 @@ module.exports = function commentMessage(errors = [], isTitle = false, username)
 
     return `Hi @${username}!, thanks for the Pull Request
 
-The ${isTitle ? "pull request title" : "first commit message"} isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **${isTitle ? "pull request title" : "first commit message"}** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
 
 ${errorMessages.join("\n")}
+
+**To Fix:** You can fix this problem by ${isTitle ? "clicking 'Edit' next to the pull request title at the top of this page." : "By running `git commit --amend`, editing your commit message, and then running `git push -f` to update this pull request."}
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 `;
