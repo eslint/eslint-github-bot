@@ -205,11 +205,7 @@ describe("commit-message", () => {
                     .post("/repos/test/repo-test/statuses/second-sha", req => req.state === "success")
                     .reply(201);
 
-                const labelsScope = nock("https://api.github.com")
-                    .post("/repos/test/repo-test/issues/1/labels", {
-                        labels: ["feature"]
-                    })
-                    .reply(201);
+                const labelsScope = mockLabels(["feature"]);
 
                 await emitBotEvent(bot, { action, pull_request: { number: 1, title: "feat: foo" } });
                 expect(nockScope.isDone()).toBeTruthy();
