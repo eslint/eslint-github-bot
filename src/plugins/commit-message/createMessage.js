@@ -37,7 +37,7 @@ The **${isTitle ? "pull request title" : "first commit message"}** isn't properl
 
 ${errorMessages.join("\n")}
 
-**To Fix:** You can fix this problem by ${isTitle ? "clicking 'Edit' next to the pull request title at the top of this page." : "By running `git commit --amend`, editing your commit message, and then running `git push -f` to update this pull request."}
+**To Fix:** You can fix this problem by ${isTitle ? "clicking 'Edit' next to the pull request title at the top of this page." : "running `git commit --amend`, editing your commit message, and then running `git push -f` to update this pull request."}
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 `;
