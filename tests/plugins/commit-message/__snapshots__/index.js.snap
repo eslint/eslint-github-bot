@@ -169,7 +169,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -184,7 +184,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -199,7 +199,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -214,7 +214,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -229,7 +229,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -244,7 +244,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -259,7 +259,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -274,7 +274,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -289,7 +289,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -303,7 +303,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -317,7 +317,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -330,7 +330,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -343,7 +343,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 
 - The length of the commit message must be less than or equal to 72
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -545,7 +545,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -560,7 +560,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -575,7 +575,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -590,7 +590,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -605,7 +605,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -620,7 +620,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -635,7 +635,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -650,7 +650,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -665,7 +665,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -679,7 +679,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -693,7 +693,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -706,7 +706,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -719,7 +719,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 
 - The length of the commit message must be less than or equal to 72
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -921,7 +921,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -936,7 +936,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -951,7 +951,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -966,7 +966,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -981,7 +981,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -996,7 +996,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1011,7 +1011,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1026,7 +1026,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1041,7 +1041,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1055,7 +1055,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1069,7 +1069,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1082,7 +1082,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1095,7 +1095,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 
 - The length of the commit message must be less than or equal to 72
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1297,7 +1297,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1312,7 +1312,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1327,7 +1327,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1342,7 +1342,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1357,7 +1357,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1372,7 +1372,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1387,7 +1387,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1402,7 +1402,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1417,7 +1417,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1431,7 +1431,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1445,7 +1445,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1458,7 +1458,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1471,7 +1471,7 @@ The **first commit message** isn't properly formatted. We ask that you update th
 
 - The length of the commit message must be less than or equal to 72
 
-**To Fix:** You can fix this problem by By running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
