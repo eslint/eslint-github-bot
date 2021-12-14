@@ -133,7 +133,7 @@ async function processCommitMessage(context) {
         context.repo({
             sha: allCommits.data[allCommits.data.length - 1].sha,
             state,
-            target_url: "https://github.com/eslint/eslint-github-bot/blob/master/docs/commit-message-check.md",
+            target_url: "https://github.com/eslint/eslint-github-bot/blob/main/docs/commit-message-check.md",
             description,
             context: "commit-message"
         })
