@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/eslint/eslint-github-bot.svg?branch=master)](https://travis-ci.org/eslint/eslint-github-bot)
+[![Build Status](https://github.com/eslint/eslint-github-bot/workflows/CI/badge.svg)](https://github.com/eslint/eslint-github-bot/actions)
 
 ESLint GitHub bot
 ==========================
