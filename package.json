@@ -12,8 +12,10 @@
   },
   "author": "Gyandeep Singh <gyandeeps@gmail.com>",
   "license": "MIT",
+  "homepage": "https://github.com/eslint/eslint-github-bot",
   "repository": "eslint/eslint-github-bot",
   "bugs": "https://github.com/eslint/eslint-github-bot/issues/",
+  "funding": "https://opencollective.com/eslint",
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
