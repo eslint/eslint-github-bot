@@ -8,7 +8,7 @@
 
 const path = require("path");
 
-const TAG_REGEX = /^(?:Build|Chore|Docs|Upgrade):/;
+const TAG_REGEX = /^(?:Build|Chore|Docs|Upgrade):/u;
 
 /**
  * Check if the commit message follow the guidelines

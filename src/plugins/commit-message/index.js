@@ -18,11 +18,11 @@ const { TAG_LABELS } = require("./util");
 // Helpers
 //-----------------------------------------------------------------------------
 
-const TAG_REGEX = /^(?:feat|build|chore|docs|fix|refactor|test|ci|perf)!?: /;
+const TAG_REGEX = /^(?:feat|build|chore|docs|fix|refactor|test|ci|perf)!?: /u;
 
-const TAG_SPACE_REGEX = /^(?:[a-z]+!?: )/;
+const TAG_SPACE_REGEX = /^(?:[a-z]+!?: )/u;
 
-const LOWERCASE_TAG_REGEX = /^[a-z]/;
+const LOWERCASE_TAG_REGEX = /^[a-z]/u;
 
 const MESSAGE_LENGTH_LIMIT = 72;
 
@@ -42,7 +42,7 @@ const EXCLUDED_REPOSITORY_NAMES = new Set([
  * @private
  */
 function getCommitMessageErrors(message) {
-    const commitTitle = message.split(/\r?\n/)[0];
+    const commitTitle = message.split(/\r?\n/u)[0];
     const errors = [];
 
     if (message.startsWith("Revert \"")) {
@@ -77,7 +77,7 @@ function getCommitMessageErrors(message) {
  * @private
  */
 function getCommitMessageLabels(message) {
-    const commitTitle = message.split(/\r?\n/)[0];
+    const commitTitle = message.split(/\r?\n/u)[0];
     const [tag] = commitTitle.match(TAG_REGEX) || [""];
 
     return TAG_LABELS.get(tag.trim());

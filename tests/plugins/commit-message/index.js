@@ -361,7 +361,7 @@ describe("commit-message", () => {
                         .reply(201);
 
                     mockSingleCommitWithMessage(message);
-                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: message.replace(/\n[\s\S]*/, "") } });
+                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: message.replace(/\n[\s\S]*/u, "") } });
                     expect(nockScope.isDone()).toBe(true);
                 });
             });

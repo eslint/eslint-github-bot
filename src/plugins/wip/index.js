@@ -5,7 +5,7 @@
 
 "use strict";
 
-const WIP_IN_TITLE_REGEX = /^WIP:|\(WIP\)/i;
+const WIP_IN_TITLE_REGEX = /^WIP:|\(WIP\)/iu;
 const DO_NOT_MERGE_LABEL = "do not merge";
 
 /**

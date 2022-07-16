@@ -7,7 +7,7 @@
 
 const { getCommitMessageForPR } = require("../utils");
 
-const PATCH_COMMIT_MESSAGE_REGEX = /^(?:Build|Chore|Docs|Fix|Upgrade):/;
+const PATCH_COMMIT_MESSAGE_REGEX = /^(?:Build|Chore|Docs|Fix|Upgrade):/u;
 const POST_RELEASE_LABEL = "patch release pending";
 const RELEASE_LABEL = "release";
 

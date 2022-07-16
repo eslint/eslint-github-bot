@@ -54,7 +54,7 @@ function checkNockClosedRequest(issueNum) {
  *      must match.
  * @returns {Nock} The Nock instance.
  */
-function checkNockCommentRequest(issueNum, textMatch = /days/) {
+function checkNockCommentRequest(issueNum, textMatch = /days/u) {
     return githubNock
         .post(`/repos/test/repo-test/issues/${issueNum}/comments`, {
             body: textMatch
@@ -206,7 +206,7 @@ describe("auto-closer", () => {
         issueNumbers.map(issueNum => checkNockClosedRequest(issueNum));
         issueNumbers.map(issueNum => {
             if (issueNum === 5 || issueNum === 6) {
-                return checkNockCommentRequest(issueNum, /question/);
+                return checkNockCommentRequest(issueNum, /question/u);
             }
 
             return checkNockCommentRequest(issueNum);
