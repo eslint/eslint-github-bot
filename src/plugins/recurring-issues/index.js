@@ -24,6 +24,7 @@ The next scheduled release will occur on ${releaseDate.format("dddd, MMMM Do, YY
 - [ ] Start the release on [Jenkins](https://jenkins.eslint.org)
 - [ ] Update the release blog post:
     - [ ] Add a "Highlights" section for any noteworthy changes.
+    - [ ] In the \`authors\` frontmatter, replace \`eslintbot\` with your GitHub username.
     - [ ] Remove the \`draft: true\` line in frontmatter.
 - [ ] Make a release announcement on Twitter
 - [ ] Make a release announcement in the Discord '#announcements' channel
@@ -47,6 +48,7 @@ Typically Monday for regular releases; two days after patch releases.
 - [ ] Start the release on [Jenkins](https://jenkins.eslint.org)
 - [ ] Update the release blog post:
     - [ ] Add a "Highlights" section for any noteworthy changes.
+    - [ ] In the \`authors\` frontmatter, replace \`eslintbot\` with your GitHub username.
     - [ ] Remove the \`draft: true\` line in frontmatter.
 - [ ] Make a release announcement on Twitter
 - [ ] Make a release announcement in the Discord '#announcements' channel
