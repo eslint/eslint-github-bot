@@ -8,8 +8,9 @@ const DO_NOT_MERGE_LABEL = "do not merge";
 
 /**
  * Mocks a response for the "get all commits for PR" API.
- * @param {number} number The pull request number.
- * @param {Array<Object>} commits The pull request commits to be returned.
+ * @param {Object} options Options for the request.
+ * @param {number} options.number The pull request number.
+ * @param {Array<Object>} options.commits The pull request commits to be returned.
  * @returns {Object} The Nock object for this request.
  * @private
  */
@@ -21,8 +22,9 @@ function mockGetAllCommitsForPR({ number, commits }) {
 
 /**
  * Mocks a response for the "get combined status checks for commit" API.
- * @param {string} sha The SHA for the commit for which to retrieve statuses.
- * @param {Array<Object>} statuses The status response that should be used.
+ * @param {Object} options Options for the request.
+ * @param {string} options.sha The SHA for the commit for which to retrieve statuses.
+ * @param {Array<Object>} options.statuses The status response that should be used.
  * @returns {Object} The Nock object for this request.
  * @private
  */

@@ -11,9 +11,10 @@ describe("recurring-issues", () => {
 
     /**
      * Runs the bot with the given arguments, setting up fixtures and running the webhook listener
-     * @param {string} issueTitle The title of the existing issue which was closed
-     * @param {string[]} labelNames The labels of the issue which was closed
-     * @param {string[]} eventTypes The events that have occurred for the issue
+     * @param {Object} options Configure API responses the bot will see
+     * @param {string} options.issueTitle The title of the existing issue which was closed
+     * @param {string[]} options.labelNames The labels of the issue which was closed
+     * @param {string[]} options.eventTypes The events that have occurred for the issue
      * @returns {Promise<void>} A Promise that fulfills after the webhook action is complete
      */
     function runBot({ issueTitle, labelNames, eventTypes }) {

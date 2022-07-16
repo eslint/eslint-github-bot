@@ -25,8 +25,9 @@ async function hasArchivedLabel(context) {
 /**
  * Creates a search query to look for issuesin a given repo which have been closed for at least
  * `ARCHIVAL_AGE_DAYS` days since the current date, and have not yet been archived.
- * @param {string} options.owner The owner of the repo where issues should be searched
- * @param {string} options.repo The name of the repo where issues should be searched
+ * @param {Object} options Repository where issues should be searched
+ * @param {string} options.owner The owner of the repository
+ * @param {string} options.repo The name of the repository
  * @returns {string} A search query to send to the GitHub API
  */
 function createSearchQuery({ owner, repo }) {

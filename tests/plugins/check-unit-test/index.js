@@ -26,8 +26,9 @@ function mockPrWithFiles(url) {
 /**
  * Emits a bot event for this plugin
  * @param {probot.Robot} bot A probot instance
- * @param {string} action The name of the webhook action
- * @param {string} title The title of the PR
+ * @param {Object} options Configure the event
+ * @param {string} options.action The name of the webhook action
+ * @param {string} options.title The title of the PR
  * @returns {Promise<void>} A Promise that fulfills when the webhook completes
  */
 function emitBotEvent(bot, { action, title }) {

@@ -50,16 +50,12 @@ function getAllOpenPRs(context) {
 
 /**
  * Create status on the PR
- * @param context.context
- * @param {Object} context probot context object
- * @param {string} state state can be either success or failure
- * @param {string} sha sha for the commit
- * @param {string} description description for the status
- * @param {string} targetUrl The URL that the status should link to
- * @param context.state
- * @param context.sha
- * @param context.description
- * @param context.targetUrl
+ * @param {Object} options Configure the status
+ * @param {Object} options.context probot context object
+ * @param {string} options.state state can be either success or failure
+ * @param {string} options.sha sha for the commit
+ * @param {string} options.description description for the status
+ * @param {string} options.targetUrl The URL that the status should link to
  * @returns {Promise} Resolves when the status is created on the PR
  * @private
  */
@@ -77,10 +73,9 @@ function createStatusOnPR({ context, state, sha, description, targetUrl }) {
 
 /**
  * Get all the commits for a PR
- * @param context.context
- * @param {Object} context Probot context object
- * @param {Object} pr pull request object from GitHub's API
- * @param context.pr
+ * @param {Object} options Configure the request
+ * @param {Object} options.context Probot context object
+ * @param {Object} options.pr pull request object from GitHub's API
  * @returns {Promise<Object[]>} A Promise that fulfills with a list of commit objects from GitHub's API
  * @private
  */
@@ -99,13 +94,11 @@ async function getAllCommitsForPR({ context, pr }) {
  * "This change is semver-patch" and a link to the release issue.
  * * If there is a pending patch release and this PR is not semver-patch, creates a pending status with the message
  * "A patch release is pending" and a link to the release issue.
- * @param context.context
- * @param {Object} context Probot context object
- * @param {Object} pr pull request object from GitHub's API
- * @param {string|null} pendingReleaseIssueUrl If a patch release is pending, this is the HTML URL of the
+ * @param {Object} options Configure the status
+ * @param {Object} options.context Probot context object
+ * @param {Object} options.pr pull request object from GitHub's API
+ * @param {string|null} options.pendingReleaseIssueUrl If a patch release is pending, this is the HTML URL of the
  * release issue. Otherwise, this is null.
- * @param context.pr
- * @param context.pendingReleaseIssueUrl
  * @returns {Promise<void>} A Promise that fulfills when the status check has been created
  */
 async function createAppropriateStatusForPR({ context, pr, pendingReleaseIssueUrl }) {
@@ -140,10 +133,9 @@ async function createAppropriateStatusForPR({ context, pr, pendingReleaseIssueUr
 
 /**
  * Get all the commits for a PR
- * @param context.context
- * @param {Object} context probot context object
- * @param {string|null} pendingReleaseIssueUrl A link to the pending release issue, if it exists
- * @param context.pendingReleaseIssueUrl
+ * @param {Object} options Configure the status
+ * @param {Object} options.context probot context object
+ * @param {string|null} options.pendingReleaseIssueUrl A link to the pending release issue, if it exists
  * @returns {Promise} Resolves when the status is created on the PR
  * @private
  */
@@ -170,8 +162,8 @@ function hasReleaseLabel(labels) {
 
 /**
  * Check if it is Post Release label
- * @param {Object} label label object
- * @param label.name
+ * @param {Object} label label options
+ * @param {string} label.name label name
  * @returns {boolean} True if its post release label
  * @private
  */

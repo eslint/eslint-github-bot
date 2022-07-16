@@ -10,16 +10,12 @@ const DO_NOT_MERGE_LABEL = "do not merge";
 
 /**
  * Create status on the PR
- * @param context.context
- * @param {Object} context probot context object
- * @param {string} state state can be either success or failure
- * @param {string} sha sha for the commit
- * @param {string} description description for the status
- * @param {string} targetUrl The URL that the status should link to
- * @param context.state
- * @param context.sha
- * @param context.description
- * @param context.targetUrl
+ * @param {Object} options Configure the status
+ * @param {Object} options.context probot context object
+ * @param {string} options.state state can be either success or failure
+ * @param {string} options.sha sha for the commit
+ * @param {string} options.description description for the status
+ * @param {string} options.targetUrl The URL that the status should link to
  * @returns {Promise} Resolves when the status is created on the PR
  * @private
  */
@@ -102,10 +98,9 @@ async function maybeResolveWipStatusOnPR(context, sha) {
 
 /**
  * Get all the commits for a PR
- * @param context.context
- * @param {Object} context Probot context object
- * @param {Object} pr pull request object from GitHub's API
- * @param context.pr
+ * @param {Object} options Configure the request
+ * @param {Object} options.context Probot context object
+ * @param {Object} options.pr pull request object from GitHub's API
  * @returns {Promise<Object[]>} A Promise that fulfills with a list of commit objects from GitHub's API
  * @private
  */
