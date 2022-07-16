@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "eslint": "^5.9.0",
-    "eslint-config-eslint": "^5.0.1",
+    "eslint-config-eslint": "^6.0.0",
     "eslint-plugin-node": "^8.0.0",
     "jest": "^26.1.0",
     "lint-staged": "^11.1.2",
