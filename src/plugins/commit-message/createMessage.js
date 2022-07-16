@@ -22,7 +22,7 @@ const ERROR_MESSAGES = {
  * @returns {string} the message to comment
  * @private
  */
-module.exports = function commentMessage(errors = [], isTitle = false, username) {
+module.exports = function commentMessage(errors, isTitle, username) {
     const errorMessages = [];
 
     errors.forEach(err => {
