@@ -111,7 +111,7 @@ describe("duplicate-comments", () => {
     }
 
     describe("issue comment created", () => {
-        test("Removes the duplicate comment of the bot", async() => {
+        test("Removes the duplicate comment of the bot", async () => {
             mockComments([
                 createFakeComment(4, "test [//]: # (test)", "Bot"),
                 createFakeComment(5, "test [//]: # (test)", "Bot")
@@ -121,7 +121,7 @@ describe("duplicate-comments", () => {
             expect(nockScope.isDone()).toBeTruthy();
         });
 
-        test("Do not remove any comment if no bot comment is repeated", async() => {
+        test("Do not remove any comment if no bot comment is repeated", async () => {
             mockComments([
                 createFakeComment(4, "test [//]: # (test)", "Bot"),
                 createFakeComment(5, "test [//]: # (test-1)", "Bot")
@@ -131,7 +131,7 @@ describe("duplicate-comments", () => {
             expect(nockScope.isDone()).not.toBeTruthy();
         });
 
-        test("Do not remove any comment even if non bot comment are repeated", async() => {
+        test("Do not remove any comment even if non bot comment are repeated", async () => {
             mockComments([
                 createFakeComment(4, "test [//]: # (test)", "user-x"),
                 createFakeComment(5, "test [//]: # (test)", "user-x")

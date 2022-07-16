@@ -8,7 +8,7 @@
 /**
  * Get the correct commit message for a PR
  * @param {Object[]} allCommits A list of commit objects from GitHub's API
- * @param {Object} pr - Pull request object
+ * @param {Object} pr Pull request object
  * @returns {string} Commit message
  */
 function getCommitMessageForPR(allCommits, pr) {

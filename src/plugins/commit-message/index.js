@@ -37,7 +37,7 @@ const EXCLUDED_REPOSITORY_NAMES = new Set([
 
 /**
  * Apply different checks on the commit message
- * @param {string} message - commit message
+ * @param {string} message commit message
  * @returns {boolean} `true` if the commit message is valid
  * @private
  */
@@ -72,7 +72,7 @@ function getCommitMessageErrors(message) {
 
 /**
  * Apply different checks on the commit message
- * @param {string} message - commit message
+ * @param {string} message commit message
  * @returns {Array<string>} The labels to add to the PR.
  * @private
  */
@@ -85,7 +85,7 @@ function getCommitMessageLabels(message) {
 
 /**
  * If the first commit message is not legal then it adds a comment
- * @param {Object} context - context given by the probot
+ * @param {Object} context context given by the probot
  * @returns {Promise.<void>} promise
  * @private
  */

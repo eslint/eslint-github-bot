@@ -37,8 +37,8 @@ function mockStatusChecksForCommit({ sha, statuses }) {
 
 /**
  * Asserts that a WIP status check's state value is pending.
- * @param {string} _ - ignored param
- * @param {string} payload - payload sent to the API
+ * @param {string} _ ignored param
+ * @param {string} payload payload sent to the API
  * @returns {undefined}
  * @private
  */
@@ -51,8 +51,8 @@ function assertPendingStatusForWip(_, payload) {
 
 /**
  * Asserts that a WIP status check's state value is success.
- * @param {string} _ - ignored param
- * @param {string} payload - payload sent to the API
+ * @param {string} _ ignored param
+ * @param {string} payload payload sent to the API
  * @returns {undefined}
  * @private
  */
@@ -83,7 +83,7 @@ describe("wip", () => {
 
     ["opened", "reopened", "edited", "labeled", "unlabeled", "synchronize"].forEach(action => {
         describe(`pull request ${action}`, () => {
-            test("create pending status if PR title starts with 'WIP:'", async() => {
+            test("create pending status if PR title starts with 'WIP:'", async () => {
                 mockGetAllCommitsForPR({
                     number: 1,
                     commits: [
@@ -124,7 +124,7 @@ describe("wip", () => {
                 expect(createStatusOnPR.isDone()).toBeTruthy();
             });
 
-            test("create pending status if PR title contains '(WIP)'", async() => {
+            test("create pending status if PR title contains '(WIP)'", async () => {
                 mockGetAllCommitsForPR({
                     number: 1,
                     commits: [
@@ -165,7 +165,7 @@ describe("wip", () => {
                 expect(createStatusOnPR.isDone()).toBeTruthy();
             });
 
-            test("create pending status if labels contain 'do not merge'", async() => {
+            test("create pending status if labels contain 'do not merge'", async () => {
                 mockGetAllCommitsForPR({
                     number: 1,
                     commits: [
@@ -206,7 +206,7 @@ describe("wip", () => {
                 expect(createStatusOnPR.isDone()).toBeTruthy();
             });
 
-            test("does not create status check if PR is not WIP and no wip status exists", async() => {
+            test("does not create status check if PR is not WIP and no wip status exists", async () => {
                 mockGetAllCommitsForPR({
                     number: 1,
                     commits: [
@@ -252,7 +252,7 @@ describe("wip", () => {
                 expect(createStatusOnPR.isDone()).toBeFalsy();
             });
 
-            test("creates success status check if PR is not WIP and wip status exists", async() => {
+            test("creates success status check if PR is not WIP and wip status exists", async () => {
                 mockGetAllCommitsForPR({
                     number: 1,
                     commits: [

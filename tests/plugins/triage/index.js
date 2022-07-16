@@ -25,7 +25,7 @@ describe("triage", () => {
     });
 
     describe("issue opened", () => {
-        test("Adds the label if there are no labels present", async() => {
+        test("Adds the label if there are no labels present", async () => {
             const issueLabelGetReq = nock("https://api.github.com")
                 .get("/repos/test/repo-test/issues/1")
                 .reply(200, {
@@ -63,7 +63,7 @@ describe("triage", () => {
             expect(issueLabelPostReq.isDone()).toBeTruthy();
         });
 
-        test("Does not add the label if already present in the initial webhook event", async() => {
+        test("Does not add the label if already present in the initial webhook event", async () => {
             const issueLabelGetReq = nock("https://api.github.com")
                 .get("/repos/test/repo-test/issues/1")
                 .reply(200, {
@@ -99,7 +99,7 @@ describe("triage", () => {
             expect(issueLabelPostReq.isDone()).toBe(false);
         });
 
-        test("Does not add the label if already present when the issue is fetched", async() => {
+        test("Does not add the label if already present when the issue is fetched", async () => {
             const issueLabelGetReq = nock("https://api.github.com")
                 .get("/repos/test/repo-test/issues/1")
                 .reply(200, {
@@ -135,7 +135,7 @@ describe("triage", () => {
     });
 
     describe("issue reopened", () => {
-        test("Adds the label if there are no labels present", async() => {
+        test("Adds the label if there are no labels present", async () => {
             const issueLabelGetReq = nock("https://api.github.com")
                 .get("/repos/test/repo-test/issues/1")
                 .reply(200, { labels: [] });
@@ -170,7 +170,7 @@ describe("triage", () => {
             expect(issueLabelPostReq.isDone()).toBe(true);
         });
 
-        test("Do not add the label if already present", async() => {
+        test("Do not add the label if already present", async () => {
             const issueLabelReq = nock("https://api.github.com")
                 .post("/repos/test/repo-test/issues/1/labels")
                 .reply(200);
@@ -202,7 +202,7 @@ describe("triage", () => {
     });
 
     describe("When a pull request is opened", () => {
-        test("Adds the label if there are no labels present", async() => {
+        test("Adds the label if there are no labels present", async () => {
             const issueLabelGetReq = nock("https://api.github.com")
                 .get("/repos/test/repo-test/issues/1")
                 .reply(200, {

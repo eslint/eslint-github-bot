@@ -10,11 +10,16 @@ const DO_NOT_MERGE_LABEL = "do not merge";
 
 /**
  * Create status on the PR
- * @param {Object} context - probot context object
- * @param {string} state - state can be either success or failure
- * @param {string} sha - sha for the commit
- * @param {string} description - description for the status
+ * @param context.context
+ * @param {Object} context probot context object
+ * @param {string} state state can be either success or failure
+ * @param {string} sha sha for the commit
+ * @param {string} description description for the status
  * @param {string} targetUrl The URL that the status should link to
+ * @param context.state
+ * @param context.sha
+ * @param context.description
+ * @param context.targetUrl
  * @returns {Promise} Resolves when the status is created on the PR
  * @private
  */
@@ -97,8 +102,10 @@ async function maybeResolveWipStatusOnPR(context, sha) {
 
 /**
  * Get all the commits for a PR
+ * @param context.context
  * @param {Object} context Probot context object
  * @param {Object} pr pull request object from GitHub's API
+ * @param context.pr
  * @returns {Promise<Object[]>} A Promise that fulfills with a list of commit objects from GitHub's API
  * @private
  */
@@ -112,7 +119,7 @@ async function getAllCommitsForPR({ context, pr }) {
 
 /**
  * Checks to see if a PR has the "do not merge" label.
- * @param {Array<Object>} labels - collection of label objects
+ * @param {Array<Object>} labels collection of label objects
  * @returns {boolean} True if release label is present
  * @private
  */
@@ -143,7 +150,7 @@ function prHasWipTitle(pr) {
 /**
  * Handler for PR events (opened, reopened, synchronize, edited, labeled,
  * unlabeled).
- * @param {Object} context - probot context object
+ * @param {Object} context probot context object
  * @returns {Promise} promise
  * @private
  */
