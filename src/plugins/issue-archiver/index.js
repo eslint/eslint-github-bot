@@ -57,7 +57,6 @@ async function archiveIssue(context, issueNum) {
 /**
  * Gets all archived issues on the current repository
  * @param {probot.Context} context Probot context for the current repository
- * @param {string} searchQuery A search query to send to the GitHub API
  * @returns {Promise<number[]>} A list of issue numbers that match the query
  */
 async function getAllSearchResults(context) {
