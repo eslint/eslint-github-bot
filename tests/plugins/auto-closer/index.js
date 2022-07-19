@@ -54,7 +54,7 @@ function checkNockClosedRequest(issueNum) {
  *      must match.
  * @returns {Nock} The Nock instance.
  */
-function checkNockCommentRequest(issueNum, textMatch = /days/) {
+function checkNockCommentRequest(issueNum, textMatch = /days/u) {
     return githubNock
         .post(`/repos/test/repo-test/issues/${issueNum}/comments`, {
             body: textMatch
@@ -98,7 +98,7 @@ function triggerSchedule(bot) {
 describe("auto-closer", () => {
     let bot;
 
-    beforeEach(async() => {
+    beforeEach(async () => {
         githubNock = nock("https://api.github.com");
         bot = new probot.Application({
             id: "test",
@@ -122,7 +122,7 @@ describe("auto-closer", () => {
         nock.cleanAll();
     });
 
-    it("performs a search, and closes all returned issues", async() => {
+    it("performs a search, and closes all returned issues", async () => {
         githubNock
             .get("/repos/test/repo-test/labels")
             .reply(200, [
@@ -206,7 +206,7 @@ describe("auto-closer", () => {
         issueNumbers.map(issueNum => checkNockClosedRequest(issueNum));
         issueNumbers.map(issueNum => {
             if (issueNum === 5 || issueNum === 6) {
-                return checkNockCommentRequest(issueNum, /question/);
+                return checkNockCommentRequest(issueNum, /question/u);
             }
 
             return checkNockCommentRequest(issueNum);
@@ -217,7 +217,7 @@ describe("auto-closer", () => {
         expect(githubNock.isDone()).toBe(true);
     });
 
-    it("does not close any issues if the appropriate label does not exist", async() => {
+    it("does not close any issues if the appropriate label does not exist", async () => {
         githubNock
             .get("/repos/test/repo-test/labels")
             .reply(200, [

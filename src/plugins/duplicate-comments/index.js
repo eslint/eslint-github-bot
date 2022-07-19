@@ -16,7 +16,7 @@ const botType = "Bot";
 
 /**
  * Filters the comments based on the current user
- * @param {Array<Object>} comments - collection of comments as returned by the github
+ * @param {Array<Object>} comments collection of comments as returned by the github
  * @returns {Array<Object>} filtered comments
  * @private
  */
@@ -26,7 +26,7 @@ function filterBotComments(comments) {
 
 /**
  * Extract the comment hash from the comment
- * @param {string} comment - comment body
+ * @param {string} comment comment body
  * @returns {string} comment hash
  * @private
  */
@@ -40,7 +40,7 @@ function getCommentHash(comment) {
 /**
  * Creates the collection of comments based on the hash present inside the comments
  * ignore the comments which doesnt have a hash
- * @param {Array<Object>} comments - collection of comments as returned by the github
+ * @param {Array<Object>} comments collection of comments as returned by the github
  * @returns {Map} comments by hash map
  * @private
  */
@@ -65,7 +65,7 @@ function commentsByHash(comments) {
 
 /**
  * Filter comments that need to be deleted and return them
- * @param {Map} commentsMap - comments collection by hash value inside the comment
+ * @param {Map} commentsMap comments collection by hash value inside the comment
  * @returns {Array} Comments to be deleted
  * @private
  */
@@ -83,7 +83,7 @@ function getCommentsTobeDeleted(commentsMap) {
 
 /**
  * Process the comments and return the comments which are duplicate and needs to be deleted
- * @param {Array<Object>} comments - collection of comments as returned by the github
+ * @param {Array<Object>} comments collection of comments as returned by the github
  * @returns {Array<Object>} comments to be deleted
  * @private
  */
@@ -97,7 +97,7 @@ function processComments(comments) {
 
 /**
  * Checks for duplicates comments and removes all the duplicates leaving the last one
- * @param {Object} context - context given by the probot
+ * @param {Object} context context given by the probot
  * @returns {Promise.<void>} done when comments are removed
  * @private
  */

@@ -25,7 +25,7 @@ const RELEASE_LABEL = "release";
  *          ]
  *      }
  * ];
- * @param {Array<Object>} mockData - data for PR
+ * @param {Array<Object>} mockData data for PR
  * @returns {undefined}
  * @private
  */
@@ -58,8 +58,8 @@ function mockAllOpenPrWithCommits(mockData = []) {
 
 /**
  * Asserts that the state value is pending and that it links to an issue.
- * @param {string} _ - ignored param
- * @param {string} payload - payload sent ot the API
+ * @param {string} _ ignored param
+ * @param {string} payload payload sent ot the API
  * @returns {undefined}
  * @private
  */
@@ -73,8 +73,8 @@ function assertPendingStatusWithIssueLink(_, payload) {
 
 /**
  * Asserts that the state value is success
- * @param {string} _ - ignored param
- * @param {string} payload - payload sent ot the API
+ * @param {string} _ ignored param
+ * @param {string} payload payload sent ot the API
  * @returns {undefined}
  * @private
  */
@@ -88,8 +88,8 @@ function assertSuccessStatusWithNoPendingRelease(_, payload) {
 
 /**
  * Asserts that the state value is success
- * @param {string} _ - ignored param
- * @param {string} payload - payload sent ot the API
+ * @param {string} _ ignored param
+ * @param {string} payload payload sent ot the API
  * @returns {undefined}
  * @private
  */
@@ -103,7 +103,7 @@ function assertSuccessStatusWithPendingRelease(_, payload) {
 describe("release-monitor", () => {
     let bot = null;
 
-    beforeAll(async() => {
+    beforeAll(async () => {
         bot = new Application({
             id: "test",
             cert: "test",
@@ -124,7 +124,7 @@ describe("release-monitor", () => {
     });
 
     describe("issue labeled", () => {
-        test("in post release phase then add appropriate status check to all PRs", async() => {
+        test("in post release phase then add appropriate status check to all PRs", async () => {
             mockAllOpenPrWithCommits([
                 {
                     number: 1,
@@ -279,7 +279,7 @@ describe("release-monitor", () => {
             expect(upgradePrStatus.isDone()).toBe(true);
         }, 10000);
 
-        test("with no post release label nothing happens", async() => {
+        test("with no post release label nothing happens", async () => {
             mockAllOpenPrWithCommits([
                 {
                     number: 1,
@@ -345,7 +345,7 @@ describe("release-monitor", () => {
             expect(pr2Status.isDone()).toBeFalsy();
         });
 
-        test("with post release label on non release issue, nothing happens", async() => {
+        test("with post release label on non release issue, nothing happens", async () => {
             mockAllOpenPrWithCommits([
                 {
                     number: 1,
@@ -416,7 +416,7 @@ describe("release-monitor", () => {
     });
 
     describe("issue closed", () => {
-        test("is release then update status on all PR", async() => {
+        test("is release then update status on all PR", async () => {
             mockAllOpenPrWithCommits([
                 {
                     number: 1,
@@ -565,7 +565,7 @@ describe("release-monitor", () => {
             expect(upgradePrStatus.isDone()).toBeTruthy();
         }, 10000);
 
-        test("is not a release issue", async() => {
+        test("is not a release issue", async () => {
             mockAllOpenPrWithCommits([
                 {
                     number: 1,
@@ -632,7 +632,7 @@ describe("release-monitor", () => {
 
     ["opened", "reopened", "synchronize", "edited"].forEach(action => {
         describe(`pull request ${action}`, () => {
-            test("put pending for non semver patch PR under post release phase", async() => {
+            test("put pending for non semver patch PR under post release phase", async () => {
                 mockAllOpenPrWithCommits([
                     {
                         number: 1,
@@ -689,7 +689,7 @@ describe("release-monitor", () => {
                 expect(newPrStatus.isDone()).toBeTruthy();
             });
 
-            test("put success for semver patch PR under post release phase", async() => {
+            test("put success for semver patch PR under post release phase", async () => {
                 mockAllOpenPrWithCommits([
                     {
                         number: 1,
@@ -740,7 +740,7 @@ describe("release-monitor", () => {
                 expect(newPrStatus.isDone()).toBeTruthy();
             });
 
-            test("put success for all PR under outside release phase", async() => {
+            test("put success for all PR under outside release phase", async () => {
                 mockAllOpenPrWithCommits([
                     {
                         number: 1,

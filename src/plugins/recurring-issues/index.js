@@ -99,8 +99,11 @@ function formatTeamMembers(teamMembers) {
 
 /**
  * Gets the desired issue body for a release issue, given the date and of the meeting
- * @param {Moment} meetingDate The date and time when the meeting will take place, as a Moment date
- * @param {GitHub} github A GitHub API client
+ * @param {Object} options Configure the issue body
+ * @param {Moment} options.meetingDate The date and time when the meeting will take place, as a Moment date
+ * @param {GitHub} options.github A GitHub API client for fetching TSC team members
+ * @param {string} options.organizationName The name of the organization that owns the TSC team
+ * @param {string} options.tscTeamName The name of the TSC team
  * @returns {Promise<string>} The text of the issue
  */
 async function getTscMeetingIssueBody({ meetingDate, github, organizationName, tscTeamName }) {
@@ -164,14 +167,15 @@ async function issueWasClosedMultipleTimes(github, { owner, repo, number }) {
 /**
  * Creates a webhook handler that responds when an issue is closed for the first time
  * by creating a new issue.
- * @param {string} labelTrigger A label that the closed issue must have for this webhook
+ * @param {Object} options Configure the webhook handler
+ * @param {string} options.labelTrigger A label that the closed issue must have for this webhook
  * to run
- * @param {string[]} newLabels The labels that the newly-created issue should be given
- * @param {Function} shouldCreateNewIssue A function that accepts an object with `title` and
+ * @param {string[]} options.newLabels The labels that the newly-created issue should be given
+ * @param {Function} options.shouldCreateNewIssue A function that accepts an object with `title` and
  * `body` properties as an argument, and returns a Promise for a boolean indicating whether
  * a new issue should be created. If the Promise fulfills with `false`, creating a new issue
  * will be cancelled.
- * @param {Function} getNewIssueInfo A function to get the title and body of the new issue.
+ * @param {Function} options.getNewIssueInfo A function to get the title and body of the new issue.
  * Accepts a single parameter with `title` and `body` properties for the old issue, as well as
  * a `github` property containing a GitHub API client and an `organizationName` property containing
  * the name of the organization that owns the repo where the issue was filed. Returns a promise

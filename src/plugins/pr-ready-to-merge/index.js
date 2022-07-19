@@ -14,7 +14,7 @@ const { isPrStatusSuccess } = require("./statusCheck");
 
 /**
  * Adds the triage label if the issue has no labels on it
- * @param {Object} context - context given by the probot
+ * @param {Object} context context given by the probot
  * @returns {Promise<void>} Promise that fulfills when the action is complete
  * @private
  */
@@ -32,7 +32,7 @@ async function handleStatusChange(context) {
 
 /**
  * Adds the triage label if the issue has no labels on it
- * @param {Object} context - context given by the probot
+ * @param {Object} context context given by the probot
  * @returns {Promise<void>} Promise that fulfills when the action is complete
  * @private
  */

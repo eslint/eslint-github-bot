@@ -9,7 +9,7 @@ const GitHubApi = require("@octokit/rest");
 describe("issue-archiver", () => {
     let bot;
 
-    beforeEach(async() => {
+    beforeEach(async () => {
         bot = new probot.Application({
             id: "test",
             cert: "test",
@@ -57,7 +57,7 @@ describe("issue-archiver", () => {
         nock.cleanAll();
     });
 
-    it("performs a search, and labels/archives all returned issues", async() => {
+    it("performs a search, and labels/archives all returned issues", async () => {
         const labelSearch = nock("https://api.github.com")
             .get("/repos/test/repo-test/labels")
             .reply(200, [
@@ -128,7 +128,7 @@ describe("issue-archiver", () => {
         expect(secondLabels.isDone()).toBe(true);
     });
 
-    it("does not lock any issues if the appropriate label does not exist", async() => {
+    it("does not lock any issues if the appropriate label does not exist", async () => {
         const labelSearch = nock("https://api.github.com")
             .get("/repos/test/repo-test/labels")
             .reply(200, [

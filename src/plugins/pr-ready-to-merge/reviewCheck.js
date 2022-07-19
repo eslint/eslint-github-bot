@@ -9,8 +9,8 @@ const { getPullrequestBySha, labels } = require("./common");
 
 /**
  * Gets all the reviews for the PR number
- * @param {Object} context - context given by the probot
- * @param {int} prId - pull request number
+ * @param {Object} context context given by the probot
+ * @param {int} prId pull request number
  * @returns {Promise.<Array>} Resolves with all reviews collection
  */
 async function getAllReviewsByPR(context, prId) {
@@ -23,7 +23,7 @@ async function getAllReviewsByPR(context, prId) {
 
 /**
  * Sorts all the reviews by creating buckets based on the user
- * @param {Array<Object>} allReviews - collection of reviews
+ * @param {Array<Object>} allReviews collection of reviews
  * @returns {Map} Map of reviews to users
  */
 function sortReviewsByUser(allReviews) {
@@ -40,7 +40,7 @@ function sortReviewsByUser(allReviews) {
 
 /**
  * Sorts all the reviews based on submitted date time
- * @param {Array<Object>} allReviews - collection of sorted reviews
+ * @param {Array<Object>} allReviews collection of sorted reviews
  * @returns {Array<Object>} A list of sorted reviews
  */
 function sortReviewsByDtTm(allReviews) {
@@ -52,7 +52,7 @@ function sortReviewsByDtTm(allReviews) {
 /**
  * Check to see if atleast one review has been approved.
  * if their are no reviews then it will say false
- * @param {Map} allReviewsMap - Map of reviews to users
+ * @param {Map} allReviewsMap Map of reviews to users
  * @returns {boolean} true id atleast one is approved
  */
 function isAtleastOneApproved(allReviewsMap) {
@@ -86,8 +86,8 @@ function isAtleastOneApproved(allReviewsMap) {
 
 /**
  * Check if the review on the PR is good or not
- * @param {Object} context - context given by the probot
- * @param {string} sha - git sha value
+ * @param {Object} context context given by the probot
+ * @param {string} sha git sha value
  * @returns {Promise.<boolean>} True if its good
  */
 async function isPrReviewSuccess(context, sha) {

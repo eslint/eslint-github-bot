@@ -118,7 +118,7 @@ describe("commit-message", () => {
 
     ["opened", "reopened", "synchronize", "edited"].forEach(action => {
         describe(`pull request ${action}`, () => {
-            test("Posts failure status if commit message is not correct", async() => {
+            test("Posts failure status if commit message is not correct", async () => {
                 mockSingleCommitWithMessage("non standard commit message");
 
                 const nockScope = nock("https://api.github.com")
@@ -137,7 +137,7 @@ describe("commit-message", () => {
                 expect(nockScope2.isDone()).toBeTruthy();
             });
 
-            test("Posts success status if commit message is correct", async() => {
+            test("Posts success status if commit message is correct", async () => {
                 mockSingleCommitWithMessage("feat: standard commit message");
                 const labelsScope = mockLabels(["feature"]);
 
@@ -150,7 +150,7 @@ describe("commit-message", () => {
                 expect(labelsScope.isDone()).toBeTruthy();
             });
 
-            test("Posts success status if commit message beginning with `Revert`", async() => {
+            test("Posts success status if commit message beginning with `Revert`", async () => {
                 mockSingleCommitWithMessage("Revert \"chore: add test for commit tag Revert\"");
 
                 const nockScope = nock("https://api.github.com")
@@ -161,7 +161,7 @@ describe("commit-message", () => {
                 expect(nockScope.isDone()).toBeTruthy();
             });
 
-            test("Posts failure status if the commit message is longer than 72 chars and don't set labels", async() => {
+            test("Posts failure status if the commit message is longer than 72 chars and don't set labels", async () => {
                 mockSingleCommitWithMessage("feat!: standard commit message very very very long message and its beond 72");
 
                 const labelsScope = mockLabels(["feature", "breaking"]);
@@ -182,7 +182,7 @@ describe("commit-message", () => {
                 expect(labelsScope.isDone()).toBeFalsy();
             });
 
-            test("Posts success status if the commit message is longer than 72 chars after the newline", async() => {
+            test("Posts success status if the commit message is longer than 72 chars after the newline", async () => {
                 mockSingleCommitWithMessage(
                     `fix: foo\n\n${"A".repeat(72)}`
                 );
@@ -198,7 +198,7 @@ describe("commit-message", () => {
                 expect(labelsScope.isDone()).toBeTruthy();
             });
 
-            test("Posts success status if there are multiple commit messages and the title is valid", async() => {
+            test("Posts success status if there are multiple commit messages and the title is valid", async () => {
                 mockMultipleCommits();
 
                 const nockScope = nock("https://api.github.com")
@@ -212,7 +212,7 @@ describe("commit-message", () => {
                 expect(labelsScope.isDone()).toBeTruthy();
             });
 
-            test("Posts failure status if there are multiple commit messages and the title is invalid", async() => {
+            test("Posts failure status if there are multiple commit messages and the title is invalid", async () => {
                 mockMultipleCommits();
 
                 const nockScope = nock("https://api.github.com")
@@ -231,7 +231,7 @@ describe("commit-message", () => {
                 expect(nockScope2.isDone()).toBeTruthy();
             });
 
-            test("Posts failure status if there are multiple commit messages and the title is too long", async() => {
+            test("Posts failure status if there are multiple commit messages and the title is too long", async () => {
                 mockMultipleCommits();
 
                 const nockScope = nock("https://api.github.com")
@@ -266,7 +266,7 @@ describe("commit-message", () => {
             ].forEach(prefix => {
                 const message = `${prefix}foo`;
 
-                test(`Posts failure status if the commit message has invalid tag prefix: "${prefix}"`, async() => {
+                test(`Posts failure status if the commit message has invalid tag prefix: "${prefix}"`, async () => {
                     mockSingleCommitWithMessage(message);
 
                     const nockScope = nock("https://api.github.com")
@@ -285,7 +285,7 @@ describe("commit-message", () => {
                     expect(nockScope2.isDone()).toBeTruthy();
                 });
 
-                test(`Posts failure status if PR with multiple commits has invalid tag prefix in the title: "${prefix}"`, async() => {
+                test(`Posts failure status if PR with multiple commits has invalid tag prefix in the title: "${prefix}"`, async () => {
                     mockMultipleCommits();
 
                     const nockScope = nock("https://api.github.com")
@@ -309,7 +309,7 @@ describe("commit-message", () => {
             TAG_LABELS.forEach((labels, prefix) => {
                 const message = `${prefix} foo`;
 
-                test(`Posts success status if the commit message has valid tag prefix: "${prefix}"`, async() => {
+                test(`Posts success status if the commit message has valid tag prefix: "${prefix}"`, async () => {
                     mockSingleCommitWithMessage(message);
 
                     const labelsScope = mockLabels(labels);
@@ -322,7 +322,7 @@ describe("commit-message", () => {
                     expect(labelsScope.isDone()).toBeTruthy();
                 });
 
-                test(`Posts success status if PR with multiple commits has valid tag prefix in the title: "${prefix}"`, async() => {
+                test(`Posts success status if PR with multiple commits has valid tag prefix in the title: "${prefix}"`, async () => {
                     mockMultipleCommits();
 
                     const nockScope = nock("https://api.github.com")
@@ -337,7 +337,7 @@ describe("commit-message", () => {
                 });
             });
 
-            test("Does not post a status if the repository is excluded", async() => {
+            test("Does not post a status if the repository is excluded", async () => {
                 await emitBotEvent(bot, {
                     action: "opened",
                     repository: {
@@ -355,13 +355,13 @@ describe("commit-message", () => {
                 "Revert \"Very long commit message with lots and lots of characters (more than 72!)\"",
                 "Revert \"blah\"\n\nbaz"
             ].forEach(message => {
-                test("Posts a success status", async() => {
+                test("Posts a success status", async () => {
                     const nockScope = nock("https://api.github.com")
                         .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
                         .reply(201);
 
                     mockSingleCommitWithMessage(message);
-                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: message.replace(/\n[\s\S]*/, "") } });
+                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: message.replace(/\n[\s\S]*/u, "") } });
                     expect(nockScope.isDone()).toBe(true);
                 });
             });

@@ -26,8 +26,9 @@ function mockPrWithFiles(url) {
 /**
  * Emits a bot event for this plugin
  * @param {probot.Robot} bot A probot instance
- * @param {string} action The name of the webhook action
- * @param {string} title The title of the PR
+ * @param {Object} options Configure the event
+ * @param {string} options.action The name of the webhook action
+ * @param {string} options.title The title of the PR
  * @returns {Promise<void>} A Promise that fulfills when the webhook completes
  */
 function emitBotEvent(bot, { action, title }) {
@@ -83,7 +84,7 @@ describe("check-unit-test", () => {
     });
 
     describe("pull request opened", () => {
-        test("Add message if the there are no test files", async() => {
+        test("Add message if the there are no test files", async () => {
             mockPrWithFiles("src/make.js");
             await emitBotEvent(bot, {
                 action: "opened",
@@ -93,7 +94,7 @@ describe("check-unit-test", () => {
             expect(nockScope.isDone()).toBeTruthy();
         });
 
-        test("Do not add message if the test folder is present", async() => {
+        test("Do not add message if the test folder is present", async () => {
             mockPrWithFiles("src/tests/make.js");
             await emitBotEvent(bot, {
                 action: "opened",
@@ -103,7 +104,7 @@ describe("check-unit-test", () => {
             expect(nockScope.isDone()).not.toBeTruthy();
         });
 
-        test("Add message if the test folder is not present tho a file with named test is", async() => {
+        test("Add message if the test folder is not present tho a file with named test is", async () => {
             mockPrWithFiles("src/lib/test.js");
             await emitBotEvent(bot, {
                 action: "opened",
@@ -113,7 +114,7 @@ describe("check-unit-test", () => {
             expect(nockScope.isDone()).toBeTruthy();
         });
 
-        test("Do not add message if the test files are not present and commit is chore", async() => {
+        test("Do not add message if the test files are not present and commit is chore", async () => {
             mockPrWithFiles("src/make.js");
             await emitBotEvent(bot, {
                 action: "opened",
@@ -125,7 +126,7 @@ describe("check-unit-test", () => {
     });
 
     describe("pull request reopened", () => {
-        test("Add message if the there are no test files", async() => {
+        test("Add message if the there are no test files", async () => {
             mockPrWithFiles("src/make.js");
             await emitBotEvent(bot, {
                 action: "reopened",
@@ -137,7 +138,7 @@ describe("check-unit-test", () => {
     });
 
     describe("pull request synchronize", () => {
-        test("Add message if the there are no test files", async() => {
+        test("Add message if the there are no test files", async () => {
             mockPrWithFiles("src/make.js");
             await emitBotEvent(bot, {
                 action: "synchronize",

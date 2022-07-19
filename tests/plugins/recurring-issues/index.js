@@ -11,9 +11,10 @@ describe("recurring-issues", () => {
 
     /**
      * Runs the bot with the given arguments, setting up fixtures and running the webhook listener
-     * @param {string} issueTitle The title of the existing issue which was closed
-     * @param {string[]} labelNames The labels of the issue which was closed
-     * @param {string[]} eventTypes The events that have occurred for the issue
+     * @param {Object} options Configure API responses the bot will see
+     * @param {string} options.issueTitle The title of the existing issue which was closed
+     * @param {string[]} options.labelNames The labels of the issue which was closed
+     * @param {string[]} options.eventTypes The events that have occurred for the issue
      * @returns {Promise<void>} A Promise that fulfills after the webhook action is complete
      */
     function runBot({ issueTitle, labelNames, eventTypes }) {
@@ -108,7 +109,7 @@ describe("recurring-issues", () => {
     });
 
     describe("when an issue does not have the release label", () => {
-        test("ignores the issue", async() => {
+        test("ignores the issue", async () => {
             await runBot({
                 issueTitle: "Scheduled release for October 27th, 2017",
                 labelNames: ["foo"],
@@ -120,7 +121,7 @@ describe("recurring-issues", () => {
     });
 
     describe("when an issue has already been closed and reopened", () => {
-        test("ignores the issue", async() => {
+        test("ignores the issue", async () => {
             await runBot({
                 issueTitle: "Scheduled release for October 27th, 2017",
                 labelNames: ["release"],
@@ -132,7 +133,7 @@ describe("recurring-issues", () => {
     });
 
     describe("when an issue has an invalid title", () => {
-        test("ignores the issue", async() => {
+        test("ignores the issue", async () => {
             await runBot({
                 issueTitle: "Foo bar!",
                 labelNames: ["release"],
@@ -144,7 +145,7 @@ describe("recurring-issues", () => {
     });
 
     describe("when an issue has a parseable title, has the release label, and has never been closed", () => {
-        test("creates a new issue", async() => {
+        test("creates a new issue", async () => {
             await runBot({
                 issueTitle: "Scheduled release for October 27th, 2017",
                 labelNames: ["release"],
@@ -158,7 +159,7 @@ describe("recurring-issues", () => {
     });
 
     describe("when an issue has a parseable title, has the tsc meeting label, and has never been closed", () => {
-        test("creates a new issue", async() => {
+        test("creates a new issue", async () => {
             await runBot({
                 issueTitle: "TSC meeting 26-October-2017",
                 labelNames: ["tsc meeting"],

@@ -32,8 +32,9 @@ async function hasAutoCloseLabel(context) {
  * Creates a search query to look for issues in a given repo that have been
  * labeled "accepted", don't have an assignee/project/milestone, have been opened
  * for 90 days and have been inactive for 30 days.
- * @param {string} options.owner The owner of the repo where issues should be searched
- * @param {string} options.repo The name of the repo where issues should be searched
+ * @param {Object} options Repository where issues should be searched
+ * @param {string} options.owner The owner of the repository
+ * @param {string} options.repo The name of the repository
  * @returns {string} A search query to send to the GitHub API
  */
 function createAutoCloseAcceptedSearchQuery({ owner, repo }) {
@@ -53,8 +54,9 @@ function createAutoCloseAcceptedSearchQuery({ owner, repo }) {
  * Creates a search query to look for issues in a given repo that have not been
  * labeled "accepted", don't have an assignee/project/milestone, have been
  * inactive for 30 days.
- * @param {string} options.owner The owner of the repo where issues should be searched
- * @param {string} options.repo The name of the repo where issues should be searched
+ * @param {Object} options Repository where issues should be searched
+ * @param {string} options.owner The owner of the repository
+ * @param {string} options.repo The name of the repository
  * @returns {string} A search query to send to the GitHub API
  */
 function createAutoCloseUnacceptedSearchQuery({ owner, repo }) {
@@ -73,8 +75,9 @@ function createAutoCloseUnacceptedSearchQuery({ owner, repo }) {
  * Creates a search query to look for issues in a given repo that have not been
  * labeled "accepted", don't have an assignee/project/milestone, have been
  * inactive for 30 days, and are labeled "question".
- * @param {string} options.owner The owner of the repo where issues should be searched
- * @param {string} options.repo The name of the repo where issues should be searched
+ * @param {Object} options Repository where issues should be searched
+ * @param {string} options.owner The owner of the repository
+ * @param {string} options.repo The name of the repository
  * @returns {string} A search query to send to the GitHub API
  */
 function createAutoCloseQuestionSearchQuery({ owner, repo }) {

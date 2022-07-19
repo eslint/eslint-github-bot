@@ -26,7 +26,7 @@ describe("add-to-triage-project", () => {
     });
 
     describe("issue opened", () => {
-        test("Adds the issue to the project", async() => {
+        test("Adds the issue to the project", async () => {
             const addIssueToTriageProject = nock("https://api.github.com")
                 .post(`/projects/columns/${NEEDS_TRIAGE_COLUMN_ID}/cards`, body => {
                     expect(body).toEqual({
@@ -61,7 +61,7 @@ describe("add-to-triage-project", () => {
             expect(addIssueToTriageProject.isDone()).toBeTruthy();
         });
 
-        test("doesn't add the issue to the project when 'triage:no' label is present", async() => {
+        test("doesn't add the issue to the project when 'triage:no' label is present", async () => {
 
             const addIssueToTriageProject = nock("https://api.github.com")
                 .post(`/projects/columns/${NEEDS_TRIAGE_COLUMN_ID}/cards`, body => {

@@ -16,13 +16,13 @@ const ERROR_MESSAGES = {
 
 /**
  * Create a comment message body with the error details
- * @param {Array<string>} errors - list of the error codes
- * @param {boolean} isTitle - whether it is for title or the commit message
- * @param {string} username - username of the PR author
+ * @param {Array<string>} errors list of the error codes
+ * @param {boolean} isTitle whether it is for title or the commit message
+ * @param {string} username username of the PR author
  * @returns {string} the message to comment
  * @private
  */
-module.exports = function commentMessage(errors = [], isTitle = false, username) {
+module.exports = function commentMessage(errors, isTitle, username) {
     const errorMessages = [];
 
     errors.forEach(err => {

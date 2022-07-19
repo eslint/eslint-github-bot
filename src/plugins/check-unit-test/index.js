@@ -8,11 +8,11 @@
 
 const path = require("path");
 
-const TAG_REGEX = /^(?:Build|Chore|Docs|Upgrade):/;
+const TAG_REGEX = /^(?:Build|Chore|Docs|Upgrade):/u;
 
 /**
  * Check if the commit message follow the guidelines
- * @param {string} message - commit message
+ * @param {string} message commit message
  * @returns {boolean} True if it's ok
  * @private
  */
@@ -20,7 +20,7 @@ const isChoreTypePullRequest = TAG_REGEX.test.bind(TAG_REGEX);
 
 /**
  * Create the comment for the commit message issue
- * @param {string} username - user to tag on the comment
+ * @param {string} username user to tag on the comment
  * @returns {string} comment message
  * @private
  */
@@ -37,8 +37,8 @@ If this is a mistake, then please ignore this message.
 
 /**
  * Checks if any unit test files are present in the pull request
- * @param {Array<Object>} files - collection of files inside the pull request
- * @param {string} repoUrl - url of the repo
+ * @param {Array<Object>} files collection of files inside the pull request
+ * @param {string} repoUrl url of the repo
  * @returns {boolean} True if atleast 1 test files is present
  * @private
  */
@@ -52,7 +52,7 @@ function areUnitTestFilesPresent(files, repoUrl) {
 
 /**
  * Adds the triage label if the issue has no labels on it
- * @param {Object} context - context given by the probot
+ * @param {Object} context context given by the probot
  * @returns {Promise.<void>} promise
  * @private
  */

@@ -24,7 +24,7 @@ Thanks for your understanding.
 
 /**
  * Check if the needs info label is present or not
- * @param {Object} label - added label object
+ * @param {Object} label added label object
  * @returns {boolean} True if it does contain needs info label
  * @private
  */
@@ -34,7 +34,7 @@ function hasNeedInfoLabel(label) {
 
 /**
  * If the label is need info then add the comment
- * @param {Object} context - event payload from github
+ * @param {Object} context event payload from github
  * @returns {undefined}
  * @private
  */

@@ -16,7 +16,7 @@ const labels = {
 
 /**
  * Removes the approved label from the pull request
- * @param {Object} context - context given by the probot
+ * @param {Object} context context given by the probot
  * @returns {Promise} Promise that fulfills when the action is complete
  */
 function removePrApprovedLabel(context) {
@@ -27,7 +27,7 @@ function removePrApprovedLabel(context) {
 
 /**
  * Add the approved label to the pull request
- * @param {Object} context - context given by the probot
+ * @param {Object} context context given by the probot
  * @returns {Promise} Promise that fulfills when the action is complete
  */
 function addPrApprovedLabel(context) {
@@ -40,8 +40,8 @@ function addPrApprovedLabel(context) {
  * Gets all the pull request based on the sha
  * it will return null if there is no related pr
  * will return the first one if their are multiple entries (which should be rare)
- * @param {Object} context - context given by the probot
- * @param {string} sha - git sha value
+ * @param {Object} context context given by the probot
+ * @param {string} sha git sha value
  * @returns {Promise.<Object|null>} Promise that fulfills when the action is complete
  */
 async function getPullrequestBySha(context, sha) {
@@ -54,8 +54,8 @@ async function getPullrequestBySha(context, sha) {
 
 /**
  * Gets all the commits using the PR number
- * @param {Object} context - context given by the probot
- * @param {int} prId - pull request number
+ * @param {Object} context context given by the probot
+ * @param {int} prId pull request number
  * @returns {Promise.<Array>} Resolves with commit collection
  */
 async function getAllCommitsByPR(context, prId) {

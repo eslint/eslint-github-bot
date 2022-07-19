@@ -18,11 +18,11 @@ const { TAG_LABELS } = require("./util");
 // Helpers
 //-----------------------------------------------------------------------------
 
-const TAG_REGEX = /^(?:feat|build|chore|docs|fix|refactor|test|ci|perf)!?: /;
+const TAG_REGEX = /^(?:feat|build|chore|docs|fix|refactor|test|ci|perf)!?: /u;
 
-const TAG_SPACE_REGEX = /^(?:[a-z]+!?: )/;
+const TAG_SPACE_REGEX = /^(?:[a-z]+!?: )/u;
 
-const LOWERCASE_TAG_REGEX = /^[a-z]/;
+const LOWERCASE_TAG_REGEX = /^[a-z]/u;
 
 const MESSAGE_LENGTH_LIMIT = 72;
 
@@ -37,12 +37,12 @@ const EXCLUDED_REPOSITORY_NAMES = new Set([
 
 /**
  * Apply different checks on the commit message
- * @param {string} message - commit message
+ * @param {string} message commit message
  * @returns {boolean} `true` if the commit message is valid
  * @private
  */
 function getCommitMessageErrors(message) {
-    const commitTitle = message.split(/\r?\n/)[0];
+    const commitTitle = message.split(/\r?\n/u)[0];
     const errors = [];
 
     if (message.startsWith("Revert \"")) {
@@ -72,12 +72,12 @@ function getCommitMessageErrors(message) {
 
 /**
  * Apply different checks on the commit message
- * @param {string} message - commit message
+ * @param {string} message commit message
  * @returns {Array<string>} The labels to add to the PR.
  * @private
  */
 function getCommitMessageLabels(message) {
-    const commitTitle = message.split(/\r?\n/)[0];
+    const commitTitle = message.split(/\r?\n/u)[0];
     const [tag] = commitTitle.match(TAG_REGEX) || [""];
 
     return TAG_LABELS.get(tag.trim());
@@ -85,7 +85,7 @@ function getCommitMessageLabels(message) {
 
 /**
  * If the first commit message is not legal then it adds a comment
- * @param {Object} context - context given by the probot
+ * @param {Object} context context given by the probot
  * @returns {Promise.<void>} promise
  * @private
  */
