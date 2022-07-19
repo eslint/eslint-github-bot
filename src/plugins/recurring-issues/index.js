@@ -22,7 +22,10 @@ The next scheduled release will occur on ${releaseDate.format("dddd, MMMM Do, YY
 - [ ] Remove the 'tsc agenda' label on this issue
 - [ ] Review open pull requests and merge any that are [ready](https://eslint.org/docs/maintainer-guide/pullrequests#when-to-merge-a-pull-request)
 - [ ] Start the release on [Jenkins](https://jenkins.eslint.org)
-- [ ] Update the release blog post with a "Highlights" section
+- [ ] Update the release blog post:
+    - [ ] Add a "Highlights" section for any noteworthy changes.
+    - [ ] In the \`authors\` frontmatter, replace \`eslintbot\` with your GitHub username.
+    - [ ] Remove the \`draft: true\` line in frontmatter.
 - [ ] Make a release announcement on Twitter
 - [ ] Make a release announcement in the Discord '#announcements' channel
 - [ ] Add a comment to this issue saying the release is out
@@ -43,7 +46,10 @@ Typically Monday for regular releases; two days after patch releases.
 
 - [ ] Resolve the regression by merging any necessary fixes
 - [ ] Start the release on [Jenkins](https://jenkins.eslint.org)
-- [ ] Update the release blog post with a "Highlights" section
+- [ ] Update the release blog post:
+    - [ ] Add a "Highlights" section for any noteworthy changes.
+    - [ ] In the \`authors\` frontmatter, replace \`eslintbot\` with your GitHub username.
+    - [ ] Remove the \`draft: true\` line in frontmatter.
 - [ ] Make a release announcement on Twitter
 - [ ] Make a release announcement in the Discord '#announcements' channel
 - [ ] Add a comment to this issue saying the release is out
