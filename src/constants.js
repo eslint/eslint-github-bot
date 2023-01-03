@@ -6,5 +6,4 @@
 "use strict";
 
 module.exports = {
-    NEEDS_TRIAGE_COLUMN_ID: 11153344
 };
