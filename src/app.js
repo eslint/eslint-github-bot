@@ -33,7 +33,6 @@ const enabledPlugins = new Set([
     "commitMessage",
     "issueArchiver",
     "needsInfo",
-    "triage",
     "recurringIssues",
     "releaseMonitor",
     "wip"

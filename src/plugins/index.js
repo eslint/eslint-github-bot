@@ -20,7 +20,6 @@ module.exports = {
     issueArchiver: require("./issue-archiver"),
     prReadyToMerge: require("./pr-ready-to-merge"),
     needsInfo: require("./needs-info"),
-    triage: require("./triage"),
     recurringIssues: require("./recurring-issues"),
     releaseMonitor: require("./release-monitor"),
     wip: require("./wip")
