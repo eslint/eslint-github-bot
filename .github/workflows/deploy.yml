@@ -18,5 +18,6 @@ jobs:
       - name: Push to dokku
         uses: dokku/github-action@master
         with:
+          branch: main
           git_remote_url: 'ssh://dokku@github-bot.eslint.org/eslint-github-bot'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
