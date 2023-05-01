@@ -33,7 +33,7 @@
     "eslint-config-eslint": "^7.0.0",
     "eslint-plugin-node": "^11.1.0",
     "jest": "^26.1.0",
-    "lint-staged": "^12.5.0",
+    "lint-staged": "^13.2.1",
     "nock": "^10.0.2",
     "yorkie": "^2.0.0"
   },
