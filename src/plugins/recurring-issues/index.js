@@ -22,7 +22,7 @@ The next scheduled release will occur on ${releaseDate.format("dddd, MMMM Do, YY
 - [ ] Remove the 'tsc agenda' label on this issue
 - [ ] Review open pull requests and merge any that are [ready](https://eslint.org/docs/maintainer-guide/pullrequests#when-to-merge-a-pull-request)
 - [ ] Release \`@eslint/js\` to match the upcoming \`eslint\` version in [Jenkins](https://jenkins.eslint.org)
-- [ ] Verify if there are other packages (i.e., \`espree\`, \`eslint-scope\`, \`eslint-visitor-keys\`) that need to be released first
+- [ ] Verify if there are other packages (i.e., \`espree\`, \`eslint-scope\`, \`eslint-visitor-keys\`, \`@eslint/eslintrc\`) that need to be released first
 - [ ] Update \`package.json\` in the \`eslint\` repo with new versions from the preceding steps (create and merge a pull request)
 - [ ] Start the release on [Jenkins](https://jenkins.eslint.org)
 - [ ] Update the release blog post:
