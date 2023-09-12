@@ -726,7 +726,7 @@ describe("release-monitor", () => {
                         },
                         pull_request: {
                             number: 1,
-                            title: "New: add 1"
+                            title: "Fix: add 1"
                         },
                         repository: {
                             name: "repo-test",

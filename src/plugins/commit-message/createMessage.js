@@ -17,12 +17,11 @@ const ERROR_MESSAGES = {
 /**
  * Create a comment message body with the error details
  * @param {Array<string>} errors list of the error codes
- * @param {boolean} isTitle whether it is for title or the commit message
  * @param {string} username username of the PR author
  * @returns {string} the message to comment
  * @private
  */
-module.exports = function commentMessage(errors, isTitle, username) {
+module.exports = function commentMessage(errors, username) {
     const errorMessages = [];
 
     errors.forEach(err => {
@@ -33,11 +32,11 @@ module.exports = function commentMessage(errors, isTitle, username) {
 
     return `Hi @${username}!, thanks for the Pull Request
 
-The **${isTitle ? "pull request title" : "first commit message"}** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 ${errorMessages.join("\n")}
 
-**To Fix:** You can fix this problem by ${isTitle ? "clicking 'Edit' next to the pull request title at the top of this page." : "running `git commit --amend`, editing your commit message, and then running `git push -f` to update this pull request."}
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 `;

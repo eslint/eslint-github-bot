@@ -118,7 +118,7 @@ describe("commit-message", () => {
 
     ["opened", "reopened", "synchronize", "edited"].forEach(action => {
         describe(`pull request ${action}`, () => {
-            test("Posts failure status if commit message is not correct", async () => {
+            test("Posts failure status if PR title is not correct", async () => {
                 mockSingleCommitWithMessage("non standard commit message");
 
                 const nockScope = nock("https://api.github.com")
@@ -132,12 +132,45 @@ describe("commit-message", () => {
                     })
                     .reply(200);
 
-                await emitBotEvent(bot, { action });
+                await emitBotEvent(bot, {
+                    action,
+                    pull_request: {
+                        number: 1,
+                        title: "non standard commit message",
+                        user: { login: "user-a" }
+                    }
+                });
                 expect(nockScope.isDone()).toBeTruthy();
                 expect(nockScope2.isDone()).toBeTruthy();
             });
 
-            test("Posts success status if commit message is correct", async () => {
+            test("Posts failure status if PR title is not correct even when the first commit message is correct", async () => {
+                mockSingleCommitWithMessage("feat: standard commit message");
+
+                const nockScope = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "failure")
+                    .reply(201);
+
+                const nockScope2 = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/issues/1/comments", req => {
+                        expect(req.body).toMatchSnapshot();
+                        return true;
+                    })
+                    .reply(200);
+
+                await emitBotEvent(bot, {
+                    action,
+                    pull_request: {
+                        number: 1,
+                        title: "non standard commit message",
+                        user: { login: "user-a" }
+                    }
+                });
+                expect(nockScope.isDone()).toBeTruthy();
+                expect(nockScope2.isDone()).toBeTruthy();
+            });
+
+            test("Posts success status if PR title is correct", async () => {
                 mockSingleCommitWithMessage("feat: standard commit message");
                 const labelsScope = mockLabels(["feature"]);
 
@@ -145,24 +178,58 @@ describe("commit-message", () => {
                     .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
                     .reply(201);
 
-                await emitBotEvent(bot, { action });
+                await emitBotEvent(bot, {
+                    action,
+                    pull_request: {
+                        number: 1,
+                        title: "feat: standard commit message",
+                        user: { login: "user-a" }
+                    }
+                });
                 expect(nockScope.isDone()).toBeTruthy();
                 expect(labelsScope.isDone()).toBeTruthy();
             });
 
-            test("Posts success status if commit message beginning with `Revert`", async () => {
+            test("Posts success status if PR title is correct even when the first commit message is not correct", async () => {
+                mockSingleCommitWithMessage("non standard commit message");
+                const labelsScope = mockLabels(["feature"]);
+
+                const nockScope = nock("https://api.github.com")
+                    .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
+                    .reply(201);
+
+                await emitBotEvent(bot, {
+                    action,
+                    pull_request: {
+                        number: 1,
+                        title: "feat: standard commit message",
+                        user: { login: "user-a" }
+                    }
+                });
+                expect(nockScope.isDone()).toBeTruthy();
+                expect(labelsScope.isDone()).toBeTruthy();
+            });
+
+            test("Posts success status if PR title begins with `Revert`", async () => {
                 mockSingleCommitWithMessage("Revert \"chore: add test for commit tag Revert\"");
 
                 const nockScope = nock("https://api.github.com")
                     .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
                     .reply(201);
 
-                await emitBotEvent(bot, { action });
+                await emitBotEvent(bot, {
+                    action,
+                    pull_request: {
+                        number: 1,
+                        title: "Revert \"chore: add test for commit tag Revert\"",
+                        user: { login: "user-a" }
+                    }
+                });
                 expect(nockScope.isDone()).toBeTruthy();
             });
 
-            test("Posts failure status if the commit message is longer than 72 chars and don't set labels", async () => {
-                mockSingleCommitWithMessage("feat!: standard commit message very very very long message and its beond 72");
+            test("Posts failure status if the PR title is longer than 72 chars and don't set labels", async () => {
+                mockSingleCommitWithMessage("feat!: standard commit message very very very long message and its beyond 72");
 
                 const labelsScope = mockLabels(["feature", "breaking"]);
                 const nockScope = nock("https://api.github.com")
@@ -176,26 +243,17 @@ describe("commit-message", () => {
                     })
                     .reply(200);
 
-                await emitBotEvent(bot, { action });
+                await emitBotEvent(bot, {
+                    action,
+                    pull_request: {
+                        number: 1,
+                        title: "feat!: standard commit message very very very long message and its beyond 72",
+                        user: { login: "user-a" }
+                    }
+                });
                 expect(nockScope.isDone()).toBeTruthy();
                 expect(nockScope2.isDone()).toBeTruthy();
                 expect(labelsScope.isDone()).toBeFalsy();
-            });
-
-            test("Posts success status if the commit message is longer than 72 chars after the newline", async () => {
-                mockSingleCommitWithMessage(
-                    `fix: foo\n\n${"A".repeat(72)}`
-                );
-
-                const labelsScope = mockLabels(["bug"]);
-
-                const nockScope = nock("https://api.github.com")
-                    .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
-                    .reply(201);
-
-                await emitBotEvent(bot, { action });
-                expect(nockScope.isDone()).toBeTruthy();
-                expect(labelsScope.isDone()).toBeTruthy();
             });
 
             test("Posts success status if there are multiple commit messages and the title is valid", async () => {
@@ -266,7 +324,7 @@ describe("commit-message", () => {
             ].forEach(prefix => {
                 const message = `${prefix}foo`;
 
-                test(`Posts failure status if the commit message has invalid tag prefix: "${prefix}"`, async () => {
+                test(`Posts failure status if the PR title has invalid tag prefix: "${prefix}"`, async () => {
                     mockSingleCommitWithMessage(message);
 
                     const nockScope = nock("https://api.github.com")
@@ -280,7 +338,7 @@ describe("commit-message", () => {
                         })
                         .reply(200);
 
-                    await emitBotEvent(bot, { action });
+                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: message, user: { login: "user-a" } } });
                     expect(nockScope.isDone()).toBeTruthy();
                     expect(nockScope2.isDone()).toBeTruthy();
                 });
@@ -309,7 +367,7 @@ describe("commit-message", () => {
             TAG_LABELS.forEach((labels, prefix) => {
                 const message = `${prefix} foo`;
 
-                test(`Posts success status if the commit message has valid tag prefix: "${prefix}"`, async () => {
+                test(`Posts success status if the PR title has valid tag prefix: "${prefix}"`, async () => {
                     mockSingleCommitWithMessage(message);
 
                     const labelsScope = mockLabels(labels);
@@ -317,7 +375,7 @@ describe("commit-message", () => {
                         .post("/repos/test/repo-test/statuses/first-sha", req => req.state === "success")
                         .reply(201);
 
-                    await emitBotEvent(bot, { action });
+                    await emitBotEvent(bot, { action, pull_request: { number: 1, title: message, user: { login: "user-a" } } });
                     expect(nockScope.isDone()).toBeTruthy();
                     expect(labelsScope.isDone()).toBeTruthy();
                 });

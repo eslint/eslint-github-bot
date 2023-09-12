@@ -1,9 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`commit-message pull request edited Posts failure status if PR title is not correct 1`] = `
+"Hi @user-a!, thanks for the Pull Request
+
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
+
+- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- There should be a space following the initial tag and colon, for example 'feat: Message'.
+
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
+
+Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
+"
+`;
+
+exports[`commit-message pull request edited Posts failure status if PR title is not correct even when the first commit message is correct 1`] = `
+"Hi @user-a!, thanks for the Pull Request
+
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
+
+- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- There should be a space following the initial tag and colon, for example 'feat: Message'.
+
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
+
+Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
+"
+`;
+
 exports[`commit-message pull request edited Posts failure status if PR with multiple commits has invalid tag prefix in the title: " New: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -18,7 +46,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request edited Posts failure status if PR with multiple commits has invalid tag prefix in the title: ": " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -33,7 +61,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request edited Posts failure status if PR with multiple commits has invalid tag prefix in the title: "Foo: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -48,7 +76,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request edited Posts failure status if PR with multiple commits has invalid tag prefix in the title: "New " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -63,7 +91,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request edited Posts failure status if PR with multiple commits has invalid tag prefix in the title: "New : " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -78,7 +106,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request edited Posts failure status if PR with multiple commits has invalid tag prefix in the title: "New:" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -93,7 +121,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request edited Posts failure status if PR with multiple commits has invalid tag prefix in the title: "Neww: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -108,7 +136,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request edited Posts failure status if PR with multiple commits has invalid tag prefix in the title: "Revert: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -123,7 +151,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request edited Posts failure status if PR with multiple commits has invalid tag prefix in the title: "feat" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -137,7 +165,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request edited Posts failure status if PR with multiple commits has invalid tag prefix in the title: "nNew: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -151,7 +179,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request edited Posts failure status if PR with multiple commits has invalid tag prefix in the title: "new: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 
@@ -161,189 +189,175 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 "
 `;
 
-exports[`commit-message pull request edited Posts failure status if commit message is not correct 1`] = `
+exports[`commit-message pull request edited Posts failure status if the PR title has invalid tag prefix: " New: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
-
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
-- There should be a space following the initial tag and colon, for example 'feat: Message'.
-
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
-
-Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
-"
-`;
-
-exports[`commit-message pull request edited Posts failure status if the commit message has invalid tag prefix: " New: " 1`] = `
-"Hi @user-a!, thanks for the Pull Request
-
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request edited Posts failure status if the commit message has invalid tag prefix: ": " 1`] = `
+exports[`commit-message pull request edited Posts failure status if the PR title has invalid tag prefix: ": " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request edited Posts failure status if the commit message has invalid tag prefix: "Foo: " 1`] = `
+exports[`commit-message pull request edited Posts failure status if the PR title has invalid tag prefix: "Foo: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request edited Posts failure status if the commit message has invalid tag prefix: "New " 1`] = `
+exports[`commit-message pull request edited Posts failure status if the PR title has invalid tag prefix: "New " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request edited Posts failure status if the commit message has invalid tag prefix: "New : " 1`] = `
+exports[`commit-message pull request edited Posts failure status if the PR title has invalid tag prefix: "New : " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request edited Posts failure status if the commit message has invalid tag prefix: "New:" 1`] = `
+exports[`commit-message pull request edited Posts failure status if the PR title has invalid tag prefix: "New:" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request edited Posts failure status if the commit message has invalid tag prefix: "Neww: " 1`] = `
+exports[`commit-message pull request edited Posts failure status if the PR title has invalid tag prefix: "Neww: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request edited Posts failure status if the commit message has invalid tag prefix: "Revert: " 1`] = `
+exports[`commit-message pull request edited Posts failure status if the PR title has invalid tag prefix: "Revert: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request edited Posts failure status if the commit message has invalid tag prefix: "feat" 1`] = `
+exports[`commit-message pull request edited Posts failure status if the PR title has invalid tag prefix: "feat" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request edited Posts failure status if the commit message has invalid tag prefix: "nNew: " 1`] = `
+exports[`commit-message pull request edited Posts failure status if the PR title has invalid tag prefix: "nNew: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request edited Posts failure status if the commit message has invalid tag prefix: "new: " 1`] = `
+exports[`commit-message pull request edited Posts failure status if the PR title has invalid tag prefix: "new: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request edited Posts failure status if the commit message is longer than 72 chars and don't set labels 1`] = `
+exports[`commit-message pull request edited Posts failure status if the PR title is longer than 72 chars and don't set labels 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The length of the commit message must be less than or equal to 72
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -352,7 +366,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request edited Posts failure status if there are multiple commit messages and the title is invalid 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -366,9 +380,37 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request edited Posts failure status if there are multiple commit messages and the title is too long 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The length of the commit message must be less than or equal to 72
+
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
+
+Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
+"
+`;
+
+exports[`commit-message pull request opened Posts failure status if PR title is not correct 1`] = `
+"Hi @user-a!, thanks for the Pull Request
+
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
+
+- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- There should be a space following the initial tag and colon, for example 'feat: Message'.
+
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
+
+Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
+"
+`;
+
+exports[`commit-message pull request opened Posts failure status if PR title is not correct even when the first commit message is correct 1`] = `
+"Hi @user-a!, thanks for the Pull Request
+
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
+
+- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
@@ -379,7 +421,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request opened Posts failure status if PR with multiple commits has invalid tag prefix in the title: " New: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -394,7 +436,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request opened Posts failure status if PR with multiple commits has invalid tag prefix in the title: ": " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -409,7 +451,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request opened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "Foo: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -424,7 +466,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request opened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "New " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -439,7 +481,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request opened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "New : " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -454,7 +496,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request opened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "New:" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -469,7 +511,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request opened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "Neww: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -484,7 +526,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request opened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "Revert: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -499,7 +541,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request opened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "feat" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -513,7 +555,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request opened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "nNew: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -527,7 +569,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request opened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "new: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 
@@ -537,189 +579,175 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 "
 `;
 
-exports[`commit-message pull request opened Posts failure status if commit message is not correct 1`] = `
+exports[`commit-message pull request opened Posts failure status if the PR title has invalid tag prefix: " New: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
-
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
-- There should be a space following the initial tag and colon, for example 'feat: Message'.
-
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
-
-Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
-"
-`;
-
-exports[`commit-message pull request opened Posts failure status if the commit message has invalid tag prefix: " New: " 1`] = `
-"Hi @user-a!, thanks for the Pull Request
-
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request opened Posts failure status if the commit message has invalid tag prefix: ": " 1`] = `
+exports[`commit-message pull request opened Posts failure status if the PR title has invalid tag prefix: ": " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request opened Posts failure status if the commit message has invalid tag prefix: "Foo: " 1`] = `
+exports[`commit-message pull request opened Posts failure status if the PR title has invalid tag prefix: "Foo: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request opened Posts failure status if the commit message has invalid tag prefix: "New " 1`] = `
+exports[`commit-message pull request opened Posts failure status if the PR title has invalid tag prefix: "New " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request opened Posts failure status if the commit message has invalid tag prefix: "New : " 1`] = `
+exports[`commit-message pull request opened Posts failure status if the PR title has invalid tag prefix: "New : " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request opened Posts failure status if the commit message has invalid tag prefix: "New:" 1`] = `
+exports[`commit-message pull request opened Posts failure status if the PR title has invalid tag prefix: "New:" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request opened Posts failure status if the commit message has invalid tag prefix: "Neww: " 1`] = `
+exports[`commit-message pull request opened Posts failure status if the PR title has invalid tag prefix: "Neww: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request opened Posts failure status if the commit message has invalid tag prefix: "Revert: " 1`] = `
+exports[`commit-message pull request opened Posts failure status if the PR title has invalid tag prefix: "Revert: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request opened Posts failure status if the commit message has invalid tag prefix: "feat" 1`] = `
+exports[`commit-message pull request opened Posts failure status if the PR title has invalid tag prefix: "feat" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request opened Posts failure status if the commit message has invalid tag prefix: "nNew: " 1`] = `
+exports[`commit-message pull request opened Posts failure status if the PR title has invalid tag prefix: "nNew: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request opened Posts failure status if the commit message has invalid tag prefix: "new: " 1`] = `
+exports[`commit-message pull request opened Posts failure status if the PR title has invalid tag prefix: "new: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request opened Posts failure status if the commit message is longer than 72 chars and don't set labels 1`] = `
+exports[`commit-message pull request opened Posts failure status if the PR title is longer than 72 chars and don't set labels 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The length of the commit message must be less than or equal to 72
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -728,7 +756,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request opened Posts failure status if there are multiple commit messages and the title is invalid 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -742,9 +770,37 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request opened Posts failure status if there are multiple commit messages and the title is too long 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The length of the commit message must be less than or equal to 72
+
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
+
+Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
+"
+`;
+
+exports[`commit-message pull request reopened Posts failure status if PR title is not correct 1`] = `
+"Hi @user-a!, thanks for the Pull Request
+
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
+
+- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- There should be a space following the initial tag and colon, for example 'feat: Message'.
+
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
+
+Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
+"
+`;
+
+exports[`commit-message pull request reopened Posts failure status if PR title is not correct even when the first commit message is correct 1`] = `
+"Hi @user-a!, thanks for the Pull Request
+
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
+
+- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
@@ -755,7 +811,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request reopened Posts failure status if PR with multiple commits has invalid tag prefix in the title: " New: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -770,7 +826,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request reopened Posts failure status if PR with multiple commits has invalid tag prefix in the title: ": " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -785,7 +841,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request reopened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "Foo: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -800,7 +856,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request reopened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "New " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -815,7 +871,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request reopened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "New : " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -830,7 +886,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request reopened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "New:" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -845,7 +901,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request reopened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "Neww: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -860,7 +916,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request reopened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "Revert: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -875,7 +931,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request reopened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "feat" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -889,7 +945,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request reopened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "nNew: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -903,7 +959,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request reopened Posts failure status if PR with multiple commits has invalid tag prefix in the title: "new: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 
@@ -913,189 +969,175 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 "
 `;
 
-exports[`commit-message pull request reopened Posts failure status if commit message is not correct 1`] = `
+exports[`commit-message pull request reopened Posts failure status if the PR title has invalid tag prefix: " New: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
-
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
-- There should be a space following the initial tag and colon, for example 'feat: Message'.
-
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
-
-Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
-"
-`;
-
-exports[`commit-message pull request reopened Posts failure status if the commit message has invalid tag prefix: " New: " 1`] = `
-"Hi @user-a!, thanks for the Pull Request
-
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request reopened Posts failure status if the commit message has invalid tag prefix: ": " 1`] = `
+exports[`commit-message pull request reopened Posts failure status if the PR title has invalid tag prefix: ": " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request reopened Posts failure status if the commit message has invalid tag prefix: "Foo: " 1`] = `
+exports[`commit-message pull request reopened Posts failure status if the PR title has invalid tag prefix: "Foo: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request reopened Posts failure status if the commit message has invalid tag prefix: "New " 1`] = `
+exports[`commit-message pull request reopened Posts failure status if the PR title has invalid tag prefix: "New " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request reopened Posts failure status if the commit message has invalid tag prefix: "New : " 1`] = `
+exports[`commit-message pull request reopened Posts failure status if the PR title has invalid tag prefix: "New : " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request reopened Posts failure status if the commit message has invalid tag prefix: "New:" 1`] = `
+exports[`commit-message pull request reopened Posts failure status if the PR title has invalid tag prefix: "New:" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request reopened Posts failure status if the commit message has invalid tag prefix: "Neww: " 1`] = `
+exports[`commit-message pull request reopened Posts failure status if the PR title has invalid tag prefix: "Neww: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request reopened Posts failure status if the commit message has invalid tag prefix: "Revert: " 1`] = `
+exports[`commit-message pull request reopened Posts failure status if the PR title has invalid tag prefix: "Revert: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request reopened Posts failure status if the commit message has invalid tag prefix: "feat" 1`] = `
+exports[`commit-message pull request reopened Posts failure status if the PR title has invalid tag prefix: "feat" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request reopened Posts failure status if the commit message has invalid tag prefix: "nNew: " 1`] = `
+exports[`commit-message pull request reopened Posts failure status if the PR title has invalid tag prefix: "nNew: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request reopened Posts failure status if the commit message has invalid tag prefix: "new: " 1`] = `
+exports[`commit-message pull request reopened Posts failure status if the PR title has invalid tag prefix: "new: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request reopened Posts failure status if the commit message is longer than 72 chars and don't set labels 1`] = `
+exports[`commit-message pull request reopened Posts failure status if the PR title is longer than 72 chars and don't set labels 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The length of the commit message must be less than or equal to 72
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1104,7 +1146,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request reopened Posts failure status if there are multiple commit messages and the title is invalid 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -1118,9 +1160,37 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request reopened Posts failure status if there are multiple commit messages and the title is too long 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The length of the commit message must be less than or equal to 72
+
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
+
+Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
+"
+`;
+
+exports[`commit-message pull request synchronize Posts failure status if PR title is not correct 1`] = `
+"Hi @user-a!, thanks for the Pull Request
+
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
+
+- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- There should be a space following the initial tag and colon, for example 'feat: Message'.
+
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
+
+Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
+"
+`;
+
+exports[`commit-message pull request synchronize Posts failure status if PR title is not correct even when the first commit message is correct 1`] = `
+"Hi @user-a!, thanks for the Pull Request
+
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
+
+- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
@@ -1131,7 +1201,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request synchronize Posts failure status if PR with multiple commits has invalid tag prefix in the title: " New: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -1146,7 +1216,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request synchronize Posts failure status if PR with multiple commits has invalid tag prefix in the title: ": " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -1161,7 +1231,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request synchronize Posts failure status if PR with multiple commits has invalid tag prefix in the title: "Foo: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -1176,7 +1246,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request synchronize Posts failure status if PR with multiple commits has invalid tag prefix in the title: "New " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -1191,7 +1261,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request synchronize Posts failure status if PR with multiple commits has invalid tag prefix in the title: "New : " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -1206,7 +1276,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request synchronize Posts failure status if PR with multiple commits has invalid tag prefix in the title: "New:" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -1221,7 +1291,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request synchronize Posts failure status if PR with multiple commits has invalid tag prefix in the title: "Neww: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -1236,7 +1306,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request synchronize Posts failure status if PR with multiple commits has invalid tag prefix in the title: "Revert: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -1251,7 +1321,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request synchronize Posts failure status if PR with multiple commits has invalid tag prefix in the title: "feat" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -1265,7 +1335,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request synchronize Posts failure status if PR with multiple commits has invalid tag prefix in the title: "nNew: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -1279,7 +1349,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request synchronize Posts failure status if PR with multiple commits has invalid tag prefix in the title: "new: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 
@@ -1289,189 +1359,175 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 "
 `;
 
-exports[`commit-message pull request synchronize Posts failure status if commit message is not correct 1`] = `
+exports[`commit-message pull request synchronize Posts failure status if the PR title has invalid tag prefix: " New: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
-
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
-- There should be a space following the initial tag and colon, for example 'feat: Message'.
-
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
-
-Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
-"
-`;
-
-exports[`commit-message pull request synchronize Posts failure status if the commit message has invalid tag prefix: " New: " 1`] = `
-"Hi @user-a!, thanks for the Pull Request
-
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request synchronize Posts failure status if the commit message has invalid tag prefix: ": " 1`] = `
+exports[`commit-message pull request synchronize Posts failure status if the PR title has invalid tag prefix: ": " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request synchronize Posts failure status if the commit message has invalid tag prefix: "Foo: " 1`] = `
+exports[`commit-message pull request synchronize Posts failure status if the PR title has invalid tag prefix: "Foo: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request synchronize Posts failure status if the commit message has invalid tag prefix: "New " 1`] = `
+exports[`commit-message pull request synchronize Posts failure status if the PR title has invalid tag prefix: "New " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request synchronize Posts failure status if the commit message has invalid tag prefix: "New : " 1`] = `
+exports[`commit-message pull request synchronize Posts failure status if the PR title has invalid tag prefix: "New : " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request synchronize Posts failure status if the commit message has invalid tag prefix: "New:" 1`] = `
+exports[`commit-message pull request synchronize Posts failure status if the PR title has invalid tag prefix: "New:" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request synchronize Posts failure status if the commit message has invalid tag prefix: "Neww: " 1`] = `
+exports[`commit-message pull request synchronize Posts failure status if the PR title has invalid tag prefix: "Neww: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request synchronize Posts failure status if the commit message has invalid tag prefix: "Revert: " 1`] = `
+exports[`commit-message pull request synchronize Posts failure status if the PR title has invalid tag prefix: "Revert: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request synchronize Posts failure status if the commit message has invalid tag prefix: "feat" 1`] = `
+exports[`commit-message pull request synchronize Posts failure status if the PR title has invalid tag prefix: "feat" 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request synchronize Posts failure status if the commit message has invalid tag prefix: "nNew: " 1`] = `
+exports[`commit-message pull request synchronize Posts failure status if the PR title has invalid tag prefix: "nNew: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request synchronize Posts failure status if the commit message has invalid tag prefix: "new: " 1`] = `
+exports[`commit-message pull request synchronize Posts failure status if the PR title has invalid tag prefix: "new: " 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
 `;
 
-exports[`commit-message pull request synchronize Posts failure status if the commit message is longer than 72 chars and don't set labels 1`] = `
+exports[`commit-message pull request synchronize Posts failure status if the PR title is longer than 72 chars and don't set labels 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **first commit message** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The length of the commit message must be less than or equal to 72
 
-**To Fix:** You can fix this problem by running \`git commit --amend\`, editing your commit message, and then running \`git push -f\` to update this pull request.
+**To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
 Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
 "
@@ -1480,7 +1536,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request synchronize Posts failure status if there are multiple commit messages and the title is invalid 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
@@ -1494,7 +1550,7 @@ Read more about contributing to ESLint [here](https://eslint.org/docs/developer-
 exports[`commit-message pull request synchronize Posts failure status if there are multiple commit messages and the title is too long 1`] = `
 "Hi @user-a!, thanks for the Pull Request
 
-The **pull request title** isn't properly formatted. We ask that you update the message to match this format, as we use it to generate changelogs and automate releases.
+The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
 - The length of the commit message must be less than or equal to 72
 

@@ -10,7 +10,6 @@
 // Requirements
 //-----------------------------------------------------------------------------
 
-const { getCommitMessageForPR } = require("../utils");
 const commentMessage = require("./createMessage");
 const { TAG_LABELS } = require("./util");
 
@@ -104,16 +103,14 @@ async function processCommitMessage(context) {
     }
 
     const allCommits = await github.pullRequests.listCommits(context.issue());
-    const messageToCheck = getCommitMessageForPR(allCommits.data, payload.pull_request);
+    const messageToCheck = payload.pull_request.title;
     const errors = getCommitMessageErrors(messageToCheck);
     let description;
     let state;
 
     if (errors.length === 0) {
         state = "success";
-        description = allCommits.data.length === 1
-            ? "Commit message follows guidelines"
-            : "PR title follows commit message guidelines";
+        description = "PR title follows commit message guidelines";
 
         const labels = getCommitMessageLabels(messageToCheck);
 
@@ -123,12 +120,10 @@ async function processCommitMessage(context) {
 
     } else {
         state = "failure";
-        description = allCommits.data.length === 1
-            ? "Commit message doesn't follow guidelines"
-            : "PR title doesn't follow commit message guidelines";
+        description = "PR title doesn't follow commit message guidelines";
     }
 
-    // only check first commit message
+    // create status on the last commit
     await github.repos.createStatus(
         context.repo({
             sha: allCommits.data[allCommits.data.length - 1].sha,
@@ -141,7 +136,7 @@ async function processCommitMessage(context) {
 
     if (state === "failure") {
         await github.issues.createComment(context.issue({
-            body: commentMessage(errors, allCommits.data.length !== 1, payload.pull_request.user.login)
+            body: commentMessage(errors, payload.pull_request.user.login)
         }));
     }
 
