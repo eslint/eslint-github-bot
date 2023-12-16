@@ -32,7 +32,7 @@ function pluckLatestCommitSha(allCommits) {
 /**
  * Gets all the open PR
  * @param {Object} context context object
- * @returns {Promise} collection of pr objects
+ * @returns {Promise<any>} collection of pr objects
  * @private
  */
 function getAllOpenPRs(context) {
@@ -54,7 +54,7 @@ function getAllOpenPRs(context) {
  * @param {string} options.sha sha for the commit
  * @param {string} options.description description for the status
  * @param {string} options.targetUrl The URL that the status should link to
- * @returns {Promise} Resolves when the status is created on the PR
+ * @returns {Promise<void>} Resolves when the status is created on the PR
  * @private
  */
 function createStatusOnPR({ context, state, sha, description, targetUrl }) {
@@ -87,10 +87,10 @@ async function getAllCommitsForPR({ context, pr }) {
 
 /**
  * Creates an appropriate status on a PR, based on the current patch release state and the PR type.
- * * If there is no pending patch release, creates a success status with the message "No patch release is pending".
- * * If there is a pending patch release and this PR is semver-patch, creates a success status with the message
+ * If there is no pending patch release, creates a success status with the message "No patch release is pending".
+ * If there is a pending patch release and this PR is semver-patch, creates a success status with the message
  * "This change is semver-patch" and a link to the release issue.
- * * If there is a pending patch release and this PR is not semver-patch, creates a pending status with the message
+ * If there is a pending patch release and this PR is not semver-patch, creates a pending status with the message
  * "A patch release is pending" and a link to the release issue.
  * @param {Object} options Configure the status
  * @param {Object} options.context Probot context object
@@ -134,7 +134,7 @@ async function createAppropriateStatusForPR({ context, pr, pendingReleaseIssueUr
  * @param {Object} options Configure the status
  * @param {Object} options.context probot context object
  * @param {string|null} options.pendingReleaseIssueUrl A link to the pending release issue, if it exists
- * @returns {Promise} Resolves when the status is created on the PR
+ * @returns {Promise<void>} Resolves when the status is created on the PR
  * @private
  */
 async function createStatusOnAllPRs({ context, pendingReleaseIssueUrl }) {
@@ -172,7 +172,7 @@ function isPostReleaseLabel({ name }) {
 /**
  * Handler for issue label event
  * @param {Object} context probot context object
- * @returns {Promise} promise
+ * @returns {Promise<void>} promise
  * @private
  */
 async function issueLabeledHandler(context) {
@@ -189,7 +189,7 @@ async function issueLabeledHandler(context) {
 /**
  * Handler for issue close event
  * @param {Object} context probot context object
- * @returns {Promise} promise
+ * @returns {Promise<void>} promise
  * @private
  */
 async function issueCloseHandler(context) {
@@ -206,7 +206,7 @@ async function issueCloseHandler(context) {
 /**
  * Handler for pull request open and reopen event
  * @param {Object} context probot context object
- * @returns {Promise} promise
+ * @returns {Promise<void>} promise
  * @private
  */
 async function prOpenHandler(context) {

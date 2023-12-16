@@ -25,6 +25,7 @@ const RELEASE_LABEL = "release";
  *          ]
  *      }
  * ];
+ *
  * @param {Array<Object>} mockData data for PR
  * @returns {undefined}
  * @private

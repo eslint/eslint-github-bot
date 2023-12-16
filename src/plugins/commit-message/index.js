@@ -85,7 +85,7 @@ function getCommitMessageLabels(message) {
 /**
  * If the first commit message is not legal then it adds a comment
  * @param {Object} context context given by the probot
- * @returns {Promise.<void>} promise
+ * @returns {Promise<void>} promise
  * @private
  */
 async function processCommitMessage(context) {

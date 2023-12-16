@@ -7,6 +7,7 @@
  * hi
  *
  * [//]: # (hi)
+ *
  * @author Gyandeep Singh
  */
 
@@ -98,7 +99,7 @@ function processComments(comments) {
 /**
  * Checks for duplicates comments and removes all the duplicates leaving the last one
  * @param {Object} context context given by the probot
- * @returns {Promise.<void>} done when comments are removed
+ * @returns {Promise<void>} done when comments are removed
  * @private
  */
 async function duplicateCheck(context) {
@@ -123,6 +124,7 @@ async function duplicateCheck(context) {
  * hi
  *
  * [//]: # (hi)
+ *
  */
 
 module.exports = robot => {

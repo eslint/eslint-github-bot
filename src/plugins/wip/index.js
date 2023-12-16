@@ -16,7 +16,7 @@ const DO_NOT_MERGE_LABEL = "do not merge";
  * @param {string} options.sha sha for the commit
  * @param {string} options.description description for the status
  * @param {string} options.targetUrl The URL that the status should link to
- * @returns {Promise} Resolves when the status is created on the PR
+ * @returns {Promise<void>} Resolves when the status is created on the PR
  * @private
  */
 function createStatusOnPR({ context, state, sha, description, targetUrl }) {
@@ -35,7 +35,7 @@ function createStatusOnPR({ context, state, sha, description, targetUrl }) {
  * Creates a pending status on the PR to indicate it is a WIP.
  * @param {Object} context Probot context object
  * @param {string} sha The SHA hash representing the latest commit to the PR.
- * @returns {Promise} A Promise that will fulfill when the status check is created
+ * @returns {Promise<void>} A Promise that will fulfill when the status check is created
  */
 function createPendingWipStatusOnPR(context, sha) {
     return createStatusOnPR({
@@ -50,7 +50,7 @@ function createPendingWipStatusOnPR(context, sha) {
  * Creates a pending status on the PR to indicate it is WIP.
  * @param {Object} context Probot context object
  * @param {string} sha The SHA hash representing the latest commit to the PR.
- * @returns {Promise} A Promise that will fulfill when the status check is created
+ * @returns {Promise<void>} A Promise that will fulfill when the status check is created
  */
 function createSuccessWipStatusOnPR(context, sha) {
     return createStatusOnPR({
@@ -66,7 +66,7 @@ function createSuccessWipStatusOnPR(context, sha) {
  * If so, create a success wip status check.
  * @param {Object} context Probot context object
  * @param {string} sha Commit SHA hash associated with the status check
- * @returns {Promise} A Promise which will resolve when a success status check
+ * @returns {Promise<void>} A Promise which will resolve when a success status check
  * is created on the PR, or an immediately-resolved Promise if no status check
  * is needed.
  */
@@ -146,7 +146,7 @@ function prHasWipTitle(pr) {
  * Handler for PR events (opened, reopened, synchronize, edited, labeled,
  * unlabeled).
  * @param {Object} context probot context object
- * @returns {Promise} promise
+ * @returns {Promise<void>} promise
  * @private
  */
 async function prChangedHandler(context) {
