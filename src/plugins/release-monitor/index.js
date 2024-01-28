@@ -87,10 +87,10 @@ async function getAllCommitsForPR({ context, pr }) {
 
 /**
  * Creates an appropriate status on a PR, based on the current patch release state and the PR type.
- * If there is no pending patch release, creates a success status with the message "No patch release is pending".
- * If there is a pending patch release and this PR is semver-patch, creates a success status with the message
+ * * If there is no pending patch release, creates a success status with the message "No patch release is pending".
+ * * If there is a pending patch release and this PR is semver-patch, creates a success status with the message
  * "This change is semver-patch" and a link to the release issue.
- * If there is a pending patch release and this PR is not semver-patch, creates a pending status with the message
+ * * If there is a pending patch release and this PR is not semver-patch, creates a pending status with the message
  * "A patch release is pending" and a link to the release issue.
  * @param {Object} options Configure the status
  * @param {Object} options.context Probot context object
