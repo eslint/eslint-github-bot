@@ -53,7 +53,7 @@ function areUnitTestFilesPresent(files, repoUrl) {
 /**
  * Adds the triage label if the issue has no labels on it
  * @param {Object} context context given by the probot
- * @returns {Promise.<void>} promise
+ * @returns {Promise<void>} promise
  * @private
  */
 async function action(context) {

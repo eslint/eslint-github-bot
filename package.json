@@ -4,7 +4,7 @@
   "description": "Plugin based Github bot for ESLint",
   "main": "./src/app.js",
   "scripts": {
-    "lint": "eslint src tests .eslintrc.js",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "start": "node ./src/app.js",
     "test": "jest --colors --verbose --coverage"
@@ -28,9 +28,9 @@
     "probot-scheduler": "^1.0.3"
   },
   "devDependencies": {
-    "eslint": "^8.19.0",
-    "eslint-config-eslint": "^7.0.0",
-    "eslint-plugin-node": "^11.1.0",
+    "eslint": "^8.55.0",
+    "eslint-config-eslint": "^9.0.0",
+    "globals": "^13.24.0",
     "jest": "^26.1.0",
     "lint-staged": "^13.2.1",
     "nock": "^10.0.2",

@@ -11,7 +11,7 @@ const { getPullrequestBySha, labels } = require("./common");
  * Gets all the reviews for the PR number
  * @param {Object} context context given by the probot
  * @param {int} prId pull request number
- * @returns {Promise.<Array>} Resolves with all reviews collection
+ * @returns {Promise<Array>} Resolves with all reviews collection
  */
 async function getAllReviewsByPR(context, prId) {
     const { data: allReviews } = await context.github.pullRequests.getReviews(context.repo({
@@ -88,7 +88,7 @@ function isAtleastOneApproved(allReviewsMap) {
  * Check if the review on the PR is good or not
  * @param {Object} context context given by the probot
  * @param {string} sha git sha value
- * @returns {Promise.<boolean>} True if its good
+ * @returns {Promise<boolean>} True if its good
  */
 async function isPrReviewSuccess(context, sha) {
     const prObject = await getPullrequestBySha(context, sha);

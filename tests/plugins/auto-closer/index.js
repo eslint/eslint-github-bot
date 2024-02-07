@@ -64,8 +64,8 @@ function checkNockCommentRequest(issueNum, textMatch = /days/u) {
 
 /**
  * Triggers the schedule on which the bot runs.
- * @param {*} bot The bot to trigger a schedule on.
- * @returns {Promise} A promise to trigger the schedule.
+ * @param {any} bot The bot to trigger a schedule on.
+ * @returns {Promise<any>} A promise to trigger the schedule.
  */
 function triggerSchedule(bot) {
     return bot.receive({

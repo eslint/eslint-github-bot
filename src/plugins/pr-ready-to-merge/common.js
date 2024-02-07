@@ -17,7 +17,7 @@ const labels = {
 /**
  * Removes the approved label from the pull request
  * @param {Object} context context given by the probot
- * @returns {Promise} Promise that fulfills when the action is complete
+ * @returns {Promise<void>} Promise that fulfills when the action is complete
  */
 function removePrApprovedLabel(context) {
     return context.github.issues.removeLabel(context.issue({
@@ -28,7 +28,7 @@ function removePrApprovedLabel(context) {
 /**
  * Add the approved label to the pull request
  * @param {Object} context context given by the probot
- * @returns {Promise} Promise that fulfills when the action is complete
+ * @returns {Promise<void>} Promise that fulfills when the action is complete
  */
 function addPrApprovedLabel(context) {
     return context.github.issues.addLabels(context.issue({
@@ -42,7 +42,7 @@ function addPrApprovedLabel(context) {
  * will return the first one if their are multiple entries (which should be rare)
  * @param {Object} context context given by the probot
  * @param {string} sha git sha value
- * @returns {Promise.<Object|null>} Promise that fulfills when the action is complete
+ * @returns {Promise<Object | null>} Promise that fulfills when the action is complete
  */
 async function getPullrequestBySha(context, sha) {
     const { data: { items } } = await context.github.search.issues({
@@ -56,7 +56,7 @@ async function getPullrequestBySha(context, sha) {
  * Gets all the commits using the PR number
  * @param {Object} context context given by the probot
  * @param {int} prId pull request number
- * @returns {Promise.<Array>} Resolves with commit collection
+ * @returns {Promise<Array>} Resolves with commit collection
  */
 async function getAllCommitsByPR(context, prId) {
     const { data: commits } = await context.github.pullRequests.getCommits(context.repo({
