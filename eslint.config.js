@@ -1,19 +1,11 @@
 "use strict";
 
-const eslintConfigESLint = require("eslint-config-eslint");
+const eslintConfigESLint = require("eslint-config-eslint/cjs");
 const globals = require("globals");
 
 module.exports = [
     ...eslintConfigESLint,
     {
-        languageOptions: {
-            sourceType: "commonjs",
-            ecmaVersion: 2018,
-            globals: {
-                ...globals.node,
-                ...globals.es2015
-            }
-        },
         rules: {
             camelcase: ["error", { properties: "never" }],
 
