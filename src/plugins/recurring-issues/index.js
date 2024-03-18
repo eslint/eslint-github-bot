@@ -21,10 +21,10 @@ The next scheduled release will occur on ${releaseDate.format("dddd, MMMM Do, YY
 
 - [ ] Remove the 'tsc agenda' label on this issue
 - [ ] Review open pull requests and merge any that are [ready](https://eslint.org/docs/maintainer-guide/pullrequests#when-to-merge-a-pull-request)
-- [ ] Release \`@eslint/js\` to match the upcoming \`eslint\` version in [Jenkins](https://jenkins.eslint.org)
+- [ ] Release \`@eslint/js\` to match the upcoming \`eslint\` version in [Jenkins](https://jenkins2.eslint.org)
 - [ ] Verify if there are other packages (i.e., \`espree\`, \`eslint-scope\`, \`eslint-visitor-keys\`, \`@eslint/eslintrc\`) that need to be released first
 - [ ] Update \`package.json\` in the \`eslint\` repo with new versions from the preceding steps (create and merge a pull request)
-- [ ] Start the release on [Jenkins](https://jenkins.eslint.org)
+- [ ] Start the release on [Jenkins](https://jenkins2.eslint.org)
 - [ ] Update the release blog post:
     - [ ] Add a "Highlights" section for any noteworthy changes.
     - [ ] In the \`authors\` frontmatter, replace \`eslintbot\` with your GitHub username.
@@ -48,7 +48,7 @@ Typically Monday for regular releases; two days after patch releases.
 ## Patch Release Checklist
 
 - [ ] Resolve the regression by merging any necessary fixes
-- [ ] Start the release on [Jenkins](https://jenkins.eslint.org)
+- [ ] Start the release on [Jenkins](https://jenkins2.eslint.org)
 - [ ] Update the release blog post:
     - [ ] Add a "Highlights" section for any noteworthy changes.
     - [ ] In the \`authors\` frontmatter, replace \`eslintbot\` with your GitHub username.
