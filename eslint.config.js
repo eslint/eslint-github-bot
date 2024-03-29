@@ -6,6 +6,9 @@ const globals = require("globals");
 module.exports = [
     ...eslintConfigESLint,
     {
+        ignores: ["coverage/"]
+    },
+    {
         rules: {
             camelcase: ["error", { properties: "never" }],
 
