@@ -17,7 +17,13 @@ module.exports = [
         }
     },
     {
-        files: ["eslint.config.js", "tests/**/*.js"],
+        files: ["eslint.config.js"],
+        rules: {
+            "n/no-unpublished-require": "off"
+        }
+    },
+    {
+        files: ["tests/**/*.js"],
         languageOptions: {
             globals: {
                 ...globals.jest
