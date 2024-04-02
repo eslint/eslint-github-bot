@@ -42,7 +42,7 @@ describe("recurring-issues", () => {
             .post("/repos/test/repo-test/issues")
             .reply(200, (uri, requestBody) => {
                 issueWasCreated = true;
-                issue = JSON.parse(requestBody);
+                issue = requestBody;
                 return {};
             });
 

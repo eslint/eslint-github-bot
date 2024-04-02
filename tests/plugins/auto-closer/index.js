@@ -75,7 +75,7 @@ function triggerSchedule(bot) {
                 id: 1
             },
             pull_request: {
-                pull_number: 1
+                number: 1
             },
             sender: {
                 login: "user-a"

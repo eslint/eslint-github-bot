@@ -1,6 +1,6 @@
 "use strict";
 
-const { wip } = require("../../../src/plugins");
+const wip = require("../../../src/plugins/wip/index.js");
 const nock = require("nock");
 const { Application } = require("probot");
 
@@ -45,7 +45,9 @@ function mockStatusChecksForCommit({ sha, statuses }) {
  * @private
  */
 function assertPendingStatusForWip(_, payload) {
-    const data = JSON.parse(payload);
+
+    // const data = JSON.parse(payload);
+    const data = payload;
 
     expect(data.context).toBe("wip");
     expect(data.state).toBe("pending");
@@ -59,7 +61,9 @@ function assertPendingStatusForWip(_, payload) {
  * @private
  */
 function assertSuccessStatusForWip(_, payload) {
-    const data = JSON.parse(payload);
+
+    // const data = JSON.parse(payload);
+    const data = payload;
 
     expect(data.context).toBe("wip");
     expect(data.state).toBe("success");
@@ -110,7 +114,7 @@ describe("wip", () => {
                             id: 1
                         },
                         pull_request: {
-                            pull_number: 1,
+                            number: 1,
                             title: "WIP: Some title",
                             labels: []
                         },
@@ -151,7 +155,7 @@ describe("wip", () => {
                             id: 1
                         },
                         pull_request: {
-                            pull_number: 1,
+                            number: 1,
                             title: "Some title (WIP)",
                             labels: []
                         },
@@ -192,7 +196,7 @@ describe("wip", () => {
                             id: 1
                         },
                         pull_request: {
-                            pull_number: 1,
+                            number: 1,
                             title: "Some title",
                             labels: [{ name: DO_NOT_MERGE_LABEL }]
                         },
@@ -238,7 +242,7 @@ describe("wip", () => {
                             id: 1
                         },
                         pull_request: {
-                            pull_number: 1,
+                            number: 1,
                             title: "Some title",
                             labels: []
                         },
@@ -287,7 +291,7 @@ describe("wip", () => {
                             id: 1
                         },
                         pull_request: {
-                            pull_number: 1,
+                            number: 1,
                             title: "Some title",
                             labels: []
                         },

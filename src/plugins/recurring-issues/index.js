@@ -77,6 +77,16 @@ Resources:
  */
 async function getTeamMembers({ github, organizationName, teamName }) {
 
+    /**
+     * TODO: use getByUsername (`github.users.getById()` has been removed since @octokit/rest v16+)
+     * Gets the name of a user by their userid
+     * @param {number} id user id to get the name of
+     * @returns {Promise<string>} the user's name
+     */
+    function getById(id) {
+        return github.request(`GET /user/${id}`).then(res => res.data.name);
+    }
+
     /*
      * NOTE: This will fail if the organization contains more than 100 teams. This isn't
      * close to being a problem right now, so it hasn't been worth figuring out a good
@@ -93,7 +103,7 @@ async function getTeamMembers({ github, organizationName, teamName }) {
 
     return Promise.all(teamMembers.map(async member => ({
         login: member.login,
-        name: await github.users.getById({ id: member.id }).then(res => res.data.name)
+        name: await getById(member.id)
     })));
 }
 

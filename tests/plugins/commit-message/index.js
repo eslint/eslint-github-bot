@@ -75,7 +75,7 @@ function emitBotEvent(bot, payload = {}) {
                 id: 1
             },
             pull_request: {
-                pull_number: 1,
+                number: 1,
                 user: {
                     login: "user-a"
                 }

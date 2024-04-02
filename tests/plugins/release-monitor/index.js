@@ -65,7 +65,9 @@ function mockAllOpenPrWithCommits(mockData = []) {
  * @private
  */
 function assertPendingStatusWithIssueLink(_, payload) {
-    const data = JSON.parse(payload);
+
+    // const data = JSON.parse(payload);
+    const data = payload;
 
     expect(data.state).toBe("pending");
     expect(data.description).toBe("A patch release is pending");
@@ -80,9 +82,11 @@ function assertPendingStatusWithIssueLink(_, payload) {
  * @private
  */
 function assertSuccessStatusWithNoPendingRelease(_, payload) {
-    const data = JSON.parse(payload);
 
-    expect(JSON.parse(payload).state).toBe("success");
+    // const data = JSON.parse(payload);
+    const data = payload;
+
+    expect(payload.state).toBe("success");
     expect(data.description).toBe("No patch release is pending");
     expect(data.target_url).toBe("");
 }
@@ -95,9 +99,11 @@ function assertSuccessStatusWithNoPendingRelease(_, payload) {
  * @private
  */
 function assertSuccessStatusWithPendingRelease(_, payload) {
-    const data = JSON.parse(payload);
 
-    expect(JSON.parse(payload).state).toBe("success");
+    // const data = JSON.parse(payload);
+    const data = payload;
+
+    expect(data.state).toBe("success");
     expect(data.description).toBe("This change is semver-patch");
 }
 
