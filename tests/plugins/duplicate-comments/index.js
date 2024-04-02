@@ -1,6 +1,6 @@
 "use strict";
 
-const { duplicateComments } = require("../../../src/plugins/index");
+const duplicateComments = require("../../../src/plugins/duplicate-comments/index.js");
 const nock = require("nock");
 const probot = require("probot");
 const GitHubApi = require("@octokit/rest").Octokit;

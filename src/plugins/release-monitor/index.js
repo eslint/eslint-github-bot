@@ -42,8 +42,6 @@ function getAllOpenPRs(context) {
                 state: "open"
             })
         )
-
-        // res => res.data
     );
 }
 

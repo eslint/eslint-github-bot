@@ -1,6 +1,6 @@
 "use strict";
 
-const { needsInfo } = require("../../../src/plugins/index");
+const needsInfo = require("../../../src/plugins/needs-info/index.js");
 const nock = require("nock");
 const probot = require("probot");
 const GitHubApi = require("@octokit/rest").Octokit;

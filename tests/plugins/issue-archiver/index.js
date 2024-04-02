@@ -1,6 +1,6 @@
 "use strict";
 
-const { issueArchiver } = require("../../../src/plugins/index");
+const issueArchiver = require("../../../src/plugins/issue-archiver/index.js");
 
 const nock = require("nock");
 const probot = require("probot");

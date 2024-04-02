@@ -1,6 +1,6 @@
 "use strict";
 
-const { releaseMonitor } = require("../../../src/plugins/index");
+const releaseMonitor = require("../../../src/plugins/release-monitor/index.js");
 const nock = require("nock");
 const { Application } = require("probot");
 const GitHubApi = require("@octokit/rest").Octokit;
@@ -65,8 +65,6 @@ function mockAllOpenPrWithCommits(mockData = []) {
  * @private
  */
 function assertPendingStatusWithIssueLink(_, payload) {
-
-    // const data = JSON.parse(payload);
     const data = payload;
 
     expect(data.state).toBe("pending");
@@ -82,8 +80,6 @@ function assertPendingStatusWithIssueLink(_, payload) {
  * @private
  */
 function assertSuccessStatusWithNoPendingRelease(_, payload) {
-
-    // const data = JSON.parse(payload);
     const data = payload;
 
     expect(payload.state).toBe("success");
@@ -99,8 +95,6 @@ function assertSuccessStatusWithNoPendingRelease(_, payload) {
  * @private
  */
 function assertSuccessStatusWithPendingRelease(_, payload) {
-
-    // const data = JSON.parse(payload);
     const data = payload;
 
     expect(data.state).toBe("success");

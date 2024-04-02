@@ -1,6 +1,6 @@
 "use strict";
 
-const { commitMessage } = require("../../../src/plugins/index");
+const commitMessage = require("../../../src/plugins/commit-message/index.js");
 const { TAG_LABELS } = require("../../../src/plugins/commit-message/util");
 const nock = require("nock");
 const probot = require("probot");

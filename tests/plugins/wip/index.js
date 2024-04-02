@@ -45,8 +45,6 @@ function mockStatusChecksForCommit({ sha, statuses }) {
  * @private
  */
 function assertPendingStatusForWip(_, payload) {
-
-    // const data = JSON.parse(payload);
     const data = payload;
 
     expect(data.context).toBe("wip");
@@ -61,8 +59,6 @@ function assertPendingStatusForWip(_, payload) {
  * @private
  */
 function assertSuccessStatusForWip(_, payload) {
-
-    // const data = JSON.parse(payload);
     const data = payload;
 
     expect(data.context).toBe("wip");
