@@ -20,8 +20,7 @@ const AUTO_CLOSE_LABEL = "auto closed";
  */
 async function hasAutoCloseLabel(context) {
     const allLabels = await context.github.paginate(
-        context.github.issues.listLabelsForRepo(context.repo()),
-        res => res.data
+        context.github.issues.listLabelsForRepo.endpoint.merge(context.repo())
     );
 
     return allLabels.some(label => label.name === AUTO_CLOSE_LABEL);
@@ -160,9 +159,9 @@ a message to our [mailing list](https://groups.google.com/group/eslint) or
  */
 async function closeIssue(context, issueNum, commentText) {
     await Promise.all([
-        context.github.issues.update(context.repo({ number: issueNum, state: "closed" })),
-        context.github.issues.addLabels(context.repo({ number: issueNum, labels: [AUTO_CLOSE_LABEL] })),
-        context.github.issues.createComment(context.repo({ number: issueNum, body: commentText }))
+        context.github.issues.update(context.repo({ issue_number: issueNum, state: "closed" })),
+        context.github.issues.addLabels(context.repo({ issue_number: issueNum, labels: [AUTO_CLOSE_LABEL] })),
+        context.github.issues.createComment(context.repo({ issue_number: issueNum, body: commentText }))
     ]);
 }
 
@@ -174,8 +173,8 @@ async function closeIssue(context, issueNum, commentText) {
  */
 function queryIssues(context, searchQuery) {
     return context.github.paginate(
-        context.github.search.issues({ q: searchQuery, per_page: 100 }),
-        result => result.data.items
+        context.github.search.issuesAndPullRequests.endpoint.merge({ q: searchQuery, per_page: 100 }),
+        result => result.data
     );
 }
 
