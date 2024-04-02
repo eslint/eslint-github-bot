@@ -45,7 +45,7 @@ function addPrApprovedLabel(context) {
  * @returns {Promise<Object | null>} Promise that fulfills when the action is complete
  */
 async function getPullrequestBySha(context, sha) {
-    const { data: { items } } = await context.github.search.issues({
+    const { data: { items } } = await context.github.search.issuesAndPullRequests({
         q: sha
     });
 

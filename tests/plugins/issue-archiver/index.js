@@ -11,8 +11,8 @@ describe("issue-archiver", () => {
 
     beforeEach(async () => {
         bot = new probot.Application({
-            id: "test",
-            cert: "test",
+            id: 110,
+            githubToken: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             },
@@ -106,7 +106,7 @@ describe("issue-archiver", () => {
                     id: 1
                 },
                 pull_request: {
-                    number: 1
+                    pull_number: 1
                 },
                 sender: {
                     login: "user-a"
