@@ -3,7 +3,7 @@
 const { needsInfo } = require("../../../src/plugins/index");
 const nock = require("nock");
 const probot = require("probot");
-const GitHubApi = require("@octokit/rest");
+const GitHubApi = require("@octokit/rest").Octokit;
 
 describe("needs-info", () => {
     let bot = null;

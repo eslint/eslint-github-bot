@@ -4,7 +4,7 @@ const { commitMessage } = require("../../../src/plugins/index");
 const { TAG_LABELS } = require("../../../src/plugins/commit-message/util");
 const nock = require("nock");
 const probot = require("probot");
-const GitHubApi = require("@octokit/rest");
+const GitHubApi = require("@octokit/rest").Octokit;
 
 /**
  * Mocks a given commit on a PR with the specified message

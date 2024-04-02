@@ -37,7 +37,7 @@ function pluckLatestCommitSha(allCommits) {
  */
 function getAllOpenPRs(context) {
     return context.github.paginate(
-        context.github.pullRequests.list(
+        context.github.pulls.list(
             context.repo({
                 state: "open"
             })
@@ -78,7 +78,7 @@ function createStatusOnPR({ context, state, sha, description, targetUrl }) {
  * @private
  */
 async function getAllCommitsForPR({ context, pr }) {
-    const { data: commitList } = await context.github.pullRequests.listCommits(
+    const { data: commitList } = await context.github.pulls.listCommits(
         context.repo({ number: pr.number })
     );
 

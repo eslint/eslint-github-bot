@@ -3,7 +3,7 @@
 const { releaseMonitor } = require("../../../src/plugins/index");
 const nock = require("nock");
 const { Application } = require("probot");
-const GitHubApi = require("@octokit/rest");
+const GitHubApi = require("@octokit/rest").Octokit;
 
 const POST_RELEASE_LABEL = "patch release pending";
 const RELEASE_LABEL = "release";
