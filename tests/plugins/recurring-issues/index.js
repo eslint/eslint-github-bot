@@ -21,8 +21,8 @@ describe("recurring-issues", () => {
         issueWasCreated = false;
 
         const bot = new probot.Application({
-            id: "test",
-            cert: "test",
+            id: 110,
+            githubToken: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }

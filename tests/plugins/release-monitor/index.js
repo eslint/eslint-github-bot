@@ -106,8 +106,8 @@ describe("release-monitor", () => {
 
     beforeAll(async () => {
         bot = new Application({
-            id: "test",
-            cert: "test",
+            id: 110,
+            githubToken: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             },

@@ -78,7 +78,7 @@ async function maybeResolveWipStatusOnPR(context, sha) {
     let statusCheckExists = false;
 
     await context.github.paginate(
-        context.github.repos.getCombinedStatusForRef(repoAndRef),
+        context.github.repos.getCombinedStatusForRef.endpoint.merge(repoAndRef),
         (res, done) => {
             for (const status of res.data.statuses) {
                 if (status.context === "wip") {
@@ -106,7 +106,7 @@ async function maybeResolveWipStatusOnPR(context, sha) {
  */
 async function getAllCommitsForPR({ context, pr }) {
     const { data: commitList } = await context.github.pulls.listCommits(
-        context.repo({ number: pr.number })
+        context.repo({ pull_number: pr.number })
     );
 
     return commitList;

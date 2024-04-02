@@ -15,7 +15,7 @@ const { getPullrequestBySha, labels } = require("./common");
  */
 async function getAllReviewsByPR(context, prId) {
     const { data: allReviews } = await context.github.pulls.getReviews(context.repo({
-        number: prId
+        pull_number: prId
     }));
 
     return allReviews;

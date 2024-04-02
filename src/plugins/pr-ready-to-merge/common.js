@@ -60,7 +60,7 @@ async function getPullrequestBySha(context, sha) {
  */
 async function getAllCommitsByPR(context, prId) {
     const { data: commits } = await context.github.pulls.getCommits(context.repo({
-        number: prId
+        pull_number: prId
     }));
 
     return commits;

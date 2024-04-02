@@ -70,8 +70,8 @@ describe("wip", () => {
 
     beforeAll(() => {
         bot = new Application({
-            id: "test",
-            cert: "test",
+            id: 110,
+            githubToken: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }
@@ -110,7 +110,7 @@ describe("wip", () => {
                             id: 1
                         },
                         pull_request: {
-                            number: 1,
+                            pull_number: 1,
                             title: "WIP: Some title",
                             labels: []
                         },
@@ -151,7 +151,7 @@ describe("wip", () => {
                             id: 1
                         },
                         pull_request: {
-                            number: 1,
+                            pull_number: 1,
                             title: "Some title (WIP)",
                             labels: []
                         },
@@ -192,7 +192,7 @@ describe("wip", () => {
                             id: 1
                         },
                         pull_request: {
-                            number: 1,
+                            pull_number: 1,
                             title: "Some title",
                             labels: [{ name: DO_NOT_MERGE_LABEL }]
                         },
@@ -238,7 +238,7 @@ describe("wip", () => {
                             id: 1
                         },
                         pull_request: {
-                            number: 1,
+                            pull_number: 1,
                             title: "Some title",
                             labels: []
                         },
@@ -287,7 +287,7 @@ describe("wip", () => {
                             id: 1
                         },
                         pull_request: {
-                            number: 1,
+                            pull_number: 1,
                             title: "Some title",
                             labels: []
                         },

@@ -166,7 +166,7 @@ async function issueWasClosedMultipleTimes(github, { owner, repo, number }) {
     const issueEvents = await github.issues.listEvents({
         owner,
         repo,
-        number,
+        issue_number: number,
         per_page: 100
     }).then(res => res.data);
 

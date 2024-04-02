@@ -85,8 +85,8 @@ describe("duplicate-comments", () => {
 
     beforeAll(() => {
         bot = new probot.Application({
-            id: "test",
-            cert: "test",
+            id: 110,
+            githubToken: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }

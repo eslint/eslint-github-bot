@@ -75,7 +75,7 @@ function emitBotEvent(bot, payload = {}) {
                 id: 1
             },
             pull_request: {
-                number: 1,
+                pull_number: 1,
                 user: {
                     login: "user-a"
                 }
@@ -98,8 +98,8 @@ describe("commit-message", () => {
 
     beforeAll(() => {
         bot = new probot.Application({
-            id: "test",
-            cert: "test",
+            id: 110,
+            githubToken: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }
