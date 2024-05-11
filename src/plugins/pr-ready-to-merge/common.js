@@ -45,7 +45,7 @@ function addPrApprovedLabel(context) {
  * @returns {Promise<Object | null>} Promise that fulfills when the action is complete
  */
 async function getPullrequestBySha(context, sha) {
-    const { data: { items } } = await context.github.search.issues({
+    const { data: { items } } = await context.github.search.issuesAndPullRequests({
         q: sha
     });
 
@@ -59,8 +59,8 @@ async function getPullrequestBySha(context, sha) {
  * @returns {Promise<Array>} Resolves with commit collection
  */
 async function getAllCommitsByPR(context, prId) {
-    const { data: commits } = await context.github.pullRequests.getCommits(context.repo({
-        number: prId
+    const { data: commits } = await context.github.pulls.getCommits(context.repo({
+        pull_number: prId
     }));
 
     return commits;

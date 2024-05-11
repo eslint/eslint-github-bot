@@ -1,9 +1,9 @@
 "use strict";
 
-const { releaseMonitor } = require("../../../src/plugins/index");
+const releaseMonitor = require("../../../src/plugins/release-monitor/index.js");
 const nock = require("nock");
 const { Application } = require("probot");
-const GitHubApi = require("@octokit/rest");
+const GitHubApi = require("@octokit/rest").Octokit;
 
 const POST_RELEASE_LABEL = "patch release pending";
 const RELEASE_LABEL = "release";
@@ -65,7 +65,7 @@ function mockAllOpenPrWithCommits(mockData = []) {
  * @private
  */
 function assertPendingStatusWithIssueLink(_, payload) {
-    const data = JSON.parse(payload);
+    const data = payload;
 
     expect(data.state).toBe("pending");
     expect(data.description).toBe("A patch release is pending");
@@ -80,9 +80,9 @@ function assertPendingStatusWithIssueLink(_, payload) {
  * @private
  */
 function assertSuccessStatusWithNoPendingRelease(_, payload) {
-    const data = JSON.parse(payload);
+    const data = payload;
 
-    expect(JSON.parse(payload).state).toBe("success");
+    expect(payload.state).toBe("success");
     expect(data.description).toBe("No patch release is pending");
     expect(data.target_url).toBe("");
 }
@@ -95,9 +95,9 @@ function assertSuccessStatusWithNoPendingRelease(_, payload) {
  * @private
  */
 function assertSuccessStatusWithPendingRelease(_, payload) {
-    const data = JSON.parse(payload);
+    const data = payload;
 
-    expect(JSON.parse(payload).state).toBe("success");
+    expect(data.state).toBe("success");
     expect(data.description).toBe("This change is semver-patch");
 }
 
@@ -106,8 +106,8 @@ describe("release-monitor", () => {
 
     beforeAll(async () => {
         bot = new Application({
-            id: "test",
-            cert: "test",
+            id: 110,
+            githubToken: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             },

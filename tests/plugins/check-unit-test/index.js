@@ -1,9 +1,9 @@
 "use strict";
 
-const { checkUnitTest } = require("../../../src/plugins/index");
+const checkUnitTest = require("../../../src/plugins/check-unit-test/index.js");
 const nock = require("nock");
 const probot = require("probot");
-const GitHubApi = require("@octokit/rest");
+const GitHubApi = require("@octokit/rest").Octokit;
 
 /**
  * Mocks a given PR on issue existing with specified files

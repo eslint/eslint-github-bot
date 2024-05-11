@@ -14,8 +14,7 @@ const ARCHIVED_LABEL = "archived due to age";
  */
 async function hasArchivedLabel(context) {
     const allLabels = await context.github.paginate(
-        context.github.issues.listLabelsForRepo(context.repo()),
-        res => res.data
+        context.github.issues.listLabelsForRepo.endpoint.merge(context.repo())
     );
 
     return allLabels.some(label => label.name === ARCHIVED_LABEL);
@@ -49,8 +48,8 @@ function createSearchQuery({ owner, repo }) {
  */
 async function archiveIssue(context, issueNum) {
     await Promise.all([
-        context.github.issues.lock(context.repo({ number: issueNum })),
-        context.github.issues.addLabels(context.repo({ number: issueNum, labels: [ARCHIVED_LABEL] }))
+        context.github.issues.lock(context.repo({ issue_number: issueNum })),
+        context.github.issues.addLabels(context.repo({ issue_number: issueNum, labels: [ARCHIVED_LABEL] }))
     ]);
 }
 
@@ -63,8 +62,8 @@ async function getAllSearchResults(context) {
     const searchQuery = createSearchQuery(context.repo());
 
     return context.github.paginate(
-        context.github.search.issues({ q: searchQuery, per_page: 100 }),
-        result => result.data.items
+        context.github.search.issues.endpoint.merge({ q: searchQuery, per_page: 100 }),
+        result => result.data
 
             /*
              * Do not label issues which are already locked.

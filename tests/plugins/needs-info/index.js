@@ -1,9 +1,9 @@
 "use strict";
 
-const { needsInfo } = require("../../../src/plugins/index");
+const needsInfo = require("../../../src/plugins/needs-info/index.js");
 const nock = require("nock");
 const probot = require("probot");
-const GitHubApi = require("@octokit/rest");
+const GitHubApi = require("@octokit/rest").Octokit;
 
 describe("needs-info", () => {
     let bot = null;
@@ -11,8 +11,8 @@ describe("needs-info", () => {
 
     beforeAll(() => {
         bot = new probot.Application({
-            id: "test",
-            cert: "test",
+            id: 110,
+            githubToken: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }

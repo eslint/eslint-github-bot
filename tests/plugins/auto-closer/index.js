@@ -9,11 +9,11 @@
 // Requirements
 //-----------------------------------------------------------------------------
 
-const { autoCloser } = require("../../../src/plugins/index");
+const autoCloser = require("../../../src/plugins/auto-closer/index.js");
 
 const nock = require("nock");
 const probot = require("probot");
-const GitHubApi = require("@octokit/rest");
+const GitHubApi = require("@octokit/rest").Octokit;
 
 //-----------------------------------------------------------------------------
 // Helpers
@@ -101,8 +101,8 @@ describe("auto-closer", () => {
     beforeEach(async () => {
         githubNock = nock("https://api.github.com");
         bot = new probot.Application({
-            id: "test",
-            cert: "test",
+            id: 110,
+            githubToken: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             },

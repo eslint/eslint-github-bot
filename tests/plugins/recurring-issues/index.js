@@ -1,9 +1,9 @@
 "use strict";
 
-const { recurringIssues } = require("../../../src/plugins/index");
+const recurringIssues = require("../../../src/plugins/recurring-issues/index.js");
 const nock = require("nock");
 const probot = require("probot");
-const GitHubApi = require("@octokit/rest");
+const GitHubApi = require("@octokit/rest").Octokit;
 
 describe("recurring-issues", () => {
     let issueWasCreated;
@@ -21,8 +21,8 @@ describe("recurring-issues", () => {
         issueWasCreated = false;
 
         const bot = new probot.Application({
-            id: "test",
-            cert: "test",
+            id: 110,
+            githubToken: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }
@@ -42,7 +42,7 @@ describe("recurring-issues", () => {
             .post("/repos/test/repo-test/issues")
             .reply(200, (uri, requestBody) => {
                 issueWasCreated = true;
-                issue = JSON.parse(requestBody);
+                issue = requestBody;
                 return {};
             });
 
