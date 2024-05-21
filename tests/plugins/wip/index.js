@@ -1,6 +1,6 @@
 "use strict";
 
-const wip = require("../../../src/plugins/wip/index.js");
+const { wip } = require("../../../src/plugins");
 const nock = require("nock");
 const { Application } = require("probot");
 
@@ -45,7 +45,7 @@ function mockStatusChecksForCommit({ sha, statuses }) {
  * @private
  */
 function assertPendingStatusForWip(_, payload) {
-    const data = payload;
+    const data = JSON.parse(payload);
 
     expect(data.context).toBe("wip");
     expect(data.state).toBe("pending");
@@ -59,7 +59,7 @@ function assertPendingStatusForWip(_, payload) {
  * @private
  */
 function assertSuccessStatusForWip(_, payload) {
-    const data = payload;
+    const data = JSON.parse(payload);
 
     expect(data.context).toBe("wip");
     expect(data.state).toBe("success");
@@ -70,8 +70,8 @@ describe("wip", () => {
 
     beforeAll(() => {
         bot = new Application({
-            id: 110,
-            githubToken: "test",
+            id: "test",
+            cert: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }

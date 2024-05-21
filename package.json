@@ -24,7 +24,7 @@
   "dependencies": {
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.35",
-    "probot": "^9.15.1",
+    "probot": "^7.4.0",
     "probot-scheduler": "^1.0.3"
   },
   "devDependencies": {
@@ -33,7 +33,7 @@
     "globals": "^13.24.0",
     "jest": "^26.1.0",
     "lint-staged": "^13.2.1",
-    "nock": "^13.5.4",
+    "nock": "^10.0.2",
     "yorkie": "^2.0.0"
   },
   "keywords": [
@@ -55,7 +55,6 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": "20.x",
-    "npm": "10.x"
+    "node": "16.x"
   }
 }

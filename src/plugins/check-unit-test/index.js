@@ -60,7 +60,7 @@ async function action(context) {
     const { payload, github } = context;
 
     if (!isChoreTypePullRequest(payload.pull_request.title)) {
-        const { data: allFiles } = await github.pulls.listFiles(context.issue());
+        const { data: allFiles } = await github.pullRequests.listFiles(context.issue());
 
         if (!areUnitTestFilesPresent(allFiles, payload.repository.html_url)) {
             await github.issues.createComment(context.issue({
