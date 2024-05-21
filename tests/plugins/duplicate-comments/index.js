@@ -1,9 +1,9 @@
 "use strict";
 
-const duplicateComments = require("../../../src/plugins/duplicate-comments/index.js");
+const { duplicateComments } = require("../../../src/plugins/index");
 const nock = require("nock");
 const probot = require("probot");
-const GitHubApi = require("@octokit/rest").Octokit;
+const GitHubApi = require("@octokit/rest");
 
 /**
  * Creates a mock PR with the given comments
@@ -85,8 +85,8 @@ describe("duplicate-comments", () => {
 
     beforeAll(() => {
         bot = new probot.Application({
-            id: 110,
-            githubToken: "test",
+            id: "test",
+            cert: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             }

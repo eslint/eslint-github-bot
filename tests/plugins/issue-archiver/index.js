@@ -1,18 +1,18 @@
 "use strict";
 
-const issueArchiver = require("../../../src/plugins/issue-archiver/index.js");
+const { issueArchiver } = require("../../../src/plugins/index");
 
 const nock = require("nock");
 const probot = require("probot");
-const GitHubApi = require("@octokit/rest").Octokit;
+const GitHubApi = require("@octokit/rest");
 
 describe("issue-archiver", () => {
     let bot;
 
     beforeEach(async () => {
         bot = new probot.Application({
-            id: 110,
-            githubToken: "test",
+            id: "test",
+            cert: "test",
             cache: {
                 wrap: () => Promise.resolve({ data: { token: "test" } })
             },

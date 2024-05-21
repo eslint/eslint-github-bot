@@ -102,7 +102,7 @@ async function processCommitMessage(context) {
         return;
     }
 
-    const allCommits = await github.pulls.listCommits(context.issue());
+    const allCommits = await github.pullRequests.listCommits(context.issue());
     const messageToCheck = payload.pull_request.title;
     const errors = getCommitMessageErrors(messageToCheck);
     let description;
