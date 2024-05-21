@@ -55,6 +55,6 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": "20.x"
+    "node": ">=20"
   }
 }
