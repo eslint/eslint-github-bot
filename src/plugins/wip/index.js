@@ -5,13 +5,23 @@
 
 "use strict";
 
+//-----------------------------------------------------------------------------
+// Type Definitions
+//-----------------------------------------------------------------------------
+
+/** @typedef {import("probot").Context} ProbotContext */
+
+//-----------------------------------------------------------------------------
+// Helpers
+//-----------------------------------------------------------------------------
+
 const WIP_IN_TITLE_REGEX = /^WIP:|\(WIP\)/iu;
 const DO_NOT_MERGE_LABEL = "do not merge";
 
 /**
  * Create status on the PR
  * @param {Object} options Configure the status
- * @param {Object} options.context probot context object
+ * @param {ProbotContext} options.context probot context object
  * @param {string} options.state state can be either success or failure
  * @param {string} options.sha sha for the commit
  * @param {string} options.description description for the status
@@ -20,7 +30,7 @@ const DO_NOT_MERGE_LABEL = "do not merge";
  * @private
  */
 function createStatusOnPR({ context, state, sha, description, targetUrl }) {
-    return context.github.repos.createStatus(
+    return context.octokit.repos.createCommitStatus(
         context.repo({
             sha,
             state,
@@ -33,7 +43,7 @@ function createStatusOnPR({ context, state, sha, description, targetUrl }) {
 
 /**
  * Creates a pending status on the PR to indicate it is a WIP.
- * @param {Object} context Probot context object
+ * @param {ProbotContext} context Probot context object
  * @param {string} sha The SHA hash representing the latest commit to the PR.
  * @returns {Promise<void>} A Promise that will fulfill when the status check is created
  */
@@ -48,7 +58,7 @@ function createPendingWipStatusOnPR(context, sha) {
 
 /**
  * Creates a pending status on the PR to indicate it is WIP.
- * @param {Object} context Probot context object
+ * @param {ProbotContext} context Probot context object
  * @param {string} sha The SHA hash representing the latest commit to the PR.
  * @returns {Promise<void>} A Promise that will fulfill when the status check is created
  */
@@ -64,7 +74,7 @@ function createSuccessWipStatusOnPR(context, sha) {
 /**
  * Check to see if there is an existing pending wip status check on the PR.
  * If so, create a success wip status check.
- * @param {Object} context Probot context object
+ * @param {ProbotContext} context Probot context object
  * @param {string} sha Commit SHA hash associated with the status check
  * @returns {Promise<void>} A Promise which will resolve when a success status check
  * is created on the PR, or an immediately-resolved Promise if no status check
@@ -75,19 +85,9 @@ async function maybeResolveWipStatusOnPR(context, sha) {
         ref: sha
     });
 
-    let statusCheckExists = false;
-
-    await context.github.paginate(
-        context.github.repos.getCombinedStatusForRef(repoAndRef),
-        (res, done) => {
-            for (const status of res.data.statuses) {
-                if (status.context === "wip") {
-                    statusCheckExists = true;
-                    done();
-                }
-            }
-        }
-    );
+    const { octokit } = context;
+    const statuses = await octokit.paginate(octokit.repos.getCombinedStatusForRef, repoAndRef);
+    const statusCheckExists = statuses.some(status => status.context === "wip");
 
     if (statusCheckExists) {
         return createSuccessWipStatusOnPR(context, sha);
@@ -99,14 +99,14 @@ async function maybeResolveWipStatusOnPR(context, sha) {
 /**
  * Get all the commits for a PR
  * @param {Object} options Configure the request
- * @param {Object} options.context Probot context object
+ * @param {ProbotContext} options.context Probot context object
  * @param {Object} options.pr pull request object from GitHub's API
  * @returns {Promise<Object[]>} A Promise that fulfills with a list of commit objects from GitHub's API
  * @private
  */
 async function getAllCommitsForPR({ context, pr }) {
-    const { data: commitList } = await context.github.pullRequests.listCommits(
-        context.repo({ number: pr.number })
+    const { data: commitList } = await context.octokit.pulls.listCommits(
+        context.repo({ pull_number: pr.number })
     );
 
     return commitList;
@@ -145,7 +145,7 @@ function prHasWipTitle(pr) {
 /**
  * Handler for PR events (opened, reopened, synchronize, edited, labeled,
  * unlabeled).
- * @param {Object} context probot context object
+ * @param {ProbotContext} context probot context object
  * @returns {Promise<void>} promise
  * @private
  */
@@ -167,6 +167,10 @@ async function prChangedHandler(context) {
 
     return maybeResolveWipStatusOnPR(context, sha);
 }
+
+//-----------------------------------------------------------------------------
+// Robot
+//-----------------------------------------------------------------------------
 
 module.exports = robot => {
     robot.on(

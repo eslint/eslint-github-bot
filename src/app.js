@@ -29,7 +29,6 @@ const bot = probot.createProbot({
 });
 const enabledPlugins = new Set([
     "addToTriageProject",
-    "autoCloser",
     "commitMessage",
     "issueArchiver",
     "needsInfo",

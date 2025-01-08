@@ -14,7 +14,7 @@ const { getPullrequestBySha, labels } = require("./common");
  * @returns {Promise<Array>} Resolves with all reviews collection
  */
 async function getAllReviewsByPR(context, prId) {
-    const { data: allReviews } = await context.github.pullRequests.getReviews(context.repo({
+    const { data: allReviews } = await context.octokit.pulls.getReviews(context.repo({
         number: prId
     }));
 

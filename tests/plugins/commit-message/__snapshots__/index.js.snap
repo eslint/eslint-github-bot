@@ -5,7 +5,7 @@ exports[`commit-message pull request edited Posts failure status if PR title is 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -19,7 +19,7 @@ exports[`commit-message pull request edited Posts failure status if PR title is 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -33,7 +33,7 @@ exports[`commit-message pull request edited Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -48,7 +48,7 @@ exports[`commit-message pull request edited Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -63,7 +63,7 @@ exports[`commit-message pull request edited Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -78,7 +78,7 @@ exports[`commit-message pull request edited Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -93,7 +93,7 @@ exports[`commit-message pull request edited Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -108,7 +108,7 @@ exports[`commit-message pull request edited Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -123,7 +123,7 @@ exports[`commit-message pull request edited Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -138,7 +138,7 @@ exports[`commit-message pull request edited Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -153,7 +153,7 @@ exports[`commit-message pull request edited Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -167,7 +167,7 @@ exports[`commit-message pull request edited Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -181,7 +181,7 @@ exports[`commit-message pull request edited Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
@@ -194,7 +194,7 @@ exports[`commit-message pull request edited Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -209,7 +209,7 @@ exports[`commit-message pull request edited Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -224,7 +224,7 @@ exports[`commit-message pull request edited Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -239,7 +239,7 @@ exports[`commit-message pull request edited Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -254,7 +254,7 @@ exports[`commit-message pull request edited Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -269,7 +269,7 @@ exports[`commit-message pull request edited Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -284,7 +284,7 @@ exports[`commit-message pull request edited Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -299,7 +299,7 @@ exports[`commit-message pull request edited Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -314,7 +314,7 @@ exports[`commit-message pull request edited Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -328,7 +328,7 @@ exports[`commit-message pull request edited Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -342,7 +342,7 @@ exports[`commit-message pull request edited Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
@@ -368,7 +368,7 @@ exports[`commit-message pull request edited Posts failure status if there are mu
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -395,7 +395,7 @@ exports[`commit-message pull request opened Posts failure status if PR title is 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -409,7 +409,7 @@ exports[`commit-message pull request opened Posts failure status if PR title is 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -423,7 +423,7 @@ exports[`commit-message pull request opened Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -438,7 +438,7 @@ exports[`commit-message pull request opened Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -453,7 +453,7 @@ exports[`commit-message pull request opened Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -468,7 +468,7 @@ exports[`commit-message pull request opened Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -483,7 +483,7 @@ exports[`commit-message pull request opened Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -498,7 +498,7 @@ exports[`commit-message pull request opened Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -513,7 +513,7 @@ exports[`commit-message pull request opened Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -528,7 +528,7 @@ exports[`commit-message pull request opened Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -543,7 +543,7 @@ exports[`commit-message pull request opened Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -557,7 +557,7 @@ exports[`commit-message pull request opened Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -571,7 +571,7 @@ exports[`commit-message pull request opened Posts failure status if PR with mult
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
@@ -584,7 +584,7 @@ exports[`commit-message pull request opened Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -599,7 +599,7 @@ exports[`commit-message pull request opened Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -614,7 +614,7 @@ exports[`commit-message pull request opened Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -629,7 +629,7 @@ exports[`commit-message pull request opened Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -644,7 +644,7 @@ exports[`commit-message pull request opened Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -659,7 +659,7 @@ exports[`commit-message pull request opened Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -674,7 +674,7 @@ exports[`commit-message pull request opened Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -689,7 +689,7 @@ exports[`commit-message pull request opened Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -704,7 +704,7 @@ exports[`commit-message pull request opened Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -718,7 +718,7 @@ exports[`commit-message pull request opened Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -732,7 +732,7 @@ exports[`commit-message pull request opened Posts failure status if the PR title
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
@@ -758,7 +758,7 @@ exports[`commit-message pull request opened Posts failure status if there are mu
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -785,7 +785,7 @@ exports[`commit-message pull request reopened Posts failure status if PR title i
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -799,7 +799,7 @@ exports[`commit-message pull request reopened Posts failure status if PR title i
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -813,7 +813,7 @@ exports[`commit-message pull request reopened Posts failure status if PR with mu
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -828,7 +828,7 @@ exports[`commit-message pull request reopened Posts failure status if PR with mu
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -843,7 +843,7 @@ exports[`commit-message pull request reopened Posts failure status if PR with mu
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -858,7 +858,7 @@ exports[`commit-message pull request reopened Posts failure status if PR with mu
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -873,7 +873,7 @@ exports[`commit-message pull request reopened Posts failure status if PR with mu
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -888,7 +888,7 @@ exports[`commit-message pull request reopened Posts failure status if PR with mu
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -903,7 +903,7 @@ exports[`commit-message pull request reopened Posts failure status if PR with mu
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -918,7 +918,7 @@ exports[`commit-message pull request reopened Posts failure status if PR with mu
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -933,7 +933,7 @@ exports[`commit-message pull request reopened Posts failure status if PR with mu
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -947,7 +947,7 @@ exports[`commit-message pull request reopened Posts failure status if PR with mu
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -961,7 +961,7 @@ exports[`commit-message pull request reopened Posts failure status if PR with mu
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
@@ -974,7 +974,7 @@ exports[`commit-message pull request reopened Posts failure status if the PR tit
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -989,7 +989,7 @@ exports[`commit-message pull request reopened Posts failure status if the PR tit
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1004,7 +1004,7 @@ exports[`commit-message pull request reopened Posts failure status if the PR tit
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1019,7 +1019,7 @@ exports[`commit-message pull request reopened Posts failure status if the PR tit
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1034,7 +1034,7 @@ exports[`commit-message pull request reopened Posts failure status if the PR tit
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1049,7 +1049,7 @@ exports[`commit-message pull request reopened Posts failure status if the PR tit
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1064,7 +1064,7 @@ exports[`commit-message pull request reopened Posts failure status if the PR tit
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1079,7 +1079,7 @@ exports[`commit-message pull request reopened Posts failure status if the PR tit
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1094,7 +1094,7 @@ exports[`commit-message pull request reopened Posts failure status if the PR tit
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -1108,7 +1108,7 @@ exports[`commit-message pull request reopened Posts failure status if the PR tit
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -1122,7 +1122,7 @@ exports[`commit-message pull request reopened Posts failure status if the PR tit
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
@@ -1148,7 +1148,7 @@ exports[`commit-message pull request reopened Posts failure status if there are 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -1175,7 +1175,7 @@ exports[`commit-message pull request synchronize Posts failure status if PR titl
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -1189,7 +1189,7 @@ exports[`commit-message pull request synchronize Posts failure status if PR titl
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -1203,7 +1203,7 @@ exports[`commit-message pull request synchronize Posts failure status if PR with
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1218,7 +1218,7 @@ exports[`commit-message pull request synchronize Posts failure status if PR with
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1233,7 +1233,7 @@ exports[`commit-message pull request synchronize Posts failure status if PR with
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1248,7 +1248,7 @@ exports[`commit-message pull request synchronize Posts failure status if PR with
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1263,7 +1263,7 @@ exports[`commit-message pull request synchronize Posts failure status if PR with
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1278,7 +1278,7 @@ exports[`commit-message pull request synchronize Posts failure status if PR with
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1293,7 +1293,7 @@ exports[`commit-message pull request synchronize Posts failure status if PR with
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1308,7 +1308,7 @@ exports[`commit-message pull request synchronize Posts failure status if PR with
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1323,7 +1323,7 @@ exports[`commit-message pull request synchronize Posts failure status if PR with
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -1337,7 +1337,7 @@ exports[`commit-message pull request synchronize Posts failure status if PR with
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -1351,7 +1351,7 @@ exports[`commit-message pull request synchronize Posts failure status if PR with
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
@@ -1364,7 +1364,7 @@ exports[`commit-message pull request synchronize Posts failure status if the PR 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1379,7 +1379,7 @@ exports[`commit-message pull request synchronize Posts failure status if the PR 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1394,7 +1394,7 @@ exports[`commit-message pull request synchronize Posts failure status if the PR 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1409,7 +1409,7 @@ exports[`commit-message pull request synchronize Posts failure status if the PR 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1424,7 +1424,7 @@ exports[`commit-message pull request synchronize Posts failure status if the PR 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1439,7 +1439,7 @@ exports[`commit-message pull request synchronize Posts failure status if the PR 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1454,7 +1454,7 @@ exports[`commit-message pull request synchronize Posts failure status if the PR 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1469,7 +1469,7 @@ exports[`commit-message pull request synchronize Posts failure status if the PR 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 - The first letter of the tag should be in lowercase
 
@@ -1484,7 +1484,7 @@ exports[`commit-message pull request synchronize Posts failure status if the PR 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -1498,7 +1498,7 @@ exports[`commit-message pull request synchronize Posts failure status if the PR 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
@@ -1512,7 +1512,7 @@ exports[`commit-message pull request synchronize Posts failure status if the PR 
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
@@ -1538,7 +1538,7 @@ exports[`commit-message pull request synchronize Posts failure status if there a
 
 The **pull request title** isn't properly formatted. We ask that you update the pull request title to match this format, as we use it to generate changelogs and automate releases.
 
-- The commit message tag wasn't recognized. Did you mean \\"docs\\", \\"fix\\", or \\"feat\\"?
+- The commit message tag wasn't recognized. Did you mean "docs", "fix", or "feat"?
 - There should be a space following the initial tag and colon, for example 'feat: Message'.
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.

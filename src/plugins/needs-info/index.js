@@ -39,10 +39,10 @@ function hasNeedInfoLabel(label) {
  * @private
  */
 async function check(context) {
-    const { payload, github } = context;
+    const { payload, octokit } = context;
 
     if (payload.issue.labels.some(hasNeedInfoLabel)) {
-        await github.issues.createComment(context.issue({
+        await octokit.issues.createComment(context.issue({
             body: commentMessage()
         }));
     }

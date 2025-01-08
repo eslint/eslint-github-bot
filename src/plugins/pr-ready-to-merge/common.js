@@ -20,7 +20,7 @@ const labels = {
  * @returns {Promise<void>} Promise that fulfills when the action is complete
  */
 function removePrApprovedLabel(context) {
-    return context.github.issues.removeLabel(context.issue({
+    return context.octokit.issues.removeLabel(context.issue({
         name: labels.reviewLabel
     }));
 }
@@ -31,7 +31,7 @@ function removePrApprovedLabel(context) {
  * @returns {Promise<void>} Promise that fulfills when the action is complete
  */
 function addPrApprovedLabel(context) {
-    return context.github.issues.addLabels(context.issue({
+    return context.octokit.issues.addLabels(context.issue({
         labels: [labels.reviewLabel]
     }));
 }
@@ -45,7 +45,7 @@ function addPrApprovedLabel(context) {
  * @returns {Promise<Object | null>} Promise that fulfills when the action is complete
  */
 async function getPullrequestBySha(context, sha) {
-    const { data: { items } } = await context.github.search.issues({
+    const { data: { items } } = await context.octokit.search.issues({
         q: sha
     });
 
@@ -59,7 +59,7 @@ async function getPullrequestBySha(context, sha) {
  * @returns {Promise<Array>} Resolves with commit collection
  */
 async function getAllCommitsByPR(context, prId) {
-    const { data: commits } = await context.github.pullRequests.getCommits(context.repo({
+    const { data: commits } = await context.octokit.pulls.getCommits(context.repo({
         number: prId
     }));
 

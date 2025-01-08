@@ -13,7 +13,6 @@
  */
 
 module.exports = {
-    autoCloser: require("./auto-closer"),
     checkUnitTest: require("./check-unit-test"),
     commitMessage: require("./commit-message"),
     duplicateComments: require("./duplicate-comments"),
