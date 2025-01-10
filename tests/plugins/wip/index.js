@@ -1,8 +1,20 @@
+/**
+ * @fileoverview Tests for the WIP plugin.
+ */
+
 "use strict";
+
+//-----------------------------------------------------------------------------
+// Requirements
+//-----------------------------------------------------------------------------
 
 const { wip } = require("../../../src/plugins");
 const { Probot, ProbotOctokit } = require("probot");
 const { default: fetchMock } = require("fetch-mock");
+
+//-----------------------------------------------------------------------------
+// Helpers
+//-----------------------------------------------------------------------------
 
 const DO_NOT_MERGE_LABEL = "do not merge";
 const API_ROOT = "https://api.github.com";
@@ -113,6 +125,10 @@ function mockSuccessStatusForWip() {
 function assertNoStatusChecksCreated() {
     expect(fetchMock.callHistory.calls(`${API_ROOT}/repos/test/repo-test/statuses/111`)).toHaveLength(0);
 }
+
+//-----------------------------------------------------------------------------
+// Tests
+//-----------------------------------------------------------------------------
 
 describe("wip", () => {
     let bot = null;

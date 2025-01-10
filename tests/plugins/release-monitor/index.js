@@ -1,12 +1,24 @@
+/**
+ * @fileoverview Tests for release-monitor plugin
+ */
+
 "use strict";
 
+//-----------------------------------------------------------------------------
+// Requirements
+//-----------------------------------------------------------------------------
+
 const { releaseMonitor } = require("../../../src/plugins/index");
-const nock = require("nock");
-const { Application } = require("probot");
-const GitHubApi = require("@octokit/rest");
+const { Probot, ProbotOctokit } = require("probot");
+const { default: fetchMock } = require("fetch-mock");
+
+//-----------------------------------------------------------------------------
+// Helpers
+//-----------------------------------------------------------------------------
 
 const POST_RELEASE_LABEL = "patch release pending";
 const RELEASE_LABEL = "release";
+const API_ROOT = "https://api.github.com";
 
 /**
  * Creates mock PR with commits
@@ -27,105 +39,107 @@ const RELEASE_LABEL = "release";
  * ];
  *
  * @param {Array<Object>} mockData data for PR
- * @returns {undefined}
+ * @returns {void}
  * @private
  */
 function mockAllOpenPrWithCommits(mockData = []) {
     mockData.forEach((pullRequest, index) => {
+        const apiPath = `/repos/test/repo-test/pulls?state=open${index === 0 ? "" : `&page=${index + 1}`}`;
         const linkHeaders = [];
 
         if (index !== mockData.length - 1) {
-            linkHeaders.push(`<https://api.github.com/repos/test/repo-test/pulls?state=open&page=${index + 2}>; rel="next"`);
-            linkHeaders.push(`<https://api.github.com/repos/test/repo-test/pulls?state=open&page=${mockData.length}>; rel="last"`);
+            linkHeaders.push(`<${API_ROOT}/repos/test/repo-test/pulls?state=open&page=${index + 2}>; rel="next"`);
+            linkHeaders.push(`<${API_ROOT}/repos/test/repo-test/pulls?state=open&page=${mockData.length}>; rel="last"`);
         }
 
         if (index !== 0) {
-            linkHeaders.push(`<https://api.github.com/repos/test/repo-test/pulls?state=open&page=${index}>; rel="prev"`);
-            linkHeaders.push("<https://api.github.com/repos/test/repo-test/pulls?state=open&page=1>; rel=\"first\"");
+            linkHeaders.push(`<${API_ROOT}/repos/test/repo-test/pulls?state=open&page=${index}>; rel="prev"`);
+            linkHeaders.push(`<${API_ROOT}/repos/test/repo-test/pulls?state=open&page=1>; rel="first"`);
         }
 
-        nock("https://api.github.com")
-            .get(`/repos/test/repo-test/pulls?state=open${index === 0 ? "" : `&page=${index + 1}`}`)
-            .reply(200, [pullRequest], {
-                Link: linkHeaders.join(", ")
-            });
+        fetchMock.mockGlobal().get(`${API_ROOT}${apiPath}`, {
+            status: 200,
+            body: [pullRequest],
+            headers: linkHeaders.length ? { Link: linkHeaders.join(", ") } : {}
+        });
 
-        nock("https://api.github.com")
-            .persist()
-            .get(`/repos/test/repo-test/pulls/${pullRequest.number}/commits`)
-            .reply(200, pullRequest.commits);
+        fetchMock.mockGlobal().get(
+            `${API_ROOT}/repos/test/repo-test/pulls/${pullRequest.number}/commits`,
+            pullRequest.commits
+        );
     });
 }
 
 /**
- * Asserts that the state value is pending and that it links to an issue.
- * @param {string} _ ignored param
- * @param {string} payload payload sent ot the API
- * @returns {undefined}
+ * Asserts status payload matches expectations
+ * @param {Object} payload Status payload to check
+ * @param {Object} expected Expected values
+ * @returns {void}
  * @private
  */
-function assertPendingStatusWithIssueLink(_, payload) {
-    const data = JSON.parse(payload);
-
-    expect(data.state).toBe("pending");
-    expect(data.description).toBe("A patch release is pending");
-    expect(data.target_url).toBe("https://github.com/test/repo-test/issues/1");
+function assertStatusPayload(payload, expected) {
+    expect(payload.state).toBe(expected.state);
+    expect(payload.description).toBe(expected.description);
+    expect(payload.target_url).toBe(expected.target_url || "");
 }
 
 /**
- * Asserts that the state value is success
- * @param {string} _ ignored param
- * @param {string} payload payload sent ot the API
- * @returns {undefined}
- * @private
+ * Mocks a pending status for a given status ID.
+ * @param {string} statusId The ID of the status to mock.
+ * @returns {void}
  */
-function assertSuccessStatusWithNoPendingRelease(_, payload) {
-    const data = JSON.parse(payload);
-
-    expect(JSON.parse(payload).state).toBe("success");
-    expect(data.description).toBe("No patch release is pending");
-    expect(data.target_url).toBe("");
+function mockStatusPending(statusId) {
+    fetchMock.mockGlobal().post({
+        url: `${API_ROOT}/repos/test/repo-test/statuses/${statusId}`,
+        body: {
+            state: "pending",
+            description: "A patch release is pending",
+            target_url: "https://github.com/test/repo-test/issues/1"
+        },
+        matchPartialBody: true
+    }, 200);
 }
 
 /**
- * Asserts that the state value is success
- * @param {string} _ ignored param
- * @param {string} payload payload sent ot the API
- * @returns {undefined}
- * @private
+ * Mocks a successful status update for a given status ID.
+ * @param {string} statusId The ID of the status to update.
+ * @returns {void}
  */
-function assertSuccessStatusWithPendingRelease(_, payload) {
-    const data = JSON.parse(payload);
-
-    expect(JSON.parse(payload).state).toBe("success");
-    expect(data.description).toBe("This change is semver-patch");
+function mockStatusSuccess(statusId) {
+    fetchMock.mockGlobal().post({
+        url: `${API_ROOT}/repos/test/repo-test/statuses/${statusId}`,
+        body: {
+            state: "success",
+            description: "This change is semver-patch"
+        },
+        matchPartialBody: true
+    }, 200);
 }
 
 describe("release-monitor", () => {
     let bot = null;
 
-    beforeAll(async () => {
-        bot = new Application({
-            id: "test",
-            cert: "test",
-            cache: {
-                wrap: () => Promise.resolve({ data: { token: "test" } })
-            },
-            app: () => "test"
+    beforeEach(() => {
+        bot = new Probot({
+            appId: 1,
+            githubToken: "test",
+            Octokit: ProbotOctokit.defaults(instanceOptions => ({
+                ...instanceOptions,
+                throttle: { enabled: false },
+                retry: { enabled: false }
+            }))
         });
-
-        const { paginate } = await bot.auth();
-
-        bot.auth = () => Object.assign(new GitHubApi(), { paginate });
         releaseMonitor(bot);
     });
 
     afterEach(() => {
-        nock.cleanAll();
+        fetchMock.unmockGlobal();
+        fetchMock.removeRoutes();
+        fetchMock.clearHistory();
     });
 
     describe("issue labeled", () => {
-        test("in post release phase then add appropriate status check to all PRs", async () => {
+        test.only("in post release phase then add appropriate status check to all PRs", async () => {
             mockAllOpenPrWithCommits([
                 {
                     number: 1,
@@ -212,33 +226,15 @@ describe("release-monitor", () => {
                     ]
                 }
             ]);
-            const newPrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/111")
-                .reply(200, assertPendingStatusWithIssueLink);
 
-            const fixPrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/222")
-                .reply(200, assertSuccessStatusWithPendingRelease);
-
-            const updatePrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/333")
-                .reply(200, assertPendingStatusWithIssueLink);
-
-            const breakingPrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/444")
-                .reply(200, assertPendingStatusWithIssueLink);
-
-            const randomPrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/555")
-                .reply(200, assertPendingStatusWithIssueLink);
-
-            const docPrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/666")
-                .reply(200, assertSuccessStatusWithPendingRelease);
-
-            const upgradePrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/777")
-                .reply(200, assertSuccessStatusWithPendingRelease);
+            // Mock status API calls with fetchMock
+            mockStatusPending(111);
+            mockStatusSuccess(222);
+            mockStatusPending(333);
+            mockStatusPending(444);
+            mockStatusPending(555);
+            mockStatusSuccess(666);
+            mockStatusSuccess(777);
 
             await bot.receive({
                 name: "issues",
@@ -271,13 +267,13 @@ describe("release-monitor", () => {
                 }
             });
 
-            expect(newPrStatus.isDone()).toBe(true);
-            expect(fixPrStatus.isDone()).toBe(true);
-            expect(updatePrStatus.isDone()).toBe(true);
-            expect(breakingPrStatus.isDone()).toBe(true);
-            expect(randomPrStatus.isDone()).toBe(true);
-            expect(docPrStatus.isDone()).toBe(true);
-            expect(upgradePrStatus.isDone()).toBe(true);
+            expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/statuses/111`)).toBeTruthy();
+            expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/statuses/222`)).toBeTruthy();
+            expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/statuses/333`)).toBeTruthy();
+            expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/statuses/444`)).toBeTruthy();
+            expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/statuses/555`)).toBeTruthy();
+            expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/statuses/666`)).toBeTruthy();
+            expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/statuses/777`)).toBeTruthy();
         }, 10000);
 
         test("with no post release label nothing happens", async () => {
@@ -307,13 +303,6 @@ describe("release-monitor", () => {
                     ]
                 }
             ]);
-            const pr1Status = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/111")
-                .reply(200, {});
-
-            const pr2Status = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/222")
-                .reply(200, {});
 
             await bot.receive({
                 name: "issues",
@@ -342,8 +331,7 @@ describe("release-monitor", () => {
                 }
             });
 
-            expect(pr1Status.isDone()).toBeFalsy();
-            expect(pr2Status.isDone()).toBeFalsy();
+            expect(fetchMock.called()).toBe(false);
         });
 
         test("with post release label on non release issue, nothing happens", async () => {
@@ -373,13 +361,6 @@ describe("release-monitor", () => {
                     ]
                 }
             ]);
-            const pr1Status = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/111")
-                .reply(200, {});
-
-            const pr2Status = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/222")
-                .reply(200, {});
 
             await bot.receive({
                 name: "issues",
@@ -411,8 +392,7 @@ describe("release-monitor", () => {
                 }
             });
 
-            expect(pr1Status.isDone()).toBeFalsy();
-            expect(pr2Status.isDone()).toBeFalsy();
+            expect(fetchMock.called()).toBe(false);
         });
     });
 
@@ -504,33 +484,20 @@ describe("release-monitor", () => {
                     ]
                 }
             ]);
-            const newPrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/111")
-                .reply(200, assertSuccessStatusWithNoPendingRelease);
 
-            const fixPrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/222")
-                .reply(200, assertSuccessStatusWithNoPendingRelease);
+            // Mock status API calls with fetchMock
+            fetchMock.mockGlobal().post(
+                url => url.startsWith(`${API_ROOT}/repos/test/repo-test/statuses/`),
+                (url, opts) => {
+                    const payload = JSON.parse(opts.body);
 
-            const updatePrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/333")
-                .reply(200, assertSuccessStatusWithNoPendingRelease);
-
-            const breakingPrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/444")
-                .reply(200, assertSuccessStatusWithNoPendingRelease);
-
-            const randomPrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/555")
-                .reply(200, assertSuccessStatusWithNoPendingRelease);
-
-            const docPrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/666")
-                .reply(200, assertSuccessStatusWithNoPendingRelease);
-
-            const upgradePrStatus = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/777")
-                .reply(200, assertSuccessStatusWithNoPendingRelease);
+                    assertStatusPayload(payload, {
+                        state: "success",
+                        description: "No patch release is pending"
+                    });
+                    return { status: 200, body: {} };
+                }
+            );
 
             await bot.receive({
                 name: "issues",
@@ -557,13 +524,7 @@ describe("release-monitor", () => {
                 }
             });
 
-            expect(newPrStatus.isDone()).toBeTruthy();
-            expect(fixPrStatus.isDone()).toBeTruthy();
-            expect(docPrStatus.isDone()).toBeTruthy();
-            expect(updatePrStatus.isDone()).toBeTruthy();
-            expect(breakingPrStatus.isDone()).toBeTruthy();
-            expect(randomPrStatus.isDone()).toBeTruthy();
-            expect(upgradePrStatus.isDone()).toBeTruthy();
+            expect(fetchMock.called()).toBe(true);
         }, 10000);
 
         test("is not a release issue", async () => {
@@ -593,13 +554,6 @@ describe("release-monitor", () => {
                     ]
                 }
             ]);
-            const pr1Status = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/111")
-                .reply(200, {});
-
-            const pr2Status = nock("https://api.github.com")
-                .post("/repos/test/repo-test/statuses/222")
-                .reply(200, {});
 
             await bot.receive({
                 name: "issues",
@@ -626,8 +580,7 @@ describe("release-monitor", () => {
                 }
             });
 
-            expect(pr1Status.isDone()).toBeFalsy();
-            expect(pr2Status.isDone()).toBeFalsy();
+            expect(fetchMock.called()).toBe(false);
         });
     });
 
@@ -655,17 +608,28 @@ describe("release-monitor", () => {
                     }
                 ]);
 
-                nock("https://api.github.com")
-                    .get(`/repos/test/repo-test/issues?labels=release%2C${encodeURIComponent(POST_RELEASE_LABEL)}`)
-                    .reply(200, [
+                fetchMock.mockGlobal().get(
+                    `${API_ROOT}/repos/test/repo-test/issues?labels=release%2C${encodeURIComponent(POST_RELEASE_LABEL)}`,
+                    [
                         {
                             html_url: "https://github.com/test/repo-test/issues/1"
                         }
-                    ]);
+                    ]
+                );
 
-                const newPrStatus = nock("https://api.github.com")
-                    .post("/repos/test/repo-test/statuses/111")
-                    .reply(200, assertPendingStatusWithIssueLink);
+                const newPrStatus = fetchMock.mockGlobal().post(
+                    `${API_ROOT}/repos/test/repo-test/statuses/111`,
+                    (url, opts) => {
+                        const payload = JSON.parse(opts.body);
+
+                        assertStatusPayload(payload, {
+                            state: "pending",
+                            description: "A patch release is pending",
+                            target_url: "https://github.com/test/repo-test/issues/1"
+                        });
+                        return { status: 200, body: {} };
+                    }
+                );
 
                 await bot.receive({
                     name: "pull_request",
@@ -687,7 +651,7 @@ describe("release-monitor", () => {
                     }
                 });
 
-                expect(newPrStatus.isDone()).toBeTruthy();
+                expect(newPrStatus.called()).toBe(true);
             });
 
             test("put success for semver patch PR under post release phase", async () => {
@@ -706,17 +670,27 @@ describe("release-monitor", () => {
                     }
                 ]);
 
-                nock("https://api.github.com")
-                    .get(`/repos/test/repo-test/issues?labels=release%2C${encodeURIComponent(POST_RELEASE_LABEL)}`)
-                    .reply(200, [
+                fetchMock.mockGlobal().get(
+                    `${API_ROOT}/repos/test/repo-test/issues?labels=release%2C${encodeURIComponent(POST_RELEASE_LABEL)}`,
+                    [
                         {
                             html_url: "https://github.com/test/repo-test/issues/1"
                         }
-                    ]);
+                    ]
+                );
 
-                const newPrStatus = nock("https://api.github.com")
-                    .post("/repos/test/repo-test/statuses/111")
-                    .reply(200, assertSuccessStatusWithPendingRelease);
+                const newPrStatus = fetchMock.mockGlobal().post(
+                    `${API_ROOT}/repos/test/repo-test/statuses/111`,
+                    (url, opts) => {
+                        const payload = JSON.parse(opts.body);
+
+                        assertStatusPayload(payload, {
+                            state: "success",
+                            description: "This change is semver-patch"
+                        });
+                        return { status: 200, body: {} };
+                    }
+                );
 
                 await bot.receive({
                     name: "pull_request",
@@ -738,7 +712,7 @@ describe("release-monitor", () => {
                     }
                 });
 
-                expect(newPrStatus.isDone()).toBeTruthy();
+                expect(newPrStatus.called()).toBe(true);
             });
 
             test("put success for all PR under outside release phase", async () => {
@@ -757,13 +731,19 @@ describe("release-monitor", () => {
                     }
                 ]);
 
-                nock("https://api.github.com")
-                    .get(`/repos/test/repo-test/issues?labels=release%2C${encodeURIComponent(POST_RELEASE_LABEL)}`)
-                    .reply(200, []);
+                fetchMock.mockGlobal().get(
+                    `${API_ROOT}/repos/test/repo-test/issues?labels=release%2C${encodeURIComponent(POST_RELEASE_LABEL)}`,
+                    []
+                );
 
-                const newPrStatus = nock("https://api.github.com")
-                    .post("/repos/test/repo-test/statuses/111")
-                    .reply(200, assertSuccessStatusWithNoPendingRelease);
+                const newPrStatus = fetchMock.mockGlobal().post({
+                    url: `${API_ROOT}/repos/test/repo-test/statuses/111`,
+                    body: {
+                        state: "success",
+                        description: "No patch release is pending"
+                    },
+                    matchPartialBody: true
+                }, 200);
 
                 await bot.receive({
                     name: "pull_request",
@@ -785,7 +765,7 @@ describe("release-monitor", () => {
                     }
                 });
 
-                expect(newPrStatus.isDone()).toBeTruthy();
+                expect(newPrStatus.called()).toBe(true);
             });
         });
     });

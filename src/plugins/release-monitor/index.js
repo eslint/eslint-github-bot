@@ -5,6 +5,16 @@
 
 "use strict";
 
+//-----------------------------------------------------------------------------
+// Type Definitions
+//-----------------------------------------------------------------------------
+
+/** @typedef {import("probot").Context} ProbotContext */
+
+//-----------------------------------------------------------------------------
+// Helpers
+//-----------------------------------------------------------------------------
+
 const PATCH_COMMIT_MESSAGE_REGEX = /^(?:Build|Chore|Docs|Fix|Upgrade):/u;
 const POST_RELEASE_LABEL = "patch release pending";
 const RELEASE_LABEL = "release";
@@ -31,18 +41,16 @@ function pluckLatestCommitSha(allCommits) {
 
 /**
  * Gets all the open PR
- * @param {Object} context context object
+ * @param {ProbotContext} context context object
  * @returns {Promise<any>} collection of pr objects
  * @private
  */
 function getAllOpenPRs(context) {
-    return context.github.paginate(
-        context.github.pullRequests.list(
-            context.repo({
-                state: "open"
-            })
-        ),
-        res => res.data
+    return context.octokit.paginate(
+        context.octokit.pulls.list,
+        context.repo({
+            state: "open"
+        })
     );
 }
 
@@ -58,7 +66,7 @@ function getAllOpenPRs(context) {
  * @private
  */
 function createStatusOnPR({ context, state, sha, description, targetUrl }) {
-    return context.github.repos.createStatus(
+    return context.octokit.repos.createCommitStatus(
         context.repo({
             sha,
             state,
@@ -78,11 +86,11 @@ function createStatusOnPR({ context, state, sha, description, targetUrl }) {
  * @private
  */
 async function getAllCommitsForPR({ context, pr }) {
-    const { data: commitList } = await context.github.pullRequests.listCommits(
-        context.repo({ number: pr.number })
+    const commits = await context.octokit.pulls.listCommits(
+        context.repo({ pull_number: pr.number })
     );
 
-    return commitList;
+    return commits.data;
 }
 
 /**
@@ -171,7 +179,7 @@ function isPostReleaseLabel({ name }) {
 
 /**
  * Handler for issue label event
- * @param {Object} context probot context object
+ * @param {ProbotContext} context probot context object
  * @returns {Promise<void>} promise
  * @private
  */
@@ -188,7 +196,7 @@ async function issueLabeledHandler(context) {
 
 /**
  * Handler for issue close event
- * @param {Object} context probot context object
+ * @param {ProbotContext} context probot context object
  * @returns {Promise<void>} promise
  * @private
  */
@@ -205,7 +213,7 @@ async function issueCloseHandler(context) {
 
 /**
  * Handler for pull request open and reopen event
- * @param {Object} context probot context object
+ * @param {ProbotContext} context probot context object
  * @returns {Promise<void>} promise
  * @private
  */
@@ -216,7 +224,7 @@ async function prOpenHandler(context) {
      * false: add success status to pr
      * true: add failure message if its not a fix or doc pr else success
      */
-    const { data: releaseIssues } = await context.github.issues.listForRepo(
+    const { data: releaseIssues } = await context.octokit.issues.listForRepo(
         context.repo({
             labels: `${RELEASE_LABEL},${POST_RELEASE_LABEL}`
         })
