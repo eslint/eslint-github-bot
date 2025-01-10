@@ -34,7 +34,6 @@
     "globals": "^13.24.0",
     "jest": "^29.7.0",
     "lint-staged": "^13.2.1",
-    "nock": "^13.5.6",
     "yorkie": "^2.0.0"
   },
   "keywords": [
