@@ -71,19 +71,6 @@ function mockAllOpenPrWithCommits(mockData = []) {
 }
 
 /**
- * Asserts status payload matches expectations
- * @param {Object} payload Status payload to check
- * @param {Object} expected Expected values
- * @returns {void}
- * @private
- */
-function assertStatusPayload(payload, expected) {
-    expect(payload.state).toBe(expected.state);
-    expect(payload.description).toBe(expected.description);
-    expect(payload.target_url).toBe(expected.target_url || "");
-}
-
-/**
  * Mocks a pending status for a given status ID.
  * @param {string} statusId The ID of the status to mock.
  * @returns {void}
@@ -101,16 +88,32 @@ function mockStatusPending(statusId) {
 }
 
 /**
- * Mocks a successful status update for a given status ID.
+ * Mocks a successful status update for a given status ID with a patch release message.
  * @param {string} statusId The ID of the status to update.
  * @returns {void}
  */
-function mockStatusSuccess(statusId) {
+function mockStatusSuccessWithPatch(statusId) {
     fetchMock.mockGlobal().post({
         url: `${API_ROOT}/repos/test/repo-test/statuses/${statusId}`,
         body: {
             state: "success",
             description: "This change is semver-patch"
+        },
+        matchPartialBody: true
+    }, 200);
+}
+
+/**
+ * Mocks a successful status update for a given status ID with no patch release message.
+ * @param {string} statusId The ID of the status to update.
+ * @returns {void}
+ */
+function mockStatusSuccessNoPending(statusId) {
+    fetchMock.mockGlobal().post({
+        url: `${API_ROOT}/repos/test/repo-test/statuses/${statusId}`,
+        body: {
+            state: "success",
+            description: "No patch release is pending"
         },
         matchPartialBody: true
     }, 200);
@@ -139,7 +142,7 @@ describe("release-monitor", () => {
     });
 
     describe("issue labeled", () => {
-        test.only("in post release phase then add appropriate status check to all PRs", async () => {
+        test("in post release phase then add appropriate status check to all PRs", async () => {
             mockAllOpenPrWithCommits([
                 {
                     number: 1,
@@ -229,12 +232,12 @@ describe("release-monitor", () => {
 
             // Mock status API calls with fetchMock
             mockStatusPending(111);
-            mockStatusSuccess(222);
+            mockStatusSuccessWithPatch(222);
             mockStatusPending(333);
             mockStatusPending(444);
             mockStatusPending(555);
-            mockStatusSuccess(666);
-            mockStatusSuccess(777);
+            mockStatusSuccessWithPatch(666);
+            mockStatusSuccessWithPatch(777);
 
             await bot.receive({
                 name: "issues",
@@ -331,7 +334,7 @@ describe("release-monitor", () => {
                 }
             });
 
-            expect(fetchMock.called()).toBe(false);
+            expect(fetchMock.callHistory.called()).toBe(false);
         });
 
         test("with post release label on non release issue, nothing happens", async () => {
@@ -392,7 +395,7 @@ describe("release-monitor", () => {
                 }
             });
 
-            expect(fetchMock.called()).toBe(false);
+            expect(fetchMock.callHistory.called()).toBe(false);
         });
     });
 
@@ -485,19 +488,13 @@ describe("release-monitor", () => {
                 }
             ]);
 
-            // Mock status API calls with fetchMock
-            fetchMock.mockGlobal().post(
-                url => url.startsWith(`${API_ROOT}/repos/test/repo-test/statuses/`),
-                (url, opts) => {
-                    const payload = JSON.parse(opts.body);
-
-                    assertStatusPayload(payload, {
-                        state: "success",
-                        description: "No patch release is pending"
-                    });
-                    return { status: 200, body: {} };
-                }
-            );
+            mockStatusSuccessNoPending(111);
+            mockStatusSuccessNoPending(222);
+            mockStatusSuccessNoPending(333);
+            mockStatusSuccessNoPending(444);
+            mockStatusSuccessNoPending(555);
+            mockStatusSuccessNoPending(666);
+            mockStatusSuccessNoPending(777);
 
             await bot.receive({
                 name: "issues",
@@ -524,7 +521,7 @@ describe("release-monitor", () => {
                 }
             });
 
-            expect(fetchMock.called()).toBe(true);
+            expect(fetchMock.callHistory.called()).toBe(true);
         }, 10000);
 
         test("is not a release issue", async () => {
@@ -580,7 +577,7 @@ describe("release-monitor", () => {
                 }
             });
 
-            expect(fetchMock.called()).toBe(false);
+            expect(fetchMock.callHistory.called()).toBe(false);
         });
     });
 
@@ -617,19 +614,7 @@ describe("release-monitor", () => {
                     ]
                 );
 
-                const newPrStatus = fetchMock.mockGlobal().post(
-                    `${API_ROOT}/repos/test/repo-test/statuses/111`,
-                    (url, opts) => {
-                        const payload = JSON.parse(opts.body);
-
-                        assertStatusPayload(payload, {
-                            state: "pending",
-                            description: "A patch release is pending",
-                            target_url: "https://github.com/test/repo-test/issues/1"
-                        });
-                        return { status: 200, body: {} };
-                    }
-                );
+                mockStatusPending(111);
 
                 await bot.receive({
                     name: "pull_request",
@@ -651,7 +636,7 @@ describe("release-monitor", () => {
                     }
                 });
 
-                expect(newPrStatus.called()).toBe(true);
+                expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/statuses/111`)).toBe(true);
             });
 
             test("put success for semver patch PR under post release phase", async () => {
@@ -679,18 +664,7 @@ describe("release-monitor", () => {
                     ]
                 );
 
-                const newPrStatus = fetchMock.mockGlobal().post(
-                    `${API_ROOT}/repos/test/repo-test/statuses/111`,
-                    (url, opts) => {
-                        const payload = JSON.parse(opts.body);
-
-                        assertStatusPayload(payload, {
-                            state: "success",
-                            description: "This change is semver-patch"
-                        });
-                        return { status: 200, body: {} };
-                    }
-                );
+                mockStatusSuccessWithPatch(111);
 
                 await bot.receive({
                     name: "pull_request",
@@ -712,7 +686,7 @@ describe("release-monitor", () => {
                     }
                 });
 
-                expect(newPrStatus.called()).toBe(true);
+                expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/statuses/111`)).toBe(true);
             });
 
             test("put success for all PR under outside release phase", async () => {
@@ -736,14 +710,7 @@ describe("release-monitor", () => {
                     []
                 );
 
-                const newPrStatus = fetchMock.mockGlobal().post({
-                    url: `${API_ROOT}/repos/test/repo-test/statuses/111`,
-                    body: {
-                        state: "success",
-                        description: "No patch release is pending"
-                    },
-                    matchPartialBody: true
-                }, 200);
+                mockStatusSuccessNoPending(111);
 
                 await bot.receive({
                     name: "pull_request",
@@ -765,7 +732,7 @@ describe("release-monitor", () => {
                     }
                 });
 
-                expect(newPrStatus.called()).toBe(true);
+                expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/statuses/111`)).toBe(true);
             });
         });
     });
