@@ -27,7 +27,6 @@
     "probot": "^13.4.1"
   },
   "devDependencies": {
-    "@octokit/rest": "^21.0.2",
     "eslint": "^8.55.0",
     "eslint-config-eslint": "^9.0.0",
     "fetch-mock": "^12.2.0",
