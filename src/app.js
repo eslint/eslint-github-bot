@@ -5,8 +5,24 @@
 
 "use strict";
 
-const probot = require("probot");
+//-----------------------------------------------------------------------------
+// Requirements
+//-----------------------------------------------------------------------------
+
+const { Probot, run } = require("probot");
 const plugins = require("./plugins");
+
+//-----------------------------------------------------------------------------
+// Type Definitions
+//-----------------------------------------------------------------------------
+
+/** @typedef {import("probot").Probot} Probot */
+/** @typedef {import("probot").Context<any>} ProbotContext */
+/** @typedef {import("probot").ProbotOctokit} ProbotOctokit */
+
+//-----------------------------------------------------------------------------
+// Main
+//-----------------------------------------------------------------------------
 
 if (!process.env.SECRET) {
     throw new Error("Missing 'SECRET' environment variable");
@@ -21,17 +37,15 @@ if (!process.env.APP_ID) {
 }
 
 const port = process.env.PORT || 8000;
-const bot = probot.createProbot({
-    port,
+const app = new Probot({
+    privateKey: process.env.PRIVATE_KEY,
+    appId: process.env.APP_ID,
     secret: process.env.SECRET,
-    cert: process.env.PRIVATE_KEY,
-    id: process.env.APP_ID
+    port
 });
+
 const enabledPlugins = new Set([
-    "addToTriageProject",
-    "autoCloser",
     "commitMessage",
-    "issueArchiver",
     "needsInfo",
     "recurringIssues",
     "releaseMonitor",
@@ -41,7 +55,7 @@ const enabledPlugins = new Set([
 // load all the enabled plugins from inside plugins folder
 Object.keys(plugins)
     .filter(pluginId => enabledPlugins.has(pluginId))
-    .forEach(pluginId => bot.load(plugins[pluginId]));
+    .forEach(pluginId => app.load(plugins[pluginId]));
 
 // start the server
-bot.start();
+run(app);

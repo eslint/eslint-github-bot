@@ -1,38 +1,40 @@
 "use strict";
 
 const { needsInfo } = require("../../../src/plugins/index");
-const nock = require("nock");
-const probot = require("probot");
-const GitHubApi = require("@octokit/rest");
+const { Probot, ProbotOctokit } = require("probot");
+const { default: fetchMock } = require("fetch-mock");
+
+const API_ROOT = "https://api.github.com";
 
 describe("needs-info", () => {
     let bot = null;
-    let issueCommentReq = null;
 
-    beforeAll(() => {
-        bot = new probot.Application({
-            id: "test",
-            cert: "test",
-            cache: {
-                wrap: () => Promise.resolve({ data: { token: "test" } })
-            }
+    beforeEach(() => {
+        bot = new Probot({
+            appId: 1,
+            githubToken: "test",
+            Octokit: ProbotOctokit.defaults(instanceOptions => ({
+                ...instanceOptions,
+                throttle: { enabled: false },
+                retry: { enabled: false }
+            }))
         });
-        bot.auth = () => new GitHubApi();
         needsInfo(bot);
     });
 
-    beforeEach(() => {
-        issueCommentReq = nock("https://api.github.com")
-            .post("/repos/test/repo-test/issues/1/comments")
-            .reply(200);
-    });
-
     afterEach(() => {
-        nock.cleanAll();
+        fetchMock.unmockGlobal();
+        fetchMock.removeRoutes();
+        fetchMock.clearHistory();
     });
 
     describe("issue labeled", () => {
         test("Adds the comment if there needs info is added", async () => {
+            fetchMock.mockGlobal().post(
+                `${API_ROOT}/repos/test/repo-test/issues/1/comments`,
+                { status: 200 }
+            );
+
             await bot.receive({
                 name: "issues",
                 payload: {
@@ -60,7 +62,7 @@ describe("needs-info", () => {
                 }
             });
 
-            expect(issueCommentReq.isDone()).toBeTruthy();
+            expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/issues/1/comments`)).toBeTruthy();
         });
 
         test("Do not add the comment if needs label label is not present", async () => {
@@ -91,7 +93,7 @@ describe("needs-info", () => {
                 }
             });
 
-            expect(issueCommentReq.isDone()).not.toBeTruthy();
+            expect(fetchMock.callHistory.called()).toBe(false);
         });
     });
 });

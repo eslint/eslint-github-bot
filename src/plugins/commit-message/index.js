@@ -14,6 +14,12 @@ const commentMessage = require("./createMessage");
 const { TAG_LABELS } = require("./util");
 
 //-----------------------------------------------------------------------------
+// Type Definitions
+//-----------------------------------------------------------------------------
+
+/** @typedef {import("probot").Context} ProbotContext */
+
+//-----------------------------------------------------------------------------
 // Helpers
 //-----------------------------------------------------------------------------
 
@@ -84,7 +90,7 @@ function getCommitMessageLabels(message) {
 
 /**
  * If the first commit message is not legal then it adds a comment
- * @param {Object} context context given by the probot
+ * @param {ProbotContext} context context given by the probot
  * @returns {Promise<void>} promise
  * @private
  */
@@ -96,13 +102,13 @@ async function processCommitMessage(context) {
      * message of that commit. If the PR has more than one commit, this
      * is the title of the PR.
      */
-    const { payload, github } = context;
+    const { payload, octokit } = context;
 
     if (EXCLUDED_REPOSITORY_NAMES.has(payload.repository.name)) {
         return;
     }
 
-    const allCommits = await github.pullRequests.listCommits(context.issue());
+    const allCommits = await octokit.pulls.listCommits(context.pullRequest());
     const messageToCheck = payload.pull_request.title;
     const errors = getCommitMessageErrors(messageToCheck);
     let description;
@@ -115,7 +121,7 @@ async function processCommitMessage(context) {
         const labels = getCommitMessageLabels(messageToCheck);
 
         if (labels) {
-            await context.github.issues.addLabels(context.issue({ labels }));
+            await context.octokit.issues.addLabels(context.issue({ labels }));
         }
 
     } else {
@@ -124,7 +130,7 @@ async function processCommitMessage(context) {
     }
 
     // create status on the last commit
-    await github.repos.createStatus(
+    await octokit.repos.createCommitStatus(
         context.repo({
             sha: allCommits.data[allCommits.data.length - 1].sha,
             state,
@@ -135,7 +141,7 @@ async function processCommitMessage(context) {
     );
 
     if (state === "failure") {
-        await github.issues.createComment(context.issue({
+        await octokit.issues.createComment(context.issue({
             body: commentMessage(errors, payload.pull_request.user.login)
         }));
     }

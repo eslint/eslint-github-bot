@@ -1,23 +1,48 @@
+/**
+ * @fileoverview Tests for the WIP plugin.
+ */
+
 "use strict";
 
+//-----------------------------------------------------------------------------
+// Requirements
+//-----------------------------------------------------------------------------
+
 const { wip } = require("../../../src/plugins");
-const nock = require("nock");
-const { Application } = require("probot");
+const { Probot, ProbotOctokit } = require("probot");
+const { default: fetchMock } = require("fetch-mock");
+
+//-----------------------------------------------------------------------------
+// Helpers
+//-----------------------------------------------------------------------------
 
 const DO_NOT_MERGE_LABEL = "do not merge";
+const API_ROOT = "https://api.github.com";
+
+// Add debugging for unmocked requests
 
 /**
  * Mocks a response for the "get all commits for PR" API.
  * @param {Object} options Options for the request.
  * @param {number} options.number The pull request number.
  * @param {Array<Object>} options.commits The pull request commits to be returned.
- * @returns {Object} The Nock object for this request.
+ * @returns {void}
  * @private
  */
 function mockGetAllCommitsForPR({ number, commits }) {
-    return nock("https://api.github.com")
-        .get(`/repos/test/repo-test/pulls/${number}/commits`)
-        .reply(200, commits);
+
+    const url = `${API_ROOT}/repos/test/repo-test/pulls/${number}/commits`;
+
+    fetchMock.mockGlobal().get(
+        url,
+        {
+            status: 200,
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(commits)
+        }
+    );
 }
 
 /**
@@ -25,62 +50,108 @@ function mockGetAllCommitsForPR({ number, commits }) {
  * @param {Object} options Options for the request.
  * @param {string} options.sha The SHA for the commit for which to retrieve statuses.
  * @param {Array<Object>} options.statuses The status response that should be used.
- * @returns {Object} The Nock object for this request.
+ * @returns {void}
  * @private
  */
 function mockStatusChecksForCommit({ sha, statuses }) {
-    return nock("https://api.github.com")
-        .get(`/repos/test/repo-test/commits/${sha}/status`)
-        .reply(200, {
-            sha,
-            statuses
-        });
+
+    const url = `${API_ROOT}/repos/test/repo-test/commits/${sha}/status`;
+
+    fetchMock.mockGlobal().get(
+        url,
+        {
+            status: 200,
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
+                sha,
+                statuses
+            })
+        }
+    );
+
 }
 
 /**
- * Asserts that a WIP status check's state value is pending.
- * @param {string} _ ignored param
- * @param {string} payload payload sent to the API
- * @returns {undefined}
- * @private
+ * Mocks a response for the "create status check on PR" API.
+ * Sets the status to pending.
+ * @returns {void}
  */
-function assertPendingStatusForWip(_, payload) {
-    const data = JSON.parse(payload);
+function mockPendingStatusForWip() {
 
-    expect(data.context).toBe("wip");
-    expect(data.state).toBe("pending");
+    fetchMock.mockGlobal().post(
+        {
+            url: `${API_ROOT}/repos/test/repo-test/statuses/111`,
+            body: {
+                context: "wip",
+                state: "pending"
+            },
+            matchPartialBody: true
+        },
+        {
+            status: 200,
+            body: JSON.stringify({})
+        }
+    );
 }
 
 /**
- * Asserts that a WIP status check's state value is success.
- * @param {string} _ ignored param
- * @param {string} payload payload sent to the API
- * @returns {undefined}
- * @private
+ * Mocks a response for the "create status check on PR" API.
+ * Sets the status to success.
+ * @returns {void}
  */
-function assertSuccessStatusForWip(_, payload) {
-    const data = JSON.parse(payload);
-
-    expect(data.context).toBe("wip");
-    expect(data.state).toBe("success");
+function mockSuccessStatusForWip() {
+    fetchMock.mockGlobal().post(
+        {
+            url: `${API_ROOT}/repos/test/repo-test/statuses/111`,
+            body: {
+                context: "wip",
+                state: "success"
+            },
+            matchPartialBody: true
+        },
+        {
+            status: 200,
+            body: JSON.stringify({})
+        }
+    );
 }
+
+/**
+ * Asserts that no status checks were created.
+ * @returns {void}
+ */
+function assertNoStatusChecksCreated() {
+    expect(fetchMock.callHistory.calls(`${API_ROOT}/repos/test/repo-test/statuses/111`)).toHaveLength(0);
+}
+
+//-----------------------------------------------------------------------------
+// Tests
+//-----------------------------------------------------------------------------
 
 describe("wip", () => {
     let bot = null;
 
-    beforeAll(() => {
-        bot = new Application({
-            id: "test",
-            cert: "test",
-            cache: {
-                wrap: () => Promise.resolve({ data: { token: "test" } })
-            }
+    beforeEach(() => {
+        bot = new Probot({
+
+            appId: 1,
+            githubToken: "test",
+
+            Octokit: ProbotOctokit.defaults(instanceOptions => ({
+                ...instanceOptions,
+                throttle: { enabled: false },
+                retry: { enabled: false }
+            }))
         });
         wip(bot);
     });
 
     afterEach(() => {
-        nock.cleanAll();
+        fetchMock.unmockGlobal();
+        fetchMock.removeRoutes();
+        fetchMock.clearHistory();
     });
 
     ["opened", "reopened", "edited", "labeled", "unlabeled", "synchronize"].forEach(action => {
@@ -98,9 +169,7 @@ describe("wip", () => {
                     ]
                 });
 
-                const createStatusOnPR = nock("https://api.github.com")
-                    .post("/repos/test/repo-test/statuses/111")
-                    .reply(200, assertPendingStatusForWip);
+                mockPendingStatusForWip();
 
                 await bot.receive({
                     name: "pull_request",
@@ -123,7 +192,6 @@ describe("wip", () => {
                     }
                 });
 
-                expect(createStatusOnPR.isDone()).toBeTruthy();
             });
 
             test("create pending status if PR title contains '(WIP)'", async () => {
@@ -139,9 +207,7 @@ describe("wip", () => {
                     ]
                 });
 
-                const createStatusOnPR = nock("https://api.github.com")
-                    .post("/repos/test/repo-test/statuses/111")
-                    .reply(200, assertPendingStatusForWip);
+                mockPendingStatusForWip();
 
                 await bot.receive({
                     name: "pull_request",
@@ -164,7 +230,6 @@ describe("wip", () => {
                     }
                 });
 
-                expect(createStatusOnPR.isDone()).toBeTruthy();
             });
 
             test("create pending status if labels contain 'do not merge'", async () => {
@@ -180,9 +245,7 @@ describe("wip", () => {
                     ]
                 });
 
-                const createStatusOnPR = nock("https://api.github.com")
-                    .post("/repos/test/repo-test/statuses/111")
-                    .reply(200, assertPendingStatusForWip);
+                mockPendingStatusForWip();
 
                 await bot.receive({
                     name: "pull_request",
@@ -205,7 +268,6 @@ describe("wip", () => {
                     }
                 });
 
-                expect(createStatusOnPR.isDone()).toBeTruthy();
             });
 
             test("does not create status check if PR is not WIP and no wip status exists", async () => {
@@ -225,10 +287,6 @@ describe("wip", () => {
                     sha: "111",
                     statuses: []
                 });
-
-                const createStatusOnPR = nock("https://api.github.com")
-                    .post("/repos/test/repo-test/statuses/111")
-                    .reply(200, {});
 
                 await bot.receive({
                     name: "pull_request",
@@ -251,7 +309,8 @@ describe("wip", () => {
                     }
                 });
 
-                expect(createStatusOnPR.isDone()).toBeFalsy();
+                assertNoStatusChecksCreated();
+
             });
 
             test("creates success status check if PR is not WIP and wip status exists", async () => {
@@ -275,9 +334,7 @@ describe("wip", () => {
                     }]
                 });
 
-                const createStatusOnPR = nock("https://api.github.com")
-                    .post("/repos/test/repo-test/statuses/111")
-                    .reply(200, assertSuccessStatusForWip);
+                mockSuccessStatusForWip();
 
                 await bot.receive({
                     name: "pull_request",
@@ -300,7 +357,6 @@ describe("wip", () => {
                     }
                 });
 
-                expect(createStatusOnPR.isDone()).toBeTruthy();
             });
         });
     });
