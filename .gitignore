@@ -17,3 +17,4 @@ versions.json
 .svn
 /credentials.json
 *.pem
+.env

@@ -4,19 +4,25 @@
 
 `eslint-github-bot` is a bot created with [probot](https://github.com/probot/probot) which automates some common tasks for repositories run by the ESLint team.
 
+## Environment Variables:
+
+* `APP_ID` (required): The numeric GitHub app ID
+* `PRIVATE_KEY` (required): the contents of the private key you downloaded after creating the app.
+* `WEBHOOK_SECRET` (required): Secret setup for GitHub webhook or you generated when you created the app.
+* `PORT`: Port for web server _(optional, defaults to 8000)_.
+
 ## :wrench: Setup
 
-* Clone this repo.
+* Clone this repo
 * `npm install`
-* Start the app
-* `npm start` to start it as a GitHub APP
+* `npm test`
 
-### ENV variables required:
+To start the server locally, you'll need:
 
-* `PORT`: Port for web server _(optional, defaults to 8000)_.
-* `WEBHOOK_SECRET`: Secret setup for GitHub webhook or you generated when you created the app.
-* `PRIVATE_KEY`: the contents of the private key you downloaded after creating the app.
-* `APP_ID`: The numeric GitHub app ID
+* A PEM file
+* A `.env` file that specifies the required environment variables
+
+The `APP_ID` and `WEBHOOK_SECRET` need to be present but need not be the registered application ID or webhook secret to start the server. `PRIVATE_KEY` must be a valid PEM private key.
 
 #### Adding plugins
 
