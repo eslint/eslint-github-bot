@@ -36,6 +36,8 @@ To add a plugin:
 
 The bot is deployed to a [Dokku](https://dokku.com) instance named <https://github-bot.eslint.org> and is installed as a GitHub Application at the organization level.
 
+The URL to receive webhooks is the default for Probot, which is `/api/github/webhooks`. This must be configured for the app on the ESLint organization.
+
 ### Health Check
 
 <https://github-bot.eslint.org/ping>
