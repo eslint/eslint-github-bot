@@ -132,7 +132,7 @@ async function processCommitMessage(context) {
     // create status on the last commit
     await octokit.repos.createCommitStatus(
         context.repo({
-            sha: allCommits.data[allCommits.data.length - 1].sha,
+            sha: allCommits.data.at(-1).sha,
             state,
             target_url: "https://github.com/eslint/eslint-github-bot/blob/main/docs/commit-message-check.md",
             description,
