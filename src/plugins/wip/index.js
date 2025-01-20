@@ -129,7 +129,7 @@ function hasDoNotMergeLabel(labels) {
  * @private
  */
 function pluckLatestCommitSha(allCommits) {
-    return allCommits[allCommits.length - 1].sha;
+    return allCommits.at(-1).sha;
 }
 
 /**

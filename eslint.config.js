@@ -11,9 +11,6 @@ module.exports = [
     {
         rules: {
             camelcase: ["error", { properties: "never" }],
-
-            // Remove after https://github.com/eslint/eslint/pull/17900 is included in new release
-            "jsdoc/no-multi-asterisks": ["error", { allowWhitespace: true }]
         }
     },
     {
@@ -30,15 +27,7 @@ module.exports = [
             }
         },
         rules: {
-            "n/no-unpublished-require": "off",
-            "n/no-extraneous-require": [
-                "error",
-                {
-                    allowModules: [
-                        "@octokit/rest"
-                    ]
-                }
-            ]
+            "n/no-unpublished-require": "off"
         }
     }
 ];

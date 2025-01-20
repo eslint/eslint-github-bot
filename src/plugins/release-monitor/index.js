@@ -36,7 +36,7 @@ function isMessageValidForPatchRelease(message) {
  * @private
  */
 function pluckLatestCommitSha(allCommits) {
-    return allCommits[allCommits.length - 1].sha;
+    return allCommits.at(-1).sha;
 }
 
 /**
