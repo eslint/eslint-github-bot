@@ -13,6 +13,7 @@
  */
 
 module.exports = {
+    autoAssign: require("./auto-assign"),
     commitMessage: require("./commit-message"),
     needsInfo: require("./needs-info"),
     recurringIssues: require("./recurring-issues"),
