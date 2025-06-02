@@ -16,7 +16,21 @@ const autoAssign = require("../../../src/plugins/auto-assign");
 // Helpers
 //-----------------------------------------------------------------------------
 
-const API_ROOT = "https://api.github.com";
+const API_URL = "https://api.github.com/repos/test/repo-test/issues/1/assignees";
+
+/**
+ * Returns an array of strings representing the issue body.
+ * @param {'x' | ''} checkMark Check mark to use in the issue body.
+ * @returns {string[]} Array of strings representing the issue body.
+ */
+function issueBodies(checkMark) {
+    return [
+       `- [${checkMark}] I am willing to submit a pull request for this issue.`,
+       `- [${checkMark}] I am willing to submit a pull request for this change.`,
+       `- [${checkMark}] I am willing to submit a pull request to implement this rule.`,
+       `- [${checkMark}] I am willing to submit a pull request to implement this change.`
+    ]
+}
 
 //-----------------------------------------------------------------------------
 // Tests
@@ -37,6 +51,11 @@ describe("auto-assign", () => {
         });
 
         autoAssign(bot);
+
+        fetchMock.mockGlobal().post(
+            API_URL,
+            { status: 200 }
+        );
     });
 
     afterEach(() => {
@@ -47,62 +66,61 @@ describe("auto-assign", () => {
 
     describe("issue opened", () => {
         test("assigns issue to author when they indicate willingness to submit PR", async () => {
-            fetchMock.mockGlobal().post(
-                `${API_ROOT}/repos/test/repo-test/issues/1/assignees`,
-                { status: 200 }
-            );
-
-            await bot.receive({
-                name: "issues",
-                payload: {
-                    action: "opened",
-                    installation: {
-                        id: 1
-                    },
-                    issue: {
-                        number: 1,
-                        body: "- [x] I am willing to submit a pull request to implement this change.",
-                        user: {
-                            login: "user-a"
-                        }
-                    },
-                    repository: {
-                        name: "repo-test",
-                        owner: {
-                            login: "test"
+            for (const body of issueBodies("x")) {
+                await bot.receive({
+                    name: "issues",
+                    payload: {
+                        action: "opened",
+                        installation: {
+                            id: 1
+                        },
+                        issue: {
+                            number: 1,
+                            body,
+                            user: {
+                                login: "user-a"
+                            }
+                        },
+                        repository: {
+                            name: "repo-test",
+                            owner: {
+                                login: "test"
+                            }
                         }
                     }
-                }
-            });
+                });
 
-            expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/issues/1/assignees`)).toBeTruthy();
+                expect(fetchMock.callHistory.called(API_URL)).toBeTruthy();
+            }
         });
 
         test("does not assign issue when author does not indicate willingness to submit PR", async () => {
-            await bot.receive({
-                name: "issues",
-                payload: {
-                    action: "opened",
-                    installation: {
-                        id: 1
-                    },
-                    issue: {
-                        number: 1,
-                        body: "- [] I am willing to submit a pull request to implement this change.",
-                        user: {
-                            login: "user-a"
-                        }
-                    },
-                    repository: {
-                        name: "repo-test",
-                        owner: {
-                            login: "test"
+            for (const body of issueBodies("")) {
+                await bot.receive({
+                    name: "issues",
+                    payload: {
+                        action: "opened",
+                        installation: {
+                            id: 1
+                        },
+                        issue: {
+                            number: 1,
+                            body,
+                            user: {
+                                login: "user-a"
+                            }
+                        },
+                        repository: {
+                            name: "repo-test",
+                            owner: {
+                                login: "test"
+                            }
                         }
                     }
-                }
-            });
+                });
 
-            expect(fetchMock.callHistory.called()).toBe(false);
+                expect(fetchMock.callHistory.called(API_URL)).toBe(false);
+            }
         });
     });
-}); 
+});
