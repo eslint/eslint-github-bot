@@ -13,6 +13,8 @@ versions.json
 .cache
 /packages/**/node_modules
 /.vscode
+*.code-workspace
+.cursor
 .sublimelinterrc
 .svn
 /credentials.json
