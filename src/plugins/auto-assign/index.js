@@ -25,7 +25,7 @@ function isWillingToSubmitPR(body) {
     return body
         .toLowerCase()
         .includes(
-            "- [x] i am willing to submit a pull request to implement this change."
+            "- [x] i am willing to submit"
         );
 }
 
