@@ -1,13 +1,12 @@
 "use strict";
 
+const { defineConfig, globalIgnores } = require("eslint/config");
 const eslintConfigESLint = require("eslint-config-eslint/cjs");
 const globals = require("globals");
 
-module.exports = [
-    ...eslintConfigESLint,
-    {
-        ignores: ["coverage/"]
-    },
+module.exports = defineConfig([
+    globalIgnores(["coverage/"]),
+    eslintConfigESLint,
     {
         rules: {
             camelcase: ["error", { properties: "never" }],
@@ -30,4 +29,4 @@ module.exports = [
             "n/no-unpublished-require": "off"
         }
     }
-];
+]);
