@@ -15,27 +15,27 @@
 // Helpers
 //-----------------------------------------------------------------------------
 
-// Regex to find issue references in PR titles
-// Matches patterns like: "Fix #123", "Fixes #123", "Closes #123", "Resolves #123"
-const ISSUE_REFERENCE_REGEX = /(?:fix|fixes|close|closes|resolve|resolves)\s+#(\d+)/giu;
+// Regex to find issue references in PR bodies
+// Matches patterns like: "Fix #123", "Fixes #123", "Closes #123", "Resolves #123", etc.
+const ISSUE_REFERENCE_REGEX = /(?:fix|fixes|fixed|close|closes|closed|resolve|resolves|resolved)\s+#(\d+)/giu;
 
 // Maximum number of issues to comment on per PR to prevent abuse
 const MAX_ISSUES_PER_PR = 3;
 
 /**
- * Extract issue numbers from PR title
- * @param {string} title PR title
+ * Extract issue numbers from PR body
+ * @param {string} body PR body
  * @returns {number[]} Array of issue numbers
  * @private
  */
-function extractIssueNumbers(title) {
+function extractIssueNumbers(body) {
     const matches = [];
     let match;
 
     // Reset regex lastIndex to ensure we start from the beginning
     ISSUE_REFERENCE_REGEX.lastIndex = 0;
 
-    while ((match = ISSUE_REFERENCE_REGEX.exec(title)) !== null && matches.length < MAX_ISSUES_PER_PR) {
+    while ((match = ISSUE_REFERENCE_REGEX.exec(body)) !== null && matches.length < MAX_ISSUES_PER_PR) {
         const issueNumber = parseInt(match[1], 10);
         if (!matches.includes(issueNumber)) {
             matches.push(issueNumber);
@@ -48,12 +48,11 @@ function extractIssueNumbers(title) {
 /**
  * Create the comment message for the issue
  * @param {string} prUrl URL of the pull request
- * @param {string} prTitle Title of the pull request
  * @param {string} prAuthor Author of the pull request
  * @returns {string} comment message
  * @private
  */
-function createCommentMessage(prUrl, prTitle, prAuthor) {
+function createCommentMessage(prUrl, prAuthor) {
     return `👋 Hi! This issue is being addressed in pull request ${prUrl}. Thanks, @${prAuthor}!
 
 [//]: # (issue-pr-link)`;
@@ -106,7 +105,7 @@ async function hasExistingComment(context, issueNumber, prNumber) {
 }
 
 /**
- * Comment on issues referenced in the PR title
+ * Comment on issues referenced in the PR body
  * @param {ProbotContext} context Probot context object
  * @returns {Promise<void>}
  * @private
@@ -115,18 +114,17 @@ async function commentOnReferencedIssues(context) {
     const { payload } = context;
     const pr = payload.pull_request;
     
-    if (!pr || !pr.title) {
+    if (!pr || !pr.body) {
         return;
     }
 
-    const issueNumbers = extractIssueNumbers(pr.title);
+    const issueNumbers = extractIssueNumbers(pr.body);
     
     if (issueNumbers.length === 0) {
         return;
     }
 
     const prUrl = pr.html_url;
-    const prTitle = pr.title;
     const prAuthor = pr.user.login;
     const prNumber = pr.number;
 
@@ -147,7 +145,7 @@ async function commentOnReferencedIssues(context) {
             await context.octokit.issues.createComment(
                 context.repo({
                     issue_number: issueNumber,
-                    body: createCommentMessage(prUrl, prTitle, prAuthor)
+                    body: createCommentMessage(prUrl, prAuthor)
                 })
             );
         } catch (error) {

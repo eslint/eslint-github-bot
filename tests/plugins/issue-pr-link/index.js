@@ -29,7 +29,7 @@ describe("issue-pr-link", () => {
     });
 
     describe("pull request opened", () => {
-        test("comments on issue when PR title references an issue", async () => {
+        test("comments on issue when PR body references an issue", async () => {
             // Mock the issue exists and is open
             fetchMock.mockGlobal()
                 .get(`${API_ROOT}/repos/test/repo-test/issues/123`, {
@@ -53,7 +53,8 @@ describe("issue-pr-link", () => {
                     },
                     pull_request: {
                         number: 456,
-                        title: "Fix #123: resolve the bug",
+                        title: "Resolve the bug",
+                        body: "Fix #123: resolve the bug",
                         html_url: "https://github.com/test/repo-test/pull/456",
                         user: {
                             login: "contributor"
@@ -71,7 +72,7 @@ describe("issue-pr-link", () => {
             expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/issues/123/comments`, "POST")).toBeTruthy();
         });
 
-        test("does not comment when PR title has no issue references", async () => {
+        test("does not comment when PR body has no issue references", async () => {
             await bot.receive({
                 name: "pull_request",
                 payload: {
@@ -82,6 +83,7 @@ describe("issue-pr-link", () => {
                     pull_request: {
                         number: 456,
                         title: "Add new feature",
+                        body: "This PR adds a new feature to the application",
                         html_url: "https://github.com/test/repo-test/pull/456",
                         user: {
                             login: "contributor"
@@ -116,7 +118,8 @@ describe("issue-pr-link", () => {
                     },
                     pull_request: {
                         number: 456,
-                        title: "Fix #123: resolve the bug",
+                        title: "Resolve the bug",
+                        body: "Fix #123: resolve the bug",
                         html_url: "https://github.com/test/repo-test/pull/456",
                         user: {
                             login: "contributor"
@@ -150,7 +153,8 @@ describe("issue-pr-link", () => {
                     },
                     pull_request: {
                         number: 456,
-                        title: "Fix #123: resolve the bug",
+                        title: "Resolve the bug",
+                        body: "Fix #123: resolve the bug",
                         html_url: "https://github.com/test/repo-test/pull/456",
                         user: {
                             login: "contributor"
@@ -192,7 +196,8 @@ describe("issue-pr-link", () => {
                     },
                     pull_request: {
                         number: 456,
-                        title: "Fix #123: resolve the bug",
+                        title: "Resolve the bug",
+                        body: "Fix #123: resolve the bug",
                         html_url: "https://github.com/test/repo-test/pull/456",
                         user: {
                             login: "contributor"
@@ -250,7 +255,8 @@ describe("issue-pr-link", () => {
                     },
                     pull_request: {
                         number: 789,
-                        title: "Fix #123 and closes #456",
+                        title: "Multiple fixes",
+                        body: "Fix #123 and closes #456",
                         html_url: "https://github.com/test/repo-test/pull/789",
                         user: {
                             login: "contributor"
@@ -295,7 +301,8 @@ describe("issue-pr-link", () => {
                     },
                     pull_request: {
                         number: 789,
-                        title: "Fix #1 and fix #2 and fix #3 and fix #4 and fix #5",
+                        title: "Multiple fixes test",
+                        body: "Fix #1 and fix #2 and fix #3 and fix #4 and fix #5",
                         html_url: "https://github.com/test/repo-test/pull/789",
                         user: {
                             login: "contributor"
@@ -320,7 +327,7 @@ describe("issue-pr-link", () => {
     });
 
     describe("pull request edited", () => {
-        test("comments on issue when PR title is edited to reference an issue", async () => {
+        test("comments on issue when PR body is edited to reference an issue", async () => {
             // Mock the issue exists and is open
             fetchMock.mockGlobal()
                 .get(`${API_ROOT}/repos/test/repo-test/issues/123`, {
@@ -344,7 +351,8 @@ describe("issue-pr-link", () => {
                     },
                     pull_request: {
                         number: 456,
-                        title: "Fix #123: resolve the bug",
+                        title: "Resolve the bug",
+                        body: "Fix #123: resolve the bug",
                         html_url: "https://github.com/test/repo-test/pull/456",
                         user: {
                             login: "contributor"
