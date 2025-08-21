@@ -324,6 +324,155 @@ describe("issue-pr-link", () => {
             expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/issues/4/comments`, "POST")).toBe(false);
             expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/issues/5/comments`, "POST")).toBe(false);
         });
+
+        test("handles optional colon after keywords", async () => {
+            // Mock the issue exists and is open
+            fetchMock.mockGlobal()
+                .get(`${API_ROOT}/repos/test/repo-test/issues/123`, {
+                    status: 200,
+                    body: { state: "open", number: 123 }
+                })
+                .get(`${API_ROOT}/repos/test/repo-test/issues/123/comments`, {
+                    status: 200,
+                    body: []
+                })
+                .post(`${API_ROOT}/repos/test/repo-test/issues/123/comments`, {
+                    status: 200
+                });
+
+            await bot.receive({
+                name: "pull_request",
+                payload: {
+                    action: "opened",
+                    installation: {
+                        id: 1
+                    },
+                    pull_request: {
+                        number: 456,
+                        title: "Resolve the bug",
+                        body: "resolve: #123",
+                        html_url: "https://github.com/test/repo-test/pull/456",
+                        user: {
+                            login: "contributor"
+                        }
+                    },
+                    repository: {
+                        name: "repo-test",
+                        owner: {
+                            login: "test"
+                        }
+                    }
+                }
+            });
+
+            expect(fetchMock.callHistory.called(`${API_ROOT}/repos/test/repo-test/issues/123/comments`, "POST")).toBeTruthy();
+        });
+
+        test("handles duplicate issue references correctly", async () => {
+            // Mock the issue exists and is open
+            fetchMock.mockGlobal()
+                .get(`${API_ROOT}/repos/test/repo-test/issues/123`, {
+                    status: 200,
+                    body: { state: "open", number: 123 }
+                })
+                .get(`${API_ROOT}/repos/test/repo-test/issues/123/comments`, {
+                    status: 200,
+                    body: []
+                })
+                .post(`${API_ROOT}/repos/test/repo-test/issues/123/comments`, {
+                    status: 200
+                });
+
+            await bot.receive({
+                name: "pull_request",
+                payload: {
+                    action: "opened",
+                    installation: {
+                        id: 1
+                    },
+                    pull_request: {
+                        number: 456,
+                        title: "Resolve the bug",
+                        body: "resolve #123\nresolve #123", // Same issue referenced twice
+                        html_url: "https://github.com/test/repo-test/pull/456",
+                        user: {
+                            login: "contributor"
+                        }
+                    },
+                    repository: {
+                        name: "repo-test",
+                        owner: {
+                            login: "test"
+                        }
+                    }
+                }
+            });
+
+            // Should only comment once despite duplicate references
+            const postCalls = fetchMock.callHistory.calls().filter(call => 
+                call.url === `${API_ROOT}/repos/test/repo-test/issues/123/comments` && 
+                call.options.method === "post"
+            );
+            expect(postCalls.length).toBe(1);
+        });
+
+        test("does not match keywords that are part of other words", async () => {
+            await bot.receive({
+                name: "pull_request",
+                payload: {
+                    action: "opened",
+                    installation: {
+                        id: 1
+                    },
+                    pull_request: {
+                        number: 456,
+                        title: "Update documentation",
+                        body: "This prefix #123 should not match", // 'prefix' contains 'fix' but shouldn't match
+                        html_url: "https://github.com/test/repo-test/pull/456",
+                        user: {
+                            login: "contributor"
+                        }
+                    },
+                    repository: {
+                        name: "repo-test",
+                        owner: {
+                            login: "test"
+                        }
+                    }
+                }
+            });
+
+            expect(fetchMock.callHistory.called()).toBe(false);
+        });
+
+        test("does not match when newline separates keyword and issue number", async () => {
+            await bot.receive({
+                name: "pull_request",
+                payload: {
+                    action: "opened",
+                    installation: {
+                        id: 1
+                    },
+                    pull_request: {
+                        number: 456,
+                        title: "Update documentation",
+                        body: "resolve\n#123", // Newline between keyword and issue number should not match
+                        html_url: "https://github.com/test/repo-test/pull/456",
+                        user: {
+                            login: "contributor"
+                        }
+                    },
+                    repository: {
+                        name: "repo-test",
+                        owner: {
+                            login: "test"
+                        }
+                    }
+                }
+            });
+
+            expect(fetchMock.callHistory.called()).toBe(false);
+        });
     });
 
     describe("pull request edited", () => {

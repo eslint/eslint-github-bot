@@ -15,11 +15,15 @@
 // Helpers
 //-----------------------------------------------------------------------------
 
-// Regex to find issue references in PR bodies
-// Matches patterns like: "Fix #123", "Fixes #123", "Closes #123", "Resolves #123", etc.
-const ISSUE_REFERENCE_REGEX = /(?:fix|fixes|fixed|close|closes|closed|resolve|resolves|resolved)\s+#(\d+)/giu;
+/**
+ * Regex to find issue references in PR bodies
+ * Matches patterns like: "Fix #123", "Fixes #123", "Closes #123", "Resolves #123", etc.
+ */
+const ISSUE_REFERENCE_REGEX = /\b(?:fix|fixes|fixed|close|closes|closed|resolve|resolves|resolved)\b:?[ \t]+#(?<issueNumber>\d+)/giu;
 
-// Maximum number of issues to comment on per PR to prevent abuse
+/**
+ * Maximum number of issues to comment on per PR to prevent abuse
+ */
 const MAX_ISSUES_PER_PR = 3;
 
 /**
@@ -36,7 +40,7 @@ function extractIssueNumbers(body) {
     ISSUE_REFERENCE_REGEX.lastIndex = 0;
 
     while ((match = ISSUE_REFERENCE_REGEX.exec(body)) !== null && matches.length < MAX_ISSUES_PER_PR) {
-        const issueNumber = parseInt(match[1], 10);
+        const issueNumber = parseInt(match.groups.issueNumber, 10);
         if (!matches.includes(issueNumber)) {
             matches.push(issueNumber);
         }
@@ -161,6 +165,5 @@ async function commentOnReferencedIssues(context) {
 //-----------------------------------------------------------------------------
 
 module.exports = robot => {
-    robot.on("pull_request.opened", commentOnReferencedIssues);
-    robot.on("pull_request.edited", commentOnReferencedIssues);
+    robot.on(["pull_request.opened", "pull_request.edited"], commentOnReferencedIssues);
 };
