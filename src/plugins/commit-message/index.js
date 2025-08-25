@@ -25,7 +25,7 @@ const { TAG_LABELS } = require("./util");
 
 const TAG_REGEX = /^(?:feat|build|chore|docs|fix|refactor|test|ci|perf)!?: /u;
 
-const TAG_SPACE_REGEX = /^(?:[a-z]+!?: )/u;
+const TAG_SPACE_REGEX = /^[a-z]+!?: /u;
 
 const LOWERCASE_TAG_REGEX = /^[a-z]/u;
 
