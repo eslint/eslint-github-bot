@@ -25,6 +25,7 @@ const plugins = require("./plugins");
 const enabledPlugins = new Set([
     "autoAssign",
     "commitMessage",
+    "issuePrLink",
     "needsInfo",
     "recurringIssues",
     "releaseMonitor",
