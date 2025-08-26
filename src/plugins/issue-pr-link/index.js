@@ -19,7 +19,7 @@
  * Regex to find issue references in PR bodies
  * Matches patterns like: "Fix #123", "Fixes #123", "Closes #123", "Resolves #123", etc.
  */
-const ISSUE_REFERENCE_REGEX = /\b(?:fix|fixes|fixed|close|closes|closed|resolve|resolves|resolved)\b:?[ \t]+#(?<issueNumber>\d+)/giu;
+const ISSUE_REFERENCE_REGEX = /\b(?:fix|fixes|fixed|close|closes|closed|resolve|resolves|resolved):?[ \t]+#(?<issueNumber>\d+)/giu;
 
 /**
  * Maximum number of issues to comment on per PR to prevent abuse
@@ -95,8 +95,8 @@ async function hasExistingComment(context, issueNumber, prNumber) {
             context.repo({ issue_number: issueNumber })
         );
 
-        const botComments = comments.filter(comment => 
-            comment.user.type === "Bot" && 
+        const botComments = comments.filter(comment =>
+            comment.user.type === "Bot" &&
             comment.body.includes("[//]: # (issue-pr-link)") &&
             comment.body.includes(`/pull/${prNumber}`)
         );
@@ -117,13 +117,13 @@ async function hasExistingComment(context, issueNumber, prNumber) {
 async function commentOnReferencedIssues(context) {
     const { payload } = context;
     const pr = payload.pull_request;
-    
+
     if (!pr || !pr.body) {
         return;
     }
 
     const issueNumbers = extractIssueNumbers(pr.body);
-    
+
     if (issueNumbers.length === 0) {
         return;
     }
