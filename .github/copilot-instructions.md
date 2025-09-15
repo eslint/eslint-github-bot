@@ -72,7 +72,6 @@ The bot uses a plugin architecture with 6 core plugins in `src/plugins/`:
 ```
 src/
 ├── app.js                 # Main application entry point
-├── constants.js           # Shared constants (currently empty)
 └── plugins/
     ├── index.js          # Plugin exports
     ├── auto-assign/
@@ -132,7 +131,7 @@ tests/
 {
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix", 
+    "lint:fix": "npm run lint -- --fix",
     "start": "node ./src/app.js",
     "test": "jest --colors --verbose --coverage"
   }
