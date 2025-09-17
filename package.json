@@ -46,7 +46,6 @@
       "<rootDir>/tests/**/*.test.js"
     ],
     "testPathIgnorePatterns": [
-      "<rootDir>/tests/.eslintrc.js",
       "<rootDir>/tests/__mocks__"
     ],
     "coverageDirectory": "./coverage",
