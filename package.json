@@ -1,11 +1,11 @@
 {
   "name": "eslint-github-bot",
   "version": "0.1.0",
-  "description": "Plugin based Github bot for ESLint",
+  "description": "Plugin based GitHub bot for ESLint",
   "main": "./src/app.js",
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "start": "node ./src/app.js",
     "test": "jest --colors --verbose --coverage"
   },
