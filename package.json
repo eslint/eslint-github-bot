@@ -27,7 +27,7 @@
     "probot": "^13.4.5"
   },
   "devDependencies": {
-    "eslint": "^9.35.0",
+    "eslint": "^9.38.0",
     "eslint-config-eslint": "^13.0.0",
     "fetch-mock": "^12.5.2",
     "globals": "^16.2.0",
