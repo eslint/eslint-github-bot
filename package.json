@@ -53,7 +53,7 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": "22.x",
+    "node": "22.21.1",
     "npm": "10.x"
   }
 }
