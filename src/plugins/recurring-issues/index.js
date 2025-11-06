@@ -35,7 +35,7 @@ The next scheduled release will occur on ${releaseDate.format("dddd, MMMM Do, YY
 ## Release Day Checklist
 
 - [ ] Remove the 'tsc agenda' label on this issue
-- [ ] Review open pull requests and merge any that are [ready](https://eslint.org/docs/maintainer-guide/pullrequests#when-to-merge-a-pull-request)
+- [ ] Review open pull requests and merge any that are [ready](https://eslint.org/docs/latest/maintain/review-pull-requests#when-to-merge-a-pull-request)
 - [ ] Verify if there are other packages (i.e., \`espree\`, \`eslint-scope\`, \`eslint-visitor-keys\`, \`@eslint/eslintrc\`) that need to be released first
 - [ ] Release \`@eslint/js\` to match the upcoming \`eslint\` version in [Jenkins](https://jenkins2.eslint.org)
 - [ ] Update \`package.json\` in the \`eslint\` repo with new versions from the preceding steps (create and merge a pull request)
@@ -44,8 +44,8 @@ The next scheduled release will occur on ${releaseDate.format("dddd, MMMM Do, YY
     - [ ] Add a "Highlights" section for any noteworthy changes.
     - [ ] In the \`authors\` frontmatter, replace \`eslintbot\` with your GitHub username.
     - [ ] Remove the \`draft: true\` line in frontmatter.
-- [ ] Make a release announcement on Twitter
-- [ ] Make a release announcement in the Discord '#announcements' channel
+- [ ] Make a release announcement on [social media](https://github.com/eslint/team/actions/workflows/social-post.yml)
+- [ ] Make a release announcement in the [Discord '#announcements' channel](https://discord.com/channels/688543509199716507/710284269657784440)
 - [ ] Add a comment to this issue saying the release is out
 - [ ] Add the 'patch release pending' label to this issue
 
@@ -68,8 +68,8 @@ Typically Monday for regular releases; two days after patch releases.
     - [ ] Add a "Highlights" section for any noteworthy changes.
     - [ ] In the \`authors\` frontmatter, replace \`eslintbot\` with your GitHub username.
     - [ ] Remove the \`draft: true\` line in frontmatter.
-- [ ] Make a release announcement on Twitter
-- [ ] Make a release announcement in the Discord '#announcements' channel
+- [ ] Make a release announcement on [social media](https://github.com/eslint/team/actions/workflows/social-post.yml)
+- [ ] Make a release announcement in the [Discord '#announcements' channel](https://discord.com/channels/688543509199716507/710284269657784440)
 - [ ] Add a comment to this issue saying the release is out
 - [ ] Wait two days and repeat the Two Days After a Release checklist
 - [ ] Close this issue
@@ -80,7 +80,7 @@ Please use this issue to document how the release went, any problems during the 
 
 Resources:
 
-* [Release guidelines](https://eslint.org/docs/maintainer-guide/releases)
+* [Release guidelines](https://eslint.org/docs/latest/maintain/manage-releases)
 
 `.trim();
 }
