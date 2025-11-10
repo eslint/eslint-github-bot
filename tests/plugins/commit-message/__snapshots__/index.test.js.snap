@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`commit-message pull request edited Posts failure status if PR title is not correct 1`] = `
 "Hi @user-a!, thanks for the Pull Request
