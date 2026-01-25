@@ -23,13 +23,13 @@ const plugins = require("./plugins");
 //-----------------------------------------------------------------------------
 
 const enabledPlugins = new Set([
-    "autoAssign",
-    "commitMessage",
-    "issuePrLink",
-    "needsInfo",
-    "recurringIssues",
-    "releaseMonitor",
-    "wip"
+	"autoAssign",
+	"commitMessage",
+	"issuePrLink",
+	"needsInfo",
+	"recurringIssues",
+	"releaseMonitor",
+	"wip",
 ]);
 
 /**
@@ -38,9 +38,9 @@ const enabledPlugins = new Set([
  * @returns {void}
  */
 function appFn(robot) {
-    Object.keys(plugins)
-        .filter(pluginId => enabledPlugins.has(pluginId))
-        .forEach(pluginId => plugins[pluginId](robot));
+	Object.keys(plugins)
+		.filter(pluginId => enabledPlugins.has(pluginId))
+		.forEach(pluginId => plugins[pluginId](robot));
 }
 
 // start the server

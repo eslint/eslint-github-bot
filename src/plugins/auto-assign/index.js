@@ -22,11 +22,9 @@
  * @private
  */
 function isWillingToSubmitPR(body) {
-    return body
-        .toLowerCase()
-        .includes(
-            "- [x] i am willing to submit a pull request"
-        );
+	return body
+		.toLowerCase()
+		.includes("- [x] i am willing to submit a pull request");
 }
 
 /**
@@ -36,19 +34,19 @@ function isWillingToSubmitPR(body) {
  * @private
  */
 async function issueOpenedHandler(context) {
-    const { payload } = context;
+	const { payload } = context;
 
-    if (!isWillingToSubmitPR(payload.issue.body)) {
-        return;
-    }
+	if (!isWillingToSubmitPR(payload.issue.body)) {
+		return;
+	}
 
-    await context.octokit.issues.addAssignees(
-        context.issue({
-            assignees: [payload.issue.user.login],
-        })
-    );
+	await context.octokit.issues.addAssignees(
+		context.issue({
+			assignees: [payload.issue.user.login],
+		}),
+	);
 }
 
-module.exports = (robot) => {
-    robot.on("issues.opened", issueOpenedHandler);
+module.exports = robot => {
+	robot.on("issues.opened", issueOpenedHandler);
 };

@@ -1,22 +1,22 @@
 name: deploy
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cloning repo
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Cloning repo
+              uses: actions/checkout@v6
+              with:
+                  fetch-depth: 0
 
-      - name: Push to dokku
-        uses: dokku/github-action@master
-        with:
-          branch: main
-          git_remote_url: 'ssh://dokku@github-bot.eslint.org/eslint-github-bot'
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+            - name: Push to dokku
+              uses: dokku/github-action@master
+              with:
+                  branch: main
+                  git_remote_url: "ssh://dokku@github-bot.eslint.org/eslint-github-bot"
+                  ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
