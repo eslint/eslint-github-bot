@@ -19,7 +19,8 @@
  * Regex to find issue references in PR bodies
  * Matches patterns like: "Fix #123", "Fixes #123", "Closes #123", "Resolves #123", etc.
  */
-const ISSUE_REFERENCE_REGEX = /\b(?:fix|fixes|fixed|close|closes|closed|resolve|resolves|resolved):?[ \t]+#(?<issueNumber>\d+)/giu;
+const ISSUE_REFERENCE_REGEX =
+	/\b(?:fix|fixes|fixed|close|closes|closed|resolve|resolves|resolved):?[ \t]+#(?<issueNumber>\d+)/giu;
 
 /**
  * Maximum number of issues to comment on per PR to prevent abuse
@@ -33,20 +34,23 @@ const MAX_ISSUES_PER_PR = 3;
  * @private
  */
 function extractIssueNumbers(body) {
-    const matches = [];
-    let match;
+	const matches = [];
+	let match;
 
-    // Reset regex lastIndex to ensure we start from the beginning
-    ISSUE_REFERENCE_REGEX.lastIndex = 0;
+	// Reset regex lastIndex to ensure we start from the beginning
+	ISSUE_REFERENCE_REGEX.lastIndex = 0;
 
-    while ((match = ISSUE_REFERENCE_REGEX.exec(body)) !== null && matches.length < MAX_ISSUES_PER_PR) {
-        const issueNumber = parseInt(match.groups.issueNumber, 10);
-        if (!matches.includes(issueNumber)) {
-            matches.push(issueNumber);
-        }
-    }
+	while (
+		(match = ISSUE_REFERENCE_REGEX.exec(body)) !== null &&
+		matches.length < MAX_ISSUES_PER_PR
+	) {
+		const issueNumber = parseInt(match.groups.issueNumber, 10);
+		if (!matches.includes(issueNumber)) {
+			matches.push(issueNumber);
+		}
+	}
 
-    return matches;
+	return matches;
 }
 
 /**
@@ -57,7 +61,7 @@ function extractIssueNumbers(body) {
  * @private
  */
 function createCommentMessage(prUrl, prAuthor) {
-    return `👋 Hi! This issue is being addressed in pull request ${prUrl}. Thanks, @${prAuthor}!
+	return `👋 Hi! This issue is being addressed in pull request ${prUrl}. Thanks, @${prAuthor}!
 
 [//]: # (issue-pr-link)`;
 }
@@ -70,15 +74,15 @@ function createCommentMessage(prUrl, prAuthor) {
  * @private
  */
 async function isIssueOpenAndExists(context, issueNumber) {
-    try {
-        const { data: issue } = await context.octokit.issues.get(
-            context.repo({ issue_number: issueNumber })
-        );
-        return issue.state === "open";
-    } catch {
-        // Issue doesn't exist or we don't have access
-        return false;
-    }
+	try {
+		const { data: issue } = await context.octokit.issues.get(
+			context.repo({ issue_number: issueNumber }),
+		);
+		return issue.state === "open";
+	} catch {
+		// Issue doesn't exist or we don't have access
+		return false;
+	}
 }
 
 /**
@@ -90,22 +94,23 @@ async function isIssueOpenAndExists(context, issueNumber) {
  * @private
  */
 async function hasExistingComment(context, issueNumber, prNumber) {
-    try {
-        const { data: comments } = await context.octokit.issues.listComments(
-            context.repo({ issue_number: issueNumber })
-        );
+	try {
+		const { data: comments } = await context.octokit.issues.listComments(
+			context.repo({ issue_number: issueNumber }),
+		);
 
-        const botComments = comments.filter(comment =>
-            comment.user.type === "Bot" &&
-            comment.body.includes("[//]: # (issue-pr-link)") &&
-            comment.body.includes(`/pull/${prNumber}`)
-        );
+		const botComments = comments.filter(
+			comment =>
+				comment.user.type === "Bot" &&
+				comment.body.includes("[//]: # (issue-pr-link)") &&
+				comment.body.includes(`/pull/${prNumber}`),
+		);
 
-        return botComments.length > 0;
-    } catch {
-        // If we can't check comments, assume we haven't commented
-        return false;
-    }
+		return botComments.length > 0;
+	} catch {
+		// If we can't check comments, assume we haven't commented
+		return false;
+	}
 }
 
 /**
@@ -115,49 +120,49 @@ async function hasExistingComment(context, issueNumber, prNumber) {
  * @private
  */
 async function commentOnReferencedIssues(context) {
-    const { payload } = context;
-    const pr = payload.pull_request;
+	const { payload } = context;
+	const pr = payload.pull_request;
 
-    if (!pr || !pr.body) {
-        return;
-    }
+	if (!pr || !pr.body) {
+		return;
+	}
 
-    const issueNumbers = extractIssueNumbers(pr.body);
+	const issueNumbers = extractIssueNumbers(pr.body);
 
-    if (issueNumbers.length === 0) {
-        return;
-    }
+	if (issueNumbers.length === 0) {
+		return;
+	}
 
-    const prUrl = pr.html_url;
-    const prAuthor = pr.user.login;
-    const prNumber = pr.number;
+	const prUrl = pr.html_url;
+	const prAuthor = pr.user.login;
+	const prNumber = pr.number;
 
-    // Comment on each referenced issue
-    for (const issueNumber of issueNumbers) {
-        try {
-            // Check if issue exists and is open
-            if (!(await isIssueOpenAndExists(context, issueNumber))) {
-                continue;
-            }
+	// Comment on each referenced issue
+	for (const issueNumber of issueNumbers) {
+		try {
+			// Check if issue exists and is open
+			if (!(await isIssueOpenAndExists(context, issueNumber))) {
+				continue;
+			}
 
-            // Check if we already commented on this issue for this PR
-            if (await hasExistingComment(context, issueNumber, prNumber)) {
-                continue;
-            }
+			// Check if we already commented on this issue for this PR
+			if (await hasExistingComment(context, issueNumber, prNumber)) {
+				continue;
+			}
 
-            // Create the comment
-            await context.octokit.issues.createComment(
-                context.repo({
-                    issue_number: issueNumber,
-                    body: createCommentMessage(prUrl, prAuthor)
-                })
-            );
-        } catch (error) {
-            // Log error but continue with other issues
-            // eslint-disable-next-line no-console -- Logging errors is intentional
-            console.error(`Failed to comment on issue #${issueNumber}:`, error);
-        }
-    }
+			// Create the comment
+			await context.octokit.issues.createComment(
+				context.repo({
+					issue_number: issueNumber,
+					body: createCommentMessage(prUrl, prAuthor),
+				}),
+			);
+		} catch (error) {
+			// Log error but continue with other issues
+			// eslint-disable-next-line no-console -- Logging errors is intentional
+			console.error(`Failed to comment on issue #${issueNumber}:`, error);
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -165,5 +170,8 @@ async function commentOnReferencedIssues(context) {
 //-----------------------------------------------------------------------------
 
 module.exports = robot => {
-    robot.on(["pull_request.opened", "pull_request.edited"], commentOnReferencedIssues);
+	robot.on(
+		["pull_request.opened", "pull_request.edited"],
+		commentOnReferencedIssues,
+	);
 };

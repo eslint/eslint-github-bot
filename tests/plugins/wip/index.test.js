@@ -30,19 +30,15 @@ const API_ROOT = "https://api.github.com";
  * @private
  */
 function mockGetAllCommitsForPR({ number, commits }) {
+	const url = `${API_ROOT}/repos/test/repo-test/pulls/${number}/commits`;
 
-    const url = `${API_ROOT}/repos/test/repo-test/pulls/${number}/commits`;
-
-    fetchMock.mockGlobal().get(
-        url,
-        {
-            status: 200,
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(commits)
-        }
-    );
+	fetchMock.mockGlobal().get(url, {
+		status: 200,
+		headers: {
+			"content-type": "application/json",
+		},
+		body: JSON.stringify(commits),
+	});
 }
 
 /**
@@ -54,23 +50,18 @@ function mockGetAllCommitsForPR({ number, commits }) {
  * @private
  */
 function mockStatusChecksForCommit({ sha, statuses }) {
+	const url = `${API_ROOT}/repos/test/repo-test/commits/${sha}/status`;
 
-    const url = `${API_ROOT}/repos/test/repo-test/commits/${sha}/status`;
-
-    fetchMock.mockGlobal().get(
-        url,
-        {
-            status: 200,
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify({
-                sha,
-                statuses
-            })
-        }
-    );
-
+	fetchMock.mockGlobal().get(url, {
+		status: 200,
+		headers: {
+			"content-type": "application/json",
+		},
+		body: JSON.stringify({
+			sha,
+			statuses,
+		}),
+	});
 }
 
 /**
@@ -79,21 +70,20 @@ function mockStatusChecksForCommit({ sha, statuses }) {
  * @returns {void}
  */
 function mockPendingStatusForWip() {
-
-    fetchMock.mockGlobal().post(
-        {
-            url: `${API_ROOT}/repos/test/repo-test/statuses/111`,
-            body: {
-                context: "wip",
-                state: "pending"
-            },
-            matchPartialBody: true
-        },
-        {
-            status: 200,
-            body: JSON.stringify({})
-        }
-    );
+	fetchMock.mockGlobal().post(
+		{
+			url: `${API_ROOT}/repos/test/repo-test/statuses/111`,
+			body: {
+				context: "wip",
+				state: "pending",
+			},
+			matchPartialBody: true,
+		},
+		{
+			status: 200,
+			body: JSON.stringify({}),
+		},
+	);
 }
 
 /**
@@ -102,20 +92,20 @@ function mockPendingStatusForWip() {
  * @returns {void}
  */
 function mockSuccessStatusForWip() {
-    fetchMock.mockGlobal().post(
-        {
-            url: `${API_ROOT}/repos/test/repo-test/statuses/111`,
-            body: {
-                context: "wip",
-                state: "success"
-            },
-            matchPartialBody: true
-        },
-        {
-            status: 200,
-            body: JSON.stringify({})
-        }
-    );
+	fetchMock.mockGlobal().post(
+		{
+			url: `${API_ROOT}/repos/test/repo-test/statuses/111`,
+			body: {
+				context: "wip",
+				state: "success",
+			},
+			matchPartialBody: true,
+		},
+		{
+			status: 200,
+			body: JSON.stringify({}),
+		},
+	);
 }
 
 /**
@@ -123,7 +113,11 @@ function mockSuccessStatusForWip() {
  * @returns {void}
  */
 function assertNoStatusChecksCreated() {
-    expect(fetchMock.callHistory.calls(`${API_ROOT}/repos/test/repo-test/statuses/111`)).toHaveLength(0);
+	expect(
+		fetchMock.callHistory.calls(
+			`${API_ROOT}/repos/test/repo-test/statuses/111`,
+		),
+	).toHaveLength(0);
 }
 
 //-----------------------------------------------------------------------------
@@ -131,233 +125,236 @@ function assertNoStatusChecksCreated() {
 //-----------------------------------------------------------------------------
 
 describe("wip", () => {
-    let bot = null;
+	let bot = null;
 
-    beforeEach(() => {
-        bot = new Probot({
+	beforeEach(() => {
+		bot = new Probot({
+			appId: 1,
+			githubToken: "test",
 
-            appId: 1,
-            githubToken: "test",
+			Octokit: ProbotOctokit.defaults(instanceOptions => ({
+				...instanceOptions,
+				throttle: { enabled: false },
+				retry: { enabled: false },
+			})),
+		});
+		wip(bot);
+	});
 
-            Octokit: ProbotOctokit.defaults(instanceOptions => ({
-                ...instanceOptions,
-                throttle: { enabled: false },
-                retry: { enabled: false }
-            }))
-        });
-        wip(bot);
-    });
+	afterEach(() => {
+		fetchMock.unmockGlobal();
+		fetchMock.removeRoutes();
+		fetchMock.clearHistory();
+	});
 
-    afterEach(() => {
-        fetchMock.unmockGlobal();
-        fetchMock.removeRoutes();
-        fetchMock.clearHistory();
-    });
+	[
+		"opened",
+		"reopened",
+		"edited",
+		"labeled",
+		"unlabeled",
+		"synchronize",
+	].forEach(action => {
+		describe(`pull request ${action}`, () => {
+			test("create pending status if PR title starts with 'WIP:'", async () => {
+				mockGetAllCommitsForPR({
+					number: 1,
+					commits: [
+						{
+							sha: "111",
+							commit: {
+								message: "New: add 1",
+							},
+						},
+					],
+				});
 
-    ["opened", "reopened", "edited", "labeled", "unlabeled", "synchronize"].forEach(action => {
-        describe(`pull request ${action}`, () => {
-            test("create pending status if PR title starts with 'WIP:'", async () => {
-                mockGetAllCommitsForPR({
-                    number: 1,
-                    commits: [
-                        {
-                            sha: "111",
-                            commit: {
-                                message: "New: add 1"
-                            }
-                        }
-                    ]
-                });
+				mockPendingStatusForWip();
 
-                mockPendingStatusForWip();
+				await bot.receive({
+					name: "pull_request",
+					payload: {
+						action,
+						installation: {
+							id: 1,
+						},
+						pull_request: {
+							number: 1,
+							title: "WIP: Some title",
+							labels: [],
+						},
+						repository: {
+							name: "repo-test",
+							owner: {
+								login: "test",
+							},
+						},
+					},
+				});
+			});
 
-                await bot.receive({
-                    name: "pull_request",
-                    payload: {
-                        action,
-                        installation: {
-                            id: 1
-                        },
-                        pull_request: {
-                            number: 1,
-                            title: "WIP: Some title",
-                            labels: []
-                        },
-                        repository: {
-                            name: "repo-test",
-                            owner: {
-                                login: "test"
-                            }
-                        }
-                    }
-                });
+			test("create pending status if PR title contains '(WIP)'", async () => {
+				mockGetAllCommitsForPR({
+					number: 1,
+					commits: [
+						{
+							sha: "111",
+							commit: {
+								message: "New: add 1",
+							},
+						},
+					],
+				});
 
-            });
+				mockPendingStatusForWip();
 
-            test("create pending status if PR title contains '(WIP)'", async () => {
-                mockGetAllCommitsForPR({
-                    number: 1,
-                    commits: [
-                        {
-                            sha: "111",
-                            commit: {
-                                message: "New: add 1"
-                            }
-                        }
-                    ]
-                });
+				await bot.receive({
+					name: "pull_request",
+					payload: {
+						action,
+						installation: {
+							id: 1,
+						},
+						pull_request: {
+							number: 1,
+							title: "Some title (WIP)",
+							labels: [],
+						},
+						repository: {
+							name: "repo-test",
+							owner: {
+								login: "test",
+							},
+						},
+					},
+				});
+			});
 
-                mockPendingStatusForWip();
+			test("create pending status if labels contain 'do not merge'", async () => {
+				mockGetAllCommitsForPR({
+					number: 1,
+					commits: [
+						{
+							sha: "111",
+							commit: {
+								message: "New: add 1",
+							},
+						},
+					],
+				});
 
-                await bot.receive({
-                    name: "pull_request",
-                    payload: {
-                        action,
-                        installation: {
-                            id: 1
-                        },
-                        pull_request: {
-                            number: 1,
-                            title: "Some title (WIP)",
-                            labels: []
-                        },
-                        repository: {
-                            name: "repo-test",
-                            owner: {
-                                login: "test"
-                            }
-                        }
-                    }
-                });
+				mockPendingStatusForWip();
 
-            });
+				await bot.receive({
+					name: "pull_request",
+					payload: {
+						action,
+						installation: {
+							id: 1,
+						},
+						pull_request: {
+							number: 1,
+							title: "Some title",
+							labels: [{ name: DO_NOT_MERGE_LABEL }],
+						},
+						repository: {
+							name: "repo-test",
+							owner: {
+								login: "test",
+							},
+						},
+					},
+				});
+			});
 
-            test("create pending status if labels contain 'do not merge'", async () => {
-                mockGetAllCommitsForPR({
-                    number: 1,
-                    commits: [
-                        {
-                            sha: "111",
-                            commit: {
-                                message: "New: add 1"
-                            }
-                        }
-                    ]
-                });
+			test("does not create status check if PR is not WIP and no wip status exists", async () => {
+				mockGetAllCommitsForPR({
+					number: 1,
+					commits: [
+						{
+							sha: "111",
+							commit: {
+								message: "New: add 1",
+							},
+						},
+					],
+				});
 
-                mockPendingStatusForWip();
+				mockStatusChecksForCommit({
+					sha: "111",
+					statuses: [],
+				});
 
-                await bot.receive({
-                    name: "pull_request",
-                    payload: {
-                        action,
-                        installation: {
-                            id: 1
-                        },
-                        pull_request: {
-                            number: 1,
-                            title: "Some title",
-                            labels: [{ name: DO_NOT_MERGE_LABEL }]
-                        },
-                        repository: {
-                            name: "repo-test",
-                            owner: {
-                                login: "test"
-                            }
-                        }
-                    }
-                });
+				await bot.receive({
+					name: "pull_request",
+					payload: {
+						action,
+						installation: {
+							id: 1,
+						},
+						pull_request: {
+							number: 1,
+							title: "Some title",
+							labels: [],
+						},
+						repository: {
+							name: "repo-test",
+							owner: {
+								login: "test",
+							},
+						},
+					},
+				});
 
-            });
+				assertNoStatusChecksCreated();
+			});
 
-            test("does not create status check if PR is not WIP and no wip status exists", async () => {
-                mockGetAllCommitsForPR({
-                    number: 1,
-                    commits: [
-                        {
-                            sha: "111",
-                            commit: {
-                                message: "New: add 1"
-                            }
-                        }
-                    ]
-                });
+			test("creates success status check if PR is not WIP and wip status exists", async () => {
+				mockGetAllCommitsForPR({
+					number: 1,
+					commits: [
+						{
+							sha: "111",
+							commit: {
+								message: "New: add 1",
+							},
+						},
+					],
+				});
 
-                mockStatusChecksForCommit({
-                    sha: "111",
-                    statuses: []
-                });
+				mockStatusChecksForCommit({
+					sha: "111",
+					statuses: [
+						{
+							state: "pending",
+							context: "wip",
+						},
+					],
+				});
 
-                await bot.receive({
-                    name: "pull_request",
-                    payload: {
-                        action,
-                        installation: {
-                            id: 1
-                        },
-                        pull_request: {
-                            number: 1,
-                            title: "Some title",
-                            labels: []
-                        },
-                        repository: {
-                            name: "repo-test",
-                            owner: {
-                                login: "test"
-                            }
-                        }
-                    }
-                });
+				mockSuccessStatusForWip();
 
-                assertNoStatusChecksCreated();
-
-            });
-
-            test("creates success status check if PR is not WIP and wip status exists", async () => {
-                mockGetAllCommitsForPR({
-                    number: 1,
-                    commits: [
-                        {
-                            sha: "111",
-                            commit: {
-                                message: "New: add 1"
-                            }
-                        }
-                    ]
-                });
-
-                mockStatusChecksForCommit({
-                    sha: "111",
-                    statuses: [{
-                        state: "pending",
-                        context: "wip"
-                    }]
-                });
-
-                mockSuccessStatusForWip();
-
-                await bot.receive({
-                    name: "pull_request",
-                    payload: {
-                        action,
-                        installation: {
-                            id: 1
-                        },
-                        pull_request: {
-                            number: 1,
-                            title: "Some title",
-                            labels: []
-                        },
-                        repository: {
-                            name: "repo-test",
-                            owner: {
-                                login: "test"
-                            }
-                        }
-                    }
-                });
-
-            });
-        });
-    });
+				await bot.receive({
+					name: "pull_request",
+					payload: {
+						action,
+						installation: {
+							id: 1,
+						},
+						pull_request: {
+							number: 1,
+							title: "Some title",
+							labels: [],
+						},
+						repository: {
+							name: "repo-test",
+							owner: {
+								login: "test",
+							},
+						},
+					},
+				});
+			});
+		});
+	});
 });

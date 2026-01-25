@@ -30,15 +30,15 @@ const DO_NOT_MERGE_LABEL = "do not merge";
  * @private
  */
 function createStatusOnPR({ context, state, sha, description, targetUrl }) {
-    return context.octokit.repos.createCommitStatus(
-        context.repo({
-            sha,
-            state,
-            target_url: targetUrl || "",
-            description,
-            context: "wip"
-        })
-    );
+	return context.octokit.repos.createCommitStatus(
+		context.repo({
+			sha,
+			state,
+			target_url: targetUrl || "",
+			description,
+			context: "wip",
+		}),
+	);
 }
 
 /**
@@ -48,12 +48,12 @@ function createStatusOnPR({ context, state, sha, description, targetUrl }) {
  * @returns {Promise<void>} A Promise that will fulfill when the status check is created
  */
 function createPendingWipStatusOnPR(context, sha) {
-    return createStatusOnPR({
-        context,
-        sha,
-        state: "pending",
-        description: "This PR appears to be a work in progress"
-    });
+	return createStatusOnPR({
+		context,
+		sha,
+		state: "pending",
+		description: "This PR appears to be a work in progress",
+	});
 }
 
 /**
@@ -63,12 +63,12 @@ function createPendingWipStatusOnPR(context, sha) {
  * @returns {Promise<void>} A Promise that will fulfill when the status check is created
  */
 function createSuccessWipStatusOnPR(context, sha) {
-    return createStatusOnPR({
-        context,
-        sha,
-        state: "success",
-        description: "This PR is no longer a work in progress"
-    });
+	return createStatusOnPR({
+		context,
+		sha,
+		state: "success",
+		description: "This PR is no longer a work in progress",
+	});
 }
 
 /**
@@ -81,19 +81,22 @@ function createSuccessWipStatusOnPR(context, sha) {
  * is needed.
  */
 async function maybeResolveWipStatusOnPR(context, sha) {
-    const repoAndRef = context.repo({
-        ref: sha
-    });
+	const repoAndRef = context.repo({
+		ref: sha,
+	});
 
-    const { octokit } = context;
-    const statuses = await octokit.paginate(octokit.repos.getCombinedStatusForRef, repoAndRef);
-    const statusCheckExists = statuses.some(status => status.context === "wip");
+	const { octokit } = context;
+	const statuses = await octokit.paginate(
+		octokit.repos.getCombinedStatusForRef,
+		repoAndRef,
+	);
+	const statusCheckExists = statuses.some(status => status.context === "wip");
 
-    if (statusCheckExists) {
-        return createSuccessWipStatusOnPR(context, sha);
-    }
+	if (statusCheckExists) {
+		return createSuccessWipStatusOnPR(context, sha);
+	}
 
-    return null;
+	return null;
 }
 
 /**
@@ -105,11 +108,11 @@ async function maybeResolveWipStatusOnPR(context, sha) {
  * @private
  */
 async function getAllCommitsForPR({ context, pr }) {
-    const { data: commitList } = await context.octokit.pulls.listCommits(
-        context.repo({ pull_number: pr.number })
-    );
+	const { data: commitList } = await context.octokit.pulls.listCommits(
+		context.repo({ pull_number: pr.number }),
+	);
 
-    return commitList;
+	return commitList;
 }
 
 /**
@@ -119,7 +122,7 @@ async function getAllCommitsForPR({ context, pr }) {
  * @private
  */
 function hasDoNotMergeLabel(labels) {
-    return labels.some(({ name }) => name === DO_NOT_MERGE_LABEL);
+	return labels.some(({ name }) => name === DO_NOT_MERGE_LABEL);
 }
 
 /**
@@ -129,7 +132,7 @@ function hasDoNotMergeLabel(labels) {
  * @private
  */
 function pluckLatestCommitSha(allCommits) {
-    return allCommits.at(-1).sha;
+	return allCommits.at(-1).sha;
 }
 
 /**
@@ -139,7 +142,7 @@ function pluckLatestCommitSha(allCommits) {
  * @private
  */
 function prHasWipTitle(pr) {
-    return WIP_IN_TITLE_REGEX.test(pr.title);
+	return WIP_IN_TITLE_REGEX.test(pr.title);
 }
 
 /**
@@ -150,22 +153,22 @@ function prHasWipTitle(pr) {
  * @private
  */
 async function prChangedHandler(context) {
-    const pr = context.payload.pull_request;
+	const pr = context.payload.pull_request;
 
-    const allCommits = await getAllCommitsForPR({
-        context,
-        pr
-    });
+	const allCommits = await getAllCommitsForPR({
+		context,
+		pr,
+	});
 
-    const sha = pluckLatestCommitSha(allCommits);
+	const sha = pluckLatestCommitSha(allCommits);
 
-    const isWip = prHasWipTitle(pr) || hasDoNotMergeLabel(pr.labels);
+	const isWip = prHasWipTitle(pr) || hasDoNotMergeLabel(pr.labels);
 
-    if (isWip) {
-        return createPendingWipStatusOnPR(context, sha);
-    }
+	if (isWip) {
+		return createPendingWipStatusOnPR(context, sha);
+	}
 
-    return maybeResolveWipStatusOnPR(context, sha);
+	return maybeResolveWipStatusOnPR(context, sha);
 }
 
 //-----------------------------------------------------------------------------
@@ -173,15 +176,15 @@ async function prChangedHandler(context) {
 //-----------------------------------------------------------------------------
 
 module.exports = robot => {
-    robot.on(
-        [
-            "pull_request.opened",
-            "pull_request.reopened",
-            "pull_request.edited",
-            "pull_request.labeled",
-            "pull_request.unlabeled",
-            "pull_request.synchronize"
-        ],
-        prChangedHandler
-    );
+	robot.on(
+		[
+			"pull_request.opened",
+			"pull_request.reopened",
+			"pull_request.edited",
+			"pull_request.labeled",
+			"pull_request.unlabeled",
+			"pull_request.synchronize",
+		],
+		prChangedHandler,
+	);
 };
