@@ -8,9 +8,9 @@ This project adheres to the [JS Foundation Code of Conduct](https://js.foundatio
 
 ## Filing Issues
 
-* To report a security vulnerability in `eslint-github-bot`, please use our [HackerOne program](https://hackerone.com/eslint).
-* To report an issue that does not have security impact, please [create an issue on GitHub](https://github.com/eslint/eslint-github-bot/issues/new).
-* To create a feature request, [create an issue on GitHub](https://github.com/eslint/eslint-github-bot/issues/new).
+- To report a security vulnerability in `eslint-github-bot`, please use our [HackerOne program](https://hackerone.com/eslint).
+- To report an issue that does not have security impact, please [create an issue on GitHub](https://github.com/eslint/eslint-github-bot/issues/new).
+- To create a feature request, [create an issue on GitHub](https://github.com/eslint/eslint-github-bot/issues/new).
 
     Please keep in mind that `eslint-github-bot` is primarily intended for the ESLint team's use cases. You're welcome to use the code for your own purposes, but we are unlikely to accept a feature request unless we would use the feature for the ESLint team's repositories.
 

@@ -16,7 +16,8 @@ const autoAssign = require("../../../src/plugins/auto-assign");
 // Helpers
 //-----------------------------------------------------------------------------
 
-const API_URL = "https://api.github.com/repos/test/repo-test/issues/1/assignees";
+const API_URL =
+	"https://api.github.com/repos/test/repo-test/issues/1/assignees";
 
 /**
  * Returns an array of strings representing the issue body.
@@ -24,12 +25,12 @@ const API_URL = "https://api.github.com/repos/test/repo-test/issues/1/assignees"
  * @returns {string[]} Array of strings representing the issue body.
  */
 function issueBodies(checkMark) {
-    return [
-       `- [${checkMark}] I am willing to submit a pull request for this issue.`,
-       `- [${checkMark}] I am willing to submit a pull request for this change.`,
-       `- [${checkMark}] I am willing to submit a pull request to implement this rule.`,
-       `- [${checkMark}] I am willing to submit a pull request to implement this change.`
-    ]
+	return [
+		`- [${checkMark}] I am willing to submit a pull request for this issue.`,
+		`- [${checkMark}] I am willing to submit a pull request for this change.`,
+		`- [${checkMark}] I am willing to submit a pull request to implement this rule.`,
+		`- [${checkMark}] I am willing to submit a pull request to implement this change.`,
+	];
 }
 
 //-----------------------------------------------------------------------------
@@ -37,90 +38,87 @@ function issueBodies(checkMark) {
 //-----------------------------------------------------------------------------
 
 describe("auto-assign", () => {
-    let bot = null;
+	let bot = null;
 
-    beforeEach(() => {
-        bot = new Probot({
-            appId: 1,
-            githubToken: "test",
-            Octokit: ProbotOctokit.defaults(instanceOptions => ({
-                ...instanceOptions,
-                throttle: { enabled: false },
-                retry: { enabled: false }
-            }))
-        });
+	beforeEach(() => {
+		bot = new Probot({
+			appId: 1,
+			githubToken: "test",
+			Octokit: ProbotOctokit.defaults(instanceOptions => ({
+				...instanceOptions,
+				throttle: { enabled: false },
+				retry: { enabled: false },
+			})),
+		});
 
-        autoAssign(bot);
+		autoAssign(bot);
 
-        fetchMock.mockGlobal().post(
-            API_URL,
-            { status: 200 }
-        );
-    });
+		fetchMock.mockGlobal().post(API_URL, { status: 200 });
+	});
 
-    afterEach(() => {
-        fetchMock.unmockGlobal();
-        fetchMock.removeRoutes();
-        fetchMock.clearHistory();
-    });
+	afterEach(() => {
+		fetchMock.unmockGlobal();
+		fetchMock.removeRoutes();
+		fetchMock.clearHistory();
+	});
 
-    describe("issue opened", () => {
-        test("assigns issue to author when they indicate willingness to submit PR", async () => {
-            for (const body of issueBodies("x")) {
-                await bot.receive({
-                    name: "issues",
-                    payload: {
-                        action: "opened",
-                        installation: {
-                            id: 1
-                        },
-                        issue: {
-                            number: 1,
-                            body,
-                            user: {
-                                login: "user-a"
-                            }
-                        },
-                        repository: {
-                            name: "repo-test",
-                            owner: {
-                                login: "test"
-                            }
-                        }
-                    }
-                });
+	describe("issue opened", () => {
+		test("assigns issue to author when they indicate willingness to submit PR", async () => {
+			for (const body of issueBodies("x")) {
+				await bot.receive({
+					name: "issues",
+					payload: {
+						action: "opened",
+						installation: {
+							id: 1,
+						},
+						issue: {
+							number: 1,
+							body,
+							user: {
+								login: "user-a",
+							},
+						},
+						repository: {
+							name: "repo-test",
+							owner: {
+								login: "test",
+							},
+						},
+					},
+				});
 
-                expect(fetchMock.callHistory.called(API_URL)).toBeTruthy();
-            }
-        });
+				expect(fetchMock.callHistory.called(API_URL)).toBeTruthy();
+			}
+		});
 
-        test("does not assign issue when author does not indicate willingness to submit PR", async () => {
-            for (const body of issueBodies("")) {
-                await bot.receive({
-                    name: "issues",
-                    payload: {
-                        action: "opened",
-                        installation: {
-                            id: 1
-                        },
-                        issue: {
-                            number: 1,
-                            body,
-                            user: {
-                                login: "user-a"
-                            }
-                        },
-                        repository: {
-                            name: "repo-test",
-                            owner: {
-                                login: "test"
-                            }
-                        }
-                    }
-                });
+		test("does not assign issue when author does not indicate willingness to submit PR", async () => {
+			for (const body of issueBodies("")) {
+				await bot.receive({
+					name: "issues",
+					payload: {
+						action: "opened",
+						installation: {
+							id: 1,
+						},
+						issue: {
+							number: 1,
+							body,
+							user: {
+								login: "user-a",
+							},
+						},
+						repository: {
+							name: "repo-test",
+							owner: {
+								login: "test",
+							},
+						},
+					},
+				});
 
-                expect(fetchMock.callHistory.called(API_URL)).toBe(false);
-            }
-        });
-    });
+				expect(fetchMock.callHistory.called(API_URL)).toBe(false);
+			}
+		});
+	});
 });

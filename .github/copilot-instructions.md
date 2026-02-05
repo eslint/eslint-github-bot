@@ -7,42 +7,47 @@ Always reference these instructions first and fallback to search or bash command
 ## Working Effectively
 
 ### Bootstrap and Setup
+
 - Clone the repository
 - `npm install` -- takes 1-30 seconds depending on npm cache state. Works with Node.js 20.x but shows engine warnings (expects Node.js 22.x)
 - Create `.env` file for local development:
-  ```bash
-  echo 'APP_ID=12345
-  PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----
-  [valid PEM private key content]
-  -----END RSA PRIVATE KEY-----"
-  WEBHOOK_SECRET=test_webhook_secret_123
-  PORT=3000' > .env
-  ```
+    ```bash
+    echo 'APP_ID=12345
+    PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----
+    [valid PEM private key content]
+    -----END RSA PRIVATE KEY-----"
+    WEBHOOK_SECRET=test_webhook_secret_123
+    PORT=3000' > .env
+    ```
 
 ### Build and Test
+
 - `npm run lint` -- takes ~1.5 seconds. NEVER CANCEL. Uses ESLint with eslint-config-eslint
 - `npm test` -- takes ~3 seconds. NEVER CANCEL. Runs Jest with 284 tests achieving 98.31% coverage
 - Run the web server: `npm start` -- starts immediately on port 3000
 - Health check: `curl http://localhost:3000/ping` returns "PONG" in ~1.6ms
 
 ### Environment Requirements
+
 - Node.js 22.x preferred (works on 20.x with warnings)
 - npm 10.x
 - Environment variables for server operation:
-  - `APP_ID`: GitHub app ID (can be dummy value like 12345 for local testing)
-  - `PRIVATE_KEY`: Valid PEM private key (required format, can be test key for local development)
-  - `WEBHOOK_SECRET`: Webhook secret (can be dummy value for local testing)
-  - `PORT`: Server port (optional, defaults to 3000)
+    - `APP_ID`: GitHub app ID (can be dummy value like 12345 for local testing)
+    - `PRIVATE_KEY`: Valid PEM private key (required format, can be test key for local development)
+    - `WEBHOOK_SECRET`: Webhook secret (can be dummy value for local testing)
+    - `PORT`: Server port (optional, defaults to 3000)
 
 ## Validation
 
 ### Manual Testing Requirements
+
 - ALWAYS run the full test suite after making changes: `npm test`
 - ALWAYS run linting before committing: `npm run lint`
 - Test server startup: `npm start` and verify health check responds: `curl http://localhost:3000/ping`
 - For plugin changes, run relevant test files: `npm test tests/plugins/[plugin-name]/index.js`
 
 ### Critical Timing Requirements
+
 - **NEVER CANCEL** any commands - all operations complete quickly
 - npm install: 1-30 seconds (set timeout to 60+ seconds)
 - npm test: ~3 seconds (set timeout to 30+ seconds)
@@ -52,6 +57,7 @@ Always reference these instructions first and fallback to search or bash command
 ## Common Tasks
 
 ### Plugin Development
+
 The bot uses a plugin architecture with 6 core plugins in `src/plugins/`:
 
 1. **auto-assign** (`src/plugins/auto-assign/index.js`): Auto-assigns issues to users who indicate willingness to submit PRs
@@ -62,6 +68,7 @@ The bot uses a plugin architecture with 6 core plugins in `src/plugins/`:
 6. **wip** (`src/plugins/wip/index.js`): Handles work-in-progress PR status based on title/labels
 
 ### Adding New Plugins
+
 1. Create plugin file in `src/plugins/[plugin-name]/index.js`
 2. Add plugin to exports in `src/plugins/index.js`
 3. Add plugin to enabled list in `src/app.js`
@@ -69,6 +76,7 @@ The bot uses a plugin architecture with 6 core plugins in `src/plugins/`:
 5. Follow existing plugin patterns using Probot event handlers
 
 ### File Structure Reference
+
 ```
 src/
 ├── app.js                 # Main application entry point
@@ -98,15 +106,17 @@ docs/
 ```
 
 ### Key Configuration Files
+
 - `package.json`: Dependencies, scripts, Jest config
 - `eslint.config.js`: ESLint configuration using eslint-config-eslint
 - `.editorconfig`: Code formatting rules
 - `Procfile`: Production deployment config for Dokku
-- `.gitignore`: Excludes node_modules, coverage, .env, *.pem files
+- `.gitignore`: Excludes node_modules, coverage, .env, \*.pem files
 
 ### Common Command Outputs
 
 #### Repository Root Files
+
 ```bash
 $ ls -la
 .editorconfig
@@ -127,18 +137,20 @@ tests/
 ```
 
 #### Package.json Scripts
+
 ```json
 {
-  "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
-    "start": "node ./src/app.js",
-    "test": "jest --colors --verbose --coverage"
-  }
+	"scripts": {
+		"lint": "eslint .",
+		"lint:fix": "npm run lint -- --fix",
+		"start": "node ./src/app.js",
+		"test": "jest --colors --verbose --coverage"
+	}
 }
 ```
 
 #### Test Coverage Summary
+
 ```
 All files                 |   98.31 |     93.1 |   98.36 |   98.21 |
 Test Suites: 6 passed, 6 total
@@ -149,21 +161,25 @@ Time:        ~3 seconds
 ## Troubleshooting
 
 ### Node.js Version Warnings
+
 - Repository expects Node.js 22.x but works on 20.x with warnings
 - Engine warnings are normal and do not prevent functionality
 - All commands and tests work correctly despite version mismatch
 
 ### Server Won't Start
+
 - Ensure `.env` file exists with required environment variables
 - `PRIVATE_KEY` must be valid PEM format (can be test key for local development)
 - Server defaults to port 3000, check for port conflicts
 
 ### Test Failures
+
 - Run `npm install` to ensure dependencies are current
 - Check that changes don't break existing plugin functionality
 - Verify new tests follow existing patterns in `tests/plugins/` structure
 
 ### Deployment Notes
+
 - Production deployment uses Dokku to github-bot.eslint.org
 - Health check endpoint: https://github-bot.eslint.org/ping
 - Webhook URL: /api/github/webhooks (Probot default)

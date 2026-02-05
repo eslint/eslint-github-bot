@@ -6,21 +6,21 @@
 
 ## Environment Variables:
 
-* `APP_ID` (required): The numeric GitHub app ID
-* `PRIVATE_KEY` (required): the contents of the private key you downloaded after creating the app.
-* `WEBHOOK_SECRET` (required): Secret setup for GitHub webhook or you generated when you created the app.
-* `PORT`: Port for web server _(optional, defaults to 8000)_.
+- `APP_ID` (required): The numeric GitHub app ID
+- `PRIVATE_KEY` (required): the contents of the private key you downloaded after creating the app.
+- `WEBHOOK_SECRET` (required): Secret setup for GitHub webhook or you generated when you created the app.
+- `PORT`: Port for web server _(optional, defaults to 8000)_.
 
 ## :wrench: Setup
 
-* Clone this repo
-* `npm install`
-* `npm test`
+- Clone this repo
+- `npm install`
+- `npm test`
 
 To start the server locally, you'll need:
 
-* A PEM file
-* A `.env` file that specifies the required environment variables
+- A PEM file
+- A `.env` file that specifies the required environment variables
 
 The `APP_ID` and `WEBHOOK_SECRET` need to be present but need not be the registered application ID or webhook secret to start the server. `PRIVATE_KEY` must be a valid PEM private key.
 

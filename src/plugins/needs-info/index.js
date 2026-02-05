@@ -13,7 +13,7 @@ const needInfoLabel = "needs info";
  * @private
  */
 function commentMessage() {
-    return `
+	return `
 It looks like there wasn't enough information for us to know how to help you, so we're closing the issue.
 
 Thanks for your understanding.
@@ -29,7 +29,7 @@ Thanks for your understanding.
  * @private
  */
 function hasNeedInfoLabel(label) {
-    return label.name === needInfoLabel;
+	return label.name === needInfoLabel;
 }
 
 /**
@@ -39,13 +39,15 @@ function hasNeedInfoLabel(label) {
  * @private
  */
 async function check(context) {
-    const { payload, octokit } = context;
+	const { payload, octokit } = context;
 
-    if (payload.issue.labels.some(hasNeedInfoLabel)) {
-        await octokit.issues.createComment(context.issue({
-            body: commentMessage()
-        }));
-    }
+	if (payload.issue.labels.some(hasNeedInfoLabel)) {
+		await octokit.issues.createComment(
+			context.issue({
+				body: commentMessage(),
+			}),
+		);
+	}
 }
 
 /**
@@ -53,5 +55,5 @@ async function check(context) {
  */
 
 module.exports = robot => {
-    robot.on("issues.closed", check);
+	robot.on("issues.closed", check);
 };
