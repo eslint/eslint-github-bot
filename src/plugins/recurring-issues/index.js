@@ -39,7 +39,7 @@ The next scheduled release will occur on ${releaseDate.format("dddd, MMMM Do, YY
 - [ ] Verify if there are other packages (i.e., \`espree\`, \`eslint-scope\`, \`eslint-visitor-keys\`, \`@eslint/eslintrc\`) that need to be released first
 - [ ] Update \`package.json\` in the \`eslint\` repo with new versions from the preceding step (find the [Mend Renovate pull request](https://github.com/eslint/eslint/pulls/app%2Frenovate) and merge it)
 - [ ] Start the \`eslint\` release on [Jenkins](https://jenkins2.eslint.org)
-- If there are any changes in \`@eslint/js\`:
+- [ ] If there are any changes in \`@eslint/js\`:
     - [ ] Update the \`eslint\` peer dependency in \`packages/js/package.json\` to the new version (create and merge a pull request)
     - [ ] Start the \`@eslint/js\` release on [Jenkins](https://jenkins2.eslint.org)
 - [ ] Update the release blog post:
