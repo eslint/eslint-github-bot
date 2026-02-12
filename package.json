@@ -36,7 +36,7 @@
     "eslint": "^9.39.2",
     "eslint-config-eslint": "^13.0.0",
     "fetch-mock": "^12.6.0",
-    "globals": "^17.0.0",
+    "globals": "^17.3.0",
     "jest": "^30.2.0",
     "lint-staged": "^16.2.7",
     "prettier": "3.8.1",
