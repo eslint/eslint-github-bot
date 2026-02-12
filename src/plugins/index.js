@@ -13,11 +13,11 @@
  */
 
 module.exports = {
-    autoAssign: require("./auto-assign"),
-    commitMessage: require("./commit-message"),
-    issuePrLink: require("./issue-pr-link"),
-    needsInfo: require("./needs-info"),
-    recurringIssues: require("./recurring-issues"),
-    releaseMonitor: require("./release-monitor"),
-    wip: require("./wip")
+	autoAssign: require("./auto-assign"),
+	commitMessage: require("./commit-message"),
+	issuePrLink: require("./issue-pr-link"),
+	needsInfo: require("./needs-info"),
+	recurringIssues: require("./recurring-issues"),
+	releaseMonitor: require("./release-monitor"),
+	wip: require("./wip"),
 };

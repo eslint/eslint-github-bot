@@ -28,7 +28,7 @@ const moment = require("moment-timezone");
  * @returns {Promise<string>} The text of the issue
  */
 async function getReleaseIssueBody(releaseDate) {
-    return `
+	return `
 
 The next scheduled release will occur on ${releaseDate.format("dddd, MMMM Do, YYYY")}.
 
@@ -96,25 +96,36 @@ Resources:
  * @returns {{login: string, name: (string|null)}} A list of team member login names and full names
  */
 async function getTeamMembers({ octokit, organizationName, teamName }) {
+	/*
+	 * NOTE: This will fail if the organization contains more than 100 teams. This isn't
+	 * close to being a problem right now, so it hasn't been worth figuring out a good
+	 * way to paginate yet, but that would be a good enhancement in the future.
+	 */
+	const teams = await octokit.teams
+		.list({ org: organizationName, per_page: 100 })
+		.then(res => res.data);
+	const desiredTeam = teams.find(team => team.slug === teamName);
 
-    /*
-     * NOTE: This will fail if the organization contains more than 100 teams. This isn't
-     * close to being a problem right now, so it hasn't been worth figuring out a good
-     * way to paginate yet, but that would be a good enhancement in the future.
-     */
-    const teams = await octokit.teams.list({ org: organizationName, per_page: 100 }).then(res => res.data);
-    const desiredTeam = teams.find(team => team.slug === teamName);
+	if (!desiredTeam) {
+		throw new Error(`No team with name ${teamName} found`);
+	}
 
-    if (!desiredTeam) {
-        throw new Error(`No team with name ${teamName} found`);
-    }
+	const teamMembers = await octokit.teams
+		.listMembersInOrg({
+			team_slug: desiredTeam.slug,
+			org: organizationName,
+			per_page: 100,
+		})
+		.then(res => res.data);
 
-    const teamMembers = await octokit.teams.listMembersInOrg({ team_slug: desiredTeam.slug, org: organizationName, per_page: 100 }).then(res => res.data);
-
-    return Promise.all(teamMembers.map(async member => ({
-        login: member.login,
-        name: await octokit.users.getByUsername({ username: member.login }).then(res => res.data.name)
-    })));
+	return Promise.all(
+		teamMembers.map(async member => ({
+			login: member.login,
+			name: await octokit.users
+				.getByUsername({ username: member.login })
+				.then(res => res.data.name),
+		})),
+	);
 }
 
 /**
@@ -123,7 +134,9 @@ async function getTeamMembers({ octokit, organizationName, teamName }) {
  * @returns {string} Markdown text containing a bulleted list of names
  */
 function formatTeamMembers(teamMembers) {
-    return teamMembers.map(({ login, name }) => `- ${name || login} (@${login}) - TSC`).join("\n");
+	return teamMembers
+		.map(({ login, name }) => `- ${name || login} (@${login}) - TSC`)
+		.join("\n");
 }
 
 /**
@@ -135,10 +148,15 @@ function formatTeamMembers(teamMembers) {
  * @param {string} options.tscTeamName The name of the TSC team
  * @returns {Promise<string>} The text of the issue
  */
-async function getTscMeetingIssueBody({ meetingDate, octokit, organizationName, tscTeamName }) {
-    const timeFormatString = "ddd DD-MMM-YYYY HH:mm";
+async function getTscMeetingIssueBody({
+	meetingDate,
+	octokit,
+	organizationName,
+	tscTeamName,
+}) {
+	const timeFormatString = "ddd DD-MMM-YYYY HH:mm";
 
-    return `
+	return `
 
 # Time
 
@@ -183,15 +201,22 @@ Anyone is welcome to attend the meeting as observers. We ask that you refrain fr
  * @param {number} issueInfo.issue_number The issue number on GitHub
  * @returns {Promise<boolean>} A Promise that fulfills with `true` if the issue was closed multiple times
  */
-async function issueWasClosedMultipleTimes(octokit, { owner, repo, issue_number }) {
-    const issueEvents = await octokit.issues.listEvents({
-        owner,
-        repo,
-        issue_number,
-        per_page: 100
-    }).then(res => res.data);
+async function issueWasClosedMultipleTimes(
+	octokit,
+	{ owner, repo, issue_number },
+) {
+	const issueEvents = await octokit.issues
+		.listEvents({
+			owner,
+			repo,
+			issue_number,
+			per_page: 100,
+		})
+		.then(res => res.data);
 
-    return issueEvents.filter(eventObj => eventObj.event === "closed").length > 1;
+	return (
+		issueEvents.filter(eventObj => eventObj.event === "closed").length > 1
+	);
 }
 /* eslint-enable camelcase -- issue_number is part of the GitHub API response */
 
@@ -213,92 +238,106 @@ async function issueWasClosedMultipleTimes(octokit, { owner, repo, issue_number 
  * for an object with `title` and `body` properties for the new issue.
  * @returns {function(probot.Context): Promise<void>} A Probot event listener
  */
-function createIssueHandler({ labelTrigger, newLabels, shouldCreateNewIssue, getNewIssueInfo }) {
+function createIssueHandler({
+	labelTrigger,
+	newLabels,
+	shouldCreateNewIssue,
+	getNewIssueInfo,
+}) {
+	/**
+	 * A Probot event listener that creates a new issue when an old issue is closed.
+	 * @param {ProbotContext} context A Probot context object
+	 * @returns {Promise<void>} A Promise that fulfills when the new issue is created.
+	 */
+	return async context => {
+		const {
+			title: oldTitle,
+			body: oldBody,
+			labels: oldLabels,
+		} = context.payload.issue;
 
-    /**
-     * A Probot event listener that creates a new issue when an old issue is closed.
-     * @param {ProbotContext} context A Probot context object
-     * @returns {Promise<void>} A Promise that fulfills when the new issue is created.
-     */
-    return async context => {
-        const { title: oldTitle, body: oldBody, labels: oldLabels } = context.payload.issue;
+		// If the issue does not have the correct label, skip it.
+		if (!oldLabels.some(label => label.name === labelTrigger)) {
+			return;
+		}
 
-        // If the issue does not have the correct label, skip it.
-        if (!oldLabels.some(label => label.name === labelTrigger)) {
-            return;
-        }
+		// If the issue was previously closed and then reopened, skip it.
+		if (
+			await issueWasClosedMultipleTimes(context.octokit, context.issue())
+		) {
+			return;
+		}
 
-        // If the issue was previously closed and then reopened, skip it.
-        if (await issueWasClosedMultipleTimes(context.octokit, context.issue())) {
-            return;
-        }
+		if (!(await shouldCreateNewIssue({ title: oldTitle, body: oldBody }))) {
+			return;
+		}
 
-        if (!await shouldCreateNewIssue({ title: oldTitle, body: oldBody })) {
-            return;
-        }
+		const { title: newTitle, body: newBody } = await getNewIssueInfo({
+			title: oldTitle,
+			body: oldBody,
+			octokit: context.octokit,
+			organizationName: context.repo().owner,
+		});
 
-        const { title: newTitle, body: newBody } = await getNewIssueInfo({
-            title: oldTitle,
-            body: oldBody,
-            octokit: context.octokit,
-            organizationName: context.repo().owner
-        });
-
-        // Create a new issue.
-        await context.octokit.issues.create(
-            context.repo({
-                title: newTitle,
-                body: newBody,
-                labels: newLabels
-            })
-        );
-    };
+		// Create a new issue.
+		await context.octokit.issues.create(
+			context.repo({
+				title: newTitle,
+				body: newBody,
+				labels: newLabels,
+			}),
+		);
+	};
 }
 
 const RELEASE_ISSUE_TITLE_FORMAT = "[Scheduled release for ]MMMM Do, YYYY";
 const releaseIssueHandler = createIssueHandler({
-    labelTrigger: "release",
-    newLabels: ["release", "tsc agenda", "triage:no"],
-    async shouldCreateNewIssue({ title }) {
-        return moment.utc(title, RELEASE_ISSUE_TITLE_FORMAT, true).isValid();
-    },
-    async getNewIssueInfo({ title }) {
-        const oldReleaseDate = moment.utc(title, RELEASE_ISSUE_TITLE_FORMAT, true);
-        const newReleaseDate = oldReleaseDate.clone().add({ weeks: 2 });
+	labelTrigger: "release",
+	newLabels: ["release", "tsc agenda", "triage:no"],
+	async shouldCreateNewIssue({ title }) {
+		return moment.utc(title, RELEASE_ISSUE_TITLE_FORMAT, true).isValid();
+	},
+	async getNewIssueInfo({ title }) {
+		const oldReleaseDate = moment.utc(
+			title,
+			RELEASE_ISSUE_TITLE_FORMAT,
+			true,
+		);
+		const newReleaseDate = oldReleaseDate.clone().add({ weeks: 2 });
 
-        return {
-            title: newReleaseDate.format(RELEASE_ISSUE_TITLE_FORMAT),
-            body: await getReleaseIssueBody(newReleaseDate)
-        };
-    }
+		return {
+			title: newReleaseDate.format(RELEASE_ISSUE_TITLE_FORMAT),
+			body: await getReleaseIssueBody(newReleaseDate),
+		};
+	},
 });
 
 const TSC_MEETING_TITLE_FORMAT = "[TSC meeting ]DD-MMMM-YYYY";
 const tscMeetingIssueHandler = createIssueHandler({
-    labelTrigger: "tsc meeting",
-    newLabels: ["tsc meeting", "triage:no"],
-    async shouldCreateNewIssue({ title }) {
-        return moment.utc(title, TSC_MEETING_TITLE_FORMAT, true).isValid();
-    },
-    async getNewIssueInfo({ title, octokit, organizationName }) {
-        const meetingDate = moment.tz(title, TSC_MEETING_TITLE_FORMAT, "America/New_York")
-            .hour(16)
-            .add({ weeks: 2 });
+	labelTrigger: "tsc meeting",
+	newLabels: ["tsc meeting", "triage:no"],
+	async shouldCreateNewIssue({ title }) {
+		return moment.utc(title, TSC_MEETING_TITLE_FORMAT, true).isValid();
+	},
+	async getNewIssueInfo({ title, octokit, organizationName }) {
+		const meetingDate = moment
+			.tz(title, TSC_MEETING_TITLE_FORMAT, "America/New_York")
+			.hour(16)
+			.add({ weeks: 2 });
 
+		const newTitle = meetingDate.format(TSC_MEETING_TITLE_FORMAT);
+		const newBody = await getTscMeetingIssueBody({
+			meetingDate,
+			octokit,
+			organizationName,
+			tscTeamName: "eslint-tsc",
+		});
 
-        const newTitle = meetingDate.format(TSC_MEETING_TITLE_FORMAT);
-        const newBody = await getTscMeetingIssueBody({
-            meetingDate,
-            octokit,
-            organizationName,
-            tscTeamName: "eslint-tsc"
-        });
-
-        return { title: newTitle, body: newBody };
-    }
+		return { title: newTitle, body: newBody };
+	},
 });
 
 module.exports = robot => {
-    robot.on("issues.closed", releaseIssueHandler);
-    robot.on("issues.closed", tscMeetingIssueHandler);
+	robot.on("issues.closed", releaseIssueHandler);
+	robot.on("issues.closed", tscMeetingIssueHandler);
 };

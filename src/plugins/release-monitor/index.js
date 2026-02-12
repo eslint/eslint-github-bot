@@ -26,7 +26,7 @@ const RELEASE_LABEL = "release";
  * @private
  */
 function isMessageValidForPatchRelease(message) {
-    return PATCH_COMMIT_MESSAGE_REGEX.test(message);
+	return PATCH_COMMIT_MESSAGE_REGEX.test(message);
 }
 
 /**
@@ -36,7 +36,7 @@ function isMessageValidForPatchRelease(message) {
  * @private
  */
 function pluckLatestCommitSha(allCommits) {
-    return allCommits.at(-1).sha;
+	return allCommits.at(-1).sha;
 }
 
 /**
@@ -46,12 +46,12 @@ function pluckLatestCommitSha(allCommits) {
  * @private
  */
 function getAllOpenPRs(context) {
-    return context.octokit.paginate(
-        context.octokit.pulls.list,
-        context.repo({
-            state: "open"
-        })
-    );
+	return context.octokit.paginate(
+		context.octokit.pulls.list,
+		context.repo({
+			state: "open",
+		}),
+	);
 }
 
 /**
@@ -66,15 +66,15 @@ function getAllOpenPRs(context) {
  * @private
  */
 function createStatusOnPR({ context, state, sha, description, targetUrl }) {
-    return context.octokit.repos.createCommitStatus(
-        context.repo({
-            sha,
-            state,
-            target_url: targetUrl || "",
-            description,
-            context: "release-monitor"
-        })
-    );
+	return context.octokit.repos.createCommitStatus(
+		context.repo({
+			sha,
+			state,
+			target_url: targetUrl || "",
+			description,
+			context: "release-monitor",
+		}),
+	);
 }
 
 /**
@@ -86,11 +86,11 @@ function createStatusOnPR({ context, state, sha, description, targetUrl }) {
  * @private
  */
 async function getAllCommitsForPR({ context, pr }) {
-    const commits = await context.octokit.pulls.listCommits(
-        context.repo({ pull_number: pr.number })
-    );
+	const commits = await context.octokit.pulls.listCommits(
+		context.repo({ pull_number: pr.number }),
+	);
 
-    return commits.data;
+	return commits.data;
 }
 
 /**
@@ -107,34 +107,38 @@ async function getAllCommitsForPR({ context, pr }) {
  * release issue. Otherwise, this is null.
  * @returns {Promise<void>} A Promise that fulfills when the status check has been created
  */
-async function createAppropriateStatusForPR({ context, pr, pendingReleaseIssueUrl }) {
-    const allCommits = await getAllCommitsForPR({ context, pr });
-    const sha = pluckLatestCommitSha(allCommits);
+async function createAppropriateStatusForPR({
+	context,
+	pr,
+	pendingReleaseIssueUrl,
+}) {
+	const allCommits = await getAllCommitsForPR({ context, pr });
+	const sha = pluckLatestCommitSha(allCommits);
 
-    if (pendingReleaseIssueUrl === null) {
-        await createStatusOnPR({
-            context,
-            sha,
-            state: "success",
-            description: "No patch release is pending"
-        });
-    } else if (isMessageValidForPatchRelease(pr.title)) {
-        await createStatusOnPR({
-            context,
-            sha,
-            state: "success",
-            description: "This change is semver-patch",
-            targetUrl: pendingReleaseIssueUrl
-        });
-    } else {
-        await createStatusOnPR({
-            context,
-            sha,
-            state: "pending",
-            description: "A patch release is pending",
-            targetUrl: pendingReleaseIssueUrl
-        });
-    }
+	if (pendingReleaseIssueUrl === null) {
+		await createStatusOnPR({
+			context,
+			sha,
+			state: "success",
+			description: "No patch release is pending",
+		});
+	} else if (isMessageValidForPatchRelease(pr.title)) {
+		await createStatusOnPR({
+			context,
+			sha,
+			state: "success",
+			description: "This change is semver-patch",
+			targetUrl: pendingReleaseIssueUrl,
+		});
+	} else {
+		await createStatusOnPR({
+			context,
+			sha,
+			state: "pending",
+			description: "A patch release is pending",
+			targetUrl: pendingReleaseIssueUrl,
+		});
+	}
 }
 
 /**
@@ -146,14 +150,17 @@ async function createAppropriateStatusForPR({ context, pr, pendingReleaseIssueUr
  * @private
  */
 async function createStatusOnAllPRs({ context, pendingReleaseIssueUrl }) {
-    const allOpenPrs = await getAllOpenPRs(context);
+	const allOpenPrs = await getAllOpenPRs(context);
 
-    return Promise.all(allOpenPrs.map(pr =>
-        createAppropriateStatusForPR({
-            context,
-            pr,
-            pendingReleaseIssueUrl
-        })));
+	return Promise.all(
+		allOpenPrs.map(pr =>
+			createAppropriateStatusForPR({
+				context,
+				pr,
+				pendingReleaseIssueUrl,
+			}),
+		),
+	);
 }
 
 /**
@@ -163,7 +170,7 @@ async function createStatusOnAllPRs({ context, pendingReleaseIssueUrl }) {
  * @private
  */
 function hasReleaseLabel(labels) {
-    return labels.some(({ name }) => name === RELEASE_LABEL);
+	return labels.some(({ name }) => name === RELEASE_LABEL);
 }
 
 /**
@@ -174,7 +181,7 @@ function hasReleaseLabel(labels) {
  * @private
  */
 function isPostReleaseLabel({ name }) {
-    return name === POST_RELEASE_LABEL;
+	return name === POST_RELEASE_LABEL;
 }
 
 /**
@@ -184,14 +191,16 @@ function isPostReleaseLabel({ name }) {
  * @private
  */
 async function issueLabeledHandler(context) {
-
-    // check if the label is post-release and the same issue has release label
-    if (isPostReleaseLabel(context.payload.label) && hasReleaseLabel(context.payload.issue.labels)) {
-        await createStatusOnAllPRs({
-            context,
-            pendingReleaseIssueUrl: context.payload.issue.html_url
-        });
-    }
+	// check if the label is post-release and the same issue has release label
+	if (
+		isPostReleaseLabel(context.payload.label) &&
+		hasReleaseLabel(context.payload.issue.labels)
+	) {
+		await createStatusOnAllPRs({
+			context,
+			pendingReleaseIssueUrl: context.payload.issue.html_url,
+		});
+	}
 }
 
 /**
@@ -201,14 +210,13 @@ async function issueLabeledHandler(context) {
  * @private
  */
 async function issueCloseHandler(context) {
-
-    // check if the closed issue is a release issue
-    if (hasReleaseLabel(context.payload.issue.labels)) {
-        await createStatusOnAllPRs({
-            context,
-            pendingReleaseIssueUrl: null
-        });
-    }
+	// check if the closed issue is a release issue
+	if (hasReleaseLabel(context.payload.issue.labels)) {
+		await createStatusOnAllPRs({
+			context,
+			pendingReleaseIssueUrl: null,
+		});
+	}
 }
 
 /**
@@ -218,35 +226,36 @@ async function issueCloseHandler(context) {
  * @private
  */
 async function prOpenHandler(context) {
+	/**
+	 * check if the release issue has the label for no semver minor merge please
+	 * false: add success status to pr
+	 * true: add failure message if its not a fix or doc pr else success
+	 */
+	const { data: releaseIssues } = await context.octokit.issues.listForRepo(
+		context.repo({
+			labels: `${RELEASE_LABEL},${POST_RELEASE_LABEL}`,
+		}),
+	);
 
-    /**
-     * check if the release issue has the label for no semver minor merge please
-     * false: add success status to pr
-     * true: add failure message if its not a fix or doc pr else success
-     */
-    const { data: releaseIssues } = await context.octokit.issues.listForRepo(
-        context.repo({
-            labels: `${RELEASE_LABEL},${POST_RELEASE_LABEL}`
-        })
-    );
-
-    await createAppropriateStatusForPR({
-        context,
-        pr: context.payload.pull_request,
-        pendingReleaseIssueUrl: releaseIssues.length ? releaseIssues[0].html_url : null
-    });
+	await createAppropriateStatusForPR({
+		context,
+		pr: context.payload.pull_request,
+		pendingReleaseIssueUrl: releaseIssues.length
+			? releaseIssues[0].html_url
+			: null,
+	});
 }
 
 module.exports = robot => {
-    robot.on("issues.labeled", issueLabeledHandler);
-    robot.on("issues.closed", issueCloseHandler);
-    robot.on(
-        [
-            "pull_request.opened",
-            "pull_request.reopened",
-            "pull_request.synchronize",
-            "pull_request.edited"
-        ],
-        prOpenHandler
-    );
+	robot.on("issues.labeled", issueLabeledHandler);
+	robot.on("issues.closed", issueCloseHandler);
+	robot.on(
+		[
+			"pull_request.opened",
+			"pull_request.reopened",
+			"pull_request.synchronize",
+			"pull_request.edited",
+		],
+		prOpenHandler,
+	);
 };
