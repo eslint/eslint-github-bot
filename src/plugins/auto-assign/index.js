@@ -48,5 +48,8 @@ async function issueOpenedHandler(context) {
 }
 
 module.exports = robot => {
-	robot.on("issues.opened", issueOpenedHandler);
+	robot.on(
+		["issues.opened", "issues.reopened", "issues.edited"],
+		issueOpenedHandler,
+	);
 };

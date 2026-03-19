@@ -62,63 +62,65 @@ describe("auto-assign", () => {
 		fetchMock.clearHistory();
 	});
 
-	describe("issue opened", () => {
-		test("assigns issue to author when they indicate willingness to submit PR", async () => {
-			for (const body of issueBodies("x")) {
-				await bot.receive({
-					name: "issues",
-					payload: {
-						action: "opened",
-						installation: {
-							id: 1,
-						},
-						issue: {
-							number: 1,
-							body,
-							user: {
-								login: "user-a",
+	["opened", "reopened", "edited"].forEach(action => {
+		describe(`issue ${action}`, () => {
+			test("assigns issue to author when they indicate willingness to submit PR", async () => {
+				for (const body of issueBodies("x")) {
+					await bot.receive({
+						name: "issues",
+						payload: {
+							action,
+							installation: {
+								id: 1,
+							},
+							issue: {
+								number: 1,
+								body,
+								user: {
+									login: "user-a",
+								},
+							},
+							repository: {
+								name: "repo-test",
+								owner: {
+									login: "test",
+								},
 							},
 						},
-						repository: {
-							name: "repo-test",
-							owner: {
-								login: "test",
-							},
-						},
-					},
-				});
+					});
 
-				expect(fetchMock.callHistory.called(API_URL)).toBeTruthy();
-			}
-		});
+					expect(fetchMock.callHistory.called(API_URL)).toBeTruthy();
+				}
+			});
 
-		test("does not assign issue when author does not indicate willingness to submit PR", async () => {
-			for (const body of issueBodies("")) {
-				await bot.receive({
-					name: "issues",
-					payload: {
-						action: "opened",
-						installation: {
-							id: 1,
-						},
-						issue: {
-							number: 1,
-							body,
-							user: {
-								login: "user-a",
+			test("does not assign issue when author does not indicate willingness to submit PR", async () => {
+				for (const body of issueBodies("")) {
+					await bot.receive({
+						name: "issues",
+						payload: {
+							action,
+							installation: {
+								id: 1,
+							},
+							issue: {
+								number: 1,
+								body,
+								user: {
+									login: "user-a",
+								},
+							},
+							repository: {
+								name: "repo-test",
+								owner: {
+									login: "test",
+								},
 							},
 						},
-						repository: {
-							name: "repo-test",
-							owner: {
-								login: "test",
-							},
-						},
-					},
-				});
+					});
 
-				expect(fetchMock.callHistory.called(API_URL)).toBe(false);
-			}
+					expect(fetchMock.callHistory.called(API_URL)).toBe(false);
+				}
+			});
 		});
 	});
 });
