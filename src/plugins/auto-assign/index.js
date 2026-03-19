@@ -28,12 +28,13 @@ function isWillingToSubmitPR(body) {
 }
 
 /**
- * Handler for issue opened event
+ * Handler for issue events that may trigger automatic assignment
+ * (used for `issues.opened`, `issues.reopened`, and `issues.edited`)
  * @param {ProbotContext} context probot context object
  * @returns {Promise<void>} promise
  * @private
  */
-async function issueOpenedHandler(context) {
+async function issueUpdatedHandler(context) {
 	const { payload } = context;
 
 	if (!isWillingToSubmitPR(payload.issue.body)) {
@@ -50,6 +51,6 @@ async function issueOpenedHandler(context) {
 module.exports = robot => {
 	robot.on(
 		["issues.opened", "issues.reopened", "issues.edited"],
-		issueOpenedHandler,
+		issueUpdatedHandler,
 	);
 };
