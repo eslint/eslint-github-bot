@@ -35,15 +35,19 @@ function isWillingToSubmitPR(body) {
  * @private
  */
 async function issueUpdatedHandler(context) {
-	const { payload } = context;
+	const { assignees = [], body, user } = context.payload.issue;
 
-	if (!isWillingToSubmitPR(payload.issue.body)) {
+	if (
+		!isWillingToSubmitPR(body) ||
+		// Early return if the user is already an assignee to avoid unnecessary API calls
+		assignees.some(assignee => assignee.login === user.login)
+	) {
 		return;
 	}
 
 	await context.octokit.issues.addAssignees(
 		context.issue({
-			assignees: [payload.issue.user.login],
+			assignees: [user.login],
 		}),
 	);
 }

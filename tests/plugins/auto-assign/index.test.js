@@ -121,6 +121,40 @@ describe("auto-assign", () => {
 					expect(fetchMock.callHistory.called(API_URL)).toBe(false);
 				}
 			});
+
+			test("does not assign issue when author is already an assignee", async () => {
+				for (const body of issueBodies("x")) {
+					await bot.receive({
+						name: "issues",
+						payload: {
+							action,
+							installation: {
+								id: 1,
+							},
+							issue: {
+								number: 1,
+								body,
+								user: {
+									login: "user-a",
+								},
+								assignees: [
+									{
+										login: "user-a",
+									},
+								],
+							},
+							repository: {
+								name: "repo-test",
+								owner: {
+									login: "test",
+								},
+							},
+						},
+					});
+
+					expect(fetchMock.callHistory.called(API_URL)).toBe(false);
+				}
+			});
 		});
 	});
 });
