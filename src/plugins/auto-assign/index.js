@@ -48,5 +48,7 @@ async function issueOpenedHandler(context) {
 }
 
 module.exports = robot => {
+	// We don't use the `edited` or `reopened` events and only listen for the `opened` event
+	// to avoid ambiguity when issue descriptions are edited after assignment.
 	robot.on("issues.opened", issueOpenedHandler);
 };

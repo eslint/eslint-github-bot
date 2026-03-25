@@ -150,8 +150,13 @@ async function processCommitMessage(context) {
  */
 
 module.exports = robot => {
-	robot.on("pull_request.opened", processCommitMessage);
-	robot.on("pull_request.reopened", processCommitMessage);
-	robot.on("pull_request.synchronize", processCommitMessage);
-	robot.on("pull_request.edited", processCommitMessage);
+	robot.on(
+		[
+			"pull_request.opened",
+			"pull_request.reopened",
+			"pull_request.synchronize",
+			"pull_request.edited",
+		],
+		processCommitMessage,
+	);
 };
