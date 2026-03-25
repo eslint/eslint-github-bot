@@ -28,33 +28,27 @@ function isWillingToSubmitPR(body) {
 }
 
 /**
- * Handler for issue events that may trigger automatic assignment
- * (used for `issues.opened`, `issues.reopened`, and `issues.edited`)
+ * Handler for issue opened event
  * @param {ProbotContext} context probot context object
  * @returns {Promise<void>} promise
  * @private
  */
-async function issueUpdatedHandler(context) {
-	const { assignees = [], body, user } = context.payload.issue;
+async function issueOpenedHandler(context) {
+	const { payload } = context;
 
-	if (
-		!isWillingToSubmitPR(body) ||
-		// Early return if the user is already an assignee to avoid unnecessary API calls
-		assignees.some(assignee => assignee.login === user.login)
-	) {
+	if (!isWillingToSubmitPR(payload.issue.body)) {
 		return;
 	}
 
 	await context.octokit.issues.addAssignees(
 		context.issue({
-			assignees: [user.login],
+			assignees: [payload.issue.user.login],
 		}),
 	);
 }
 
 module.exports = robot => {
-	robot.on(
-		["issues.opened", "issues.reopened", "issues.edited"],
-		issueUpdatedHandler,
-	);
+	// We don't use the `edited` or `reopened` events and only listen for the `opened` event
+	// to avoid ambiguity when issue descriptions are edited after assignment.
+	robot.on("issues.opened", issueOpenedHandler);
 };
