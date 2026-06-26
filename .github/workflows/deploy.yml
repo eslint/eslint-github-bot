@@ -15,7 +15,7 @@ jobs:
                   fetch-depth: 0
 
             - name: Push to dokku
-              uses: dokku/github-action@b705ed643fea68530501b1faf37abe233caa06be # master
+              uses: dokku/github-action@6a74219fbab2441a36df6a32a61d72f05d43a21b # master
               with:
                   branch: main
                   git_remote_url: "ssh://dokku@github-bot.eslint.org/eslint-github-bot"
