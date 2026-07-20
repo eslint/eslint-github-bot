@@ -16,4 +16,4 @@ This project adheres to the [OpenJS Foundation Code of Conduct](https://eslint.o
 
 ## Contributing Code
 
-Please sign our [Contributor License Agreement](https://cla.openjsf.org/) and read over the [Pull Request Guidelines](https://eslint.org/docs/latest/contribute/pull-requests).
+Please sign our [Contributor License Agreement](https://openjsf.org/cla) and read over the [Pull Request Guidelines](https://eslint.org/docs/latest/contribute/pull-requests).
