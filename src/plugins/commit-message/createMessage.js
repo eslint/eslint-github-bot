@@ -41,6 +41,6 @@ ${errorMessages.join("\n")}
 
 **To Fix:** You can fix this problem by clicking 'Edit' next to the pull request title at the top of this page.
 
-Read more about contributing to ESLint [here](https://eslint.org/docs/developer-guide/contributing/)
+Read more about contributing to ESLint [here](https://eslint.org/docs/latest/contribute/)
 `;
 };
