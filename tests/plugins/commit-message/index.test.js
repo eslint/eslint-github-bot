@@ -177,6 +177,244 @@ describe("commit-message", () => {
 		fetchMock.clearHistory();
 	});
 
+	/**
+	 * Verify the result of a pull request title change.
+	 * @param {Object} options The test configuration.
+	 * @param {string} options.from The previous pull request title.
+	 * @param {string} options.title The current pull request title.
+	 * @param {Array<string>} options.currentLabels The labels currently on the pull request.
+	 * @param {Array<string>} options.expectedLabels The labels expected to remain on the pull request after the title change.
+	 * @param {string} [options.state="success"] The expected commit status.
+	 * @returns {Promise<void>} A promise that fulfills when verification is complete.
+	 */
+	async function expectTitleChange({
+		from,
+		title,
+		currentLabels,
+		expectedLabels,
+		state = "success",
+	}) {
+		const removedLabels = currentLabels.filter(
+			label => !expectedLabels.includes(label),
+		);
+		const addedLabels = expectedLabels.filter(
+			label => !currentLabels.includes(label),
+		);
+
+		mockSingleCommitWithMessage(title);
+
+		for (const name of removedLabels) {
+			fetchMock
+				.mockGlobal()
+				.delete(
+					`${API_ROOT}/repos/test/repo-test/issues/1/labels/${name}`,
+					200,
+				);
+		}
+
+		if (addedLabels.length > 0) {
+			mockLabels(addedLabels);
+		}
+
+		fetchMock.mockGlobal().post(
+			{
+				url: `${API_ROOT}/repos/test/repo-test/statuses/first-sha`,
+				body: { state },
+				matchPartialBody: true,
+			},
+			201,
+		);
+
+		if (state === "failure") {
+			fetchMock
+				.mockGlobal()
+				.post(
+					`${API_ROOT}/repos/test/repo-test/issues/1/comments`,
+					200,
+				);
+		}
+
+		await emitBotEvent(bot, {
+			action: "edited",
+			changes: { title: { from } },
+			pull_request: {
+				number: 1,
+				title,
+				labels: currentLabels.map(name => ({ name })),
+				user: { login: "user-a" },
+			},
+		});
+
+		expect(
+			fetchMock.callHistory.called(
+				`${API_ROOT}/repos/test/repo-test/statuses/first-sha`,
+			),
+		).toBeTruthy();
+		expect(
+			fetchMock.callHistory.called(
+				`${API_ROOT}/repos/test/repo-test/issues/1/comments`,
+			),
+		).toBe(state === "failure");
+		expect(
+			fetchMock.callHistory
+				.calls({ method: "delete" })
+				.map(({ url }) => url),
+		).toEqual(
+			removedLabels.map(
+				name =>
+					`${API_ROOT}/repos/test/repo-test/issues/1/labels/${name}`,
+			),
+		);
+		expect(
+			fetchMock.callHistory.called(
+				`${API_ROOT}/repos/test/repo-test/issues/1/labels`,
+			),
+		).toBe(addedLabels.length > 0);
+	}
+
+	describe("when the title changes between valid Conventional Commit titles", () => {
+		test("Updates labels", () =>
+			expectTitleChange({
+				from: "fix: foo",
+				title: "feat: foo",
+				currentLabels: ["bug", "rule", "accepted"],
+				expectedLabels: ["feature", "rule", "accepted"],
+			}));
+
+		test("Updates labels while preserving the breaking label", () =>
+			expectTitleChange({
+				from: "fix!: foo",
+				title: "feat!: foo",
+				currentLabels: ["bug", "breaking"],
+				expectedLabels: ["feature", "breaking"],
+			}));
+
+		test("Updates labels while removing the breaking label", () =>
+			expectTitleChange({
+				from: "fix!: foo",
+				title: "feat: foo",
+				currentLabels: ["bug", "breaking"],
+				expectedLabels: ["feature"],
+			}));
+
+		test("Updates labels when a previous label is missing", () =>
+			expectTitleChange({
+				from: "fix!: foo",
+				title: "feat: foo",
+				currentLabels: ["breaking", "accepted"],
+				expectedLabels: ["feature", "accepted"],
+			}));
+
+		test("Updates labels when the PR has no labels", () =>
+			expectTitleChange({
+				from: "fix: foo",
+				title: "feat: foo",
+				currentLabels: [],
+				expectedLabels: ["feature"],
+			}));
+
+		test("Updates labels from a non-breaking change to a breaking change", () =>
+			expectTitleChange({
+				from: "fix: foo",
+				title: "fix!: foo",
+				currentLabels: ["bug"],
+				expectedLabels: ["bug", "breaking"],
+			}));
+
+		test("Updates labels from a breaking change to a non-breaking change", () =>
+			expectTitleChange({
+				from: "feat!: foo",
+				title: "feat: foo",
+				currentLabels: ["feature", "breaking"],
+				expectedLabels: ["feature"],
+			}));
+
+		test("Updates labels when only the title summary changes", () =>
+			expectTitleChange({
+				from: "fix: foo",
+				title: "fix: bar",
+				currentLabels: ["bug", "accepted"],
+				expectedLabels: ["bug", "accepted"],
+			}));
+	});
+
+	describe("when the title changes to or from other title forms", () => {
+		test("Updates labels from an invalid title to a valid title", () =>
+			expectTitleChange({
+				from: "invalid title",
+				title: "feat: foo",
+				currentLabels: [],
+				expectedLabels: ["feature"],
+			}));
+
+		test("Updates labels from a valid title to an invalid title", () =>
+			expectTitleChange({
+				from: "fix: foo",
+				title: "invalid title",
+				currentLabels: ["bug", "accepted"],
+				expectedLabels: ["accepted"],
+				state: "failure",
+			}));
+
+		test("Updates labels from a valid title to an overlong title", () =>
+			expectTitleChange({
+				from: "fix: foo",
+				title: `feat: ${"A".repeat(72)}`,
+				currentLabels: ["bug"],
+				expectedLabels: [],
+				state: "failure",
+			}));
+
+		test("Updates labels from a valid title to a revert title", () =>
+			expectTitleChange({
+				from: "feat!: foo",
+				title: 'Revert "feat!: foo"',
+				currentLabels: ["feature", "breaking", "accepted"],
+				expectedLabels: ["accepted"],
+			}));
+	});
+
+	describe("when the title does not change", () => {
+		test("Updates labels when only the PR body changes", async () => {
+			mockSingleCommitWithMessage("feat: foo");
+			fetchMock.mockGlobal().post(
+				{
+					url: `${API_ROOT}/repos/test/repo-test/statuses/first-sha`,
+					body: { state: "success" },
+					matchPartialBody: true,
+				},
+				201,
+			);
+
+			await emitBotEvent(bot, {
+				action: "edited",
+				changes: { body: { from: "old body" } },
+				pull_request: {
+					number: 1,
+					title: "feat: foo",
+					labels: ["bug", "feature", "accepted"].map(name => ({
+						name,
+					})),
+					user: { login: "user-a" },
+				},
+			});
+
+			expect(
+				fetchMock.callHistory.called(
+					`${API_ROOT}/repos/test/repo-test/statuses/first-sha`,
+				),
+			).toBeTruthy();
+			expect(
+				fetchMock.callHistory.calls({ method: "delete" }),
+			).toHaveLength(0);
+			expect(
+				fetchMock.callHistory.called(
+					`${API_ROOT}/repos/test/repo-test/issues/1/labels`,
+				),
+			).toBe(false);
+		});
+	});
+
 	["opened", "reopened", "synchronize", "edited"].forEach(action => {
 		describe(`pull request ${action}`, () => {
 			test("Posts failure status if PR title is not correct", async () => {
