@@ -180,16 +180,16 @@ describe("commit-message", () => {
 	/**
 	 * Verify the result of a pull request title change.
 	 * @param {Object} options The test configuration.
-	 * @param {string} options.from The previous pull request title.
-	 * @param {string} options.title The current pull request title.
+	 * @param {string} options.fromTitle The previous pull request title.
+	 * @param {string} options.toTitle The current pull request title.
 	 * @param {Array<string>} options.currentLabels The labels currently on the pull request.
 	 * @param {Array<string>} options.expectedLabels The labels expected to remain on the pull request after the title change.
 	 * @param {string} [options.state="success"] The expected commit status.
 	 * @returns {Promise<void>} A promise that fulfills when verification is complete.
 	 */
 	async function expectTitleChange({
-		from,
-		title,
+		fromTitle,
+		toTitle,
 		currentLabels,
 		expectedLabels,
 		state = "success",
@@ -201,7 +201,7 @@ describe("commit-message", () => {
 			label => !currentLabels.includes(label),
 		);
 
-		mockSingleCommitWithMessage(title);
+		mockSingleCommitWithMessage(toTitle);
 
 		for (const name of removedLabels) {
 			fetchMock
@@ -236,10 +236,10 @@ describe("commit-message", () => {
 
 		await emitBotEvent(bot, {
 			action: "edited",
-			changes: { title: { from } },
+			changes: { title: { from: fromTitle } },
 			pull_request: {
 				number: 1,
-				title,
+				title: toTitle,
 				labels: currentLabels.map(name => ({ name })),
 				user: { login: "user-a" },
 			},
@@ -275,64 +275,64 @@ describe("commit-message", () => {
 	describe("when the title changes between valid Conventional Commit titles", () => {
 		test("Updates labels", () =>
 			expectTitleChange({
-				from: "fix: foo",
-				title: "feat: foo",
+				fromTitle: "fix: foo",
+				toTitle: "feat: foo",
 				currentLabels: ["bug", "rule", "accepted"],
 				expectedLabels: ["feature", "rule", "accepted"],
 			}));
 
 		test("Updates labels while preserving the breaking label", () =>
 			expectTitleChange({
-				from: "fix!: foo",
-				title: "feat!: foo",
+				fromTitle: "fix!: foo",
+				toTitle: "feat!: foo",
 				currentLabels: ["bug", "breaking"],
 				expectedLabels: ["feature", "breaking"],
 			}));
 
 		test("Updates labels while removing the breaking label", () =>
 			expectTitleChange({
-				from: "fix!: foo",
-				title: "feat: foo",
+				fromTitle: "fix!: foo",
+				toTitle: "feat: foo",
 				currentLabels: ["bug", "breaking"],
 				expectedLabels: ["feature"],
 			}));
 
 		test("Updates labels when a previous label is missing", () =>
 			expectTitleChange({
-				from: "fix!: foo",
-				title: "feat: foo",
+				fromTitle: "fix!: foo",
+				toTitle: "feat: foo",
 				currentLabels: ["breaking", "accepted"],
 				expectedLabels: ["feature", "accepted"],
 			}));
 
 		test("Updates labels when the PR has no labels", () =>
 			expectTitleChange({
-				from: "fix: foo",
-				title: "feat: foo",
+				fromTitle: "fix: foo",
+				toTitle: "feat: foo",
 				currentLabels: [],
 				expectedLabels: ["feature"],
 			}));
 
 		test("Updates labels from a non-breaking change to a breaking change", () =>
 			expectTitleChange({
-				from: "fix: foo",
-				title: "fix!: foo",
+				fromTitle: "fix: foo",
+				toTitle: "fix!: foo",
 				currentLabels: ["bug"],
 				expectedLabels: ["bug", "breaking"],
 			}));
 
 		test("Updates labels from a breaking change to a non-breaking change", () =>
 			expectTitleChange({
-				from: "feat!: foo",
-				title: "feat: foo",
+				fromTitle: "feat!: foo",
+				toTitle: "feat: foo",
 				currentLabels: ["feature", "breaking"],
 				expectedLabels: ["feature"],
 			}));
 
-		test("Updates labels when only the title summary changes", () =>
+		test("Does not update labels when only the title summary changes", () =>
 			expectTitleChange({
-				from: "fix: foo",
-				title: "fix: bar",
+				fromTitle: "fix: foo",
+				toTitle: "fix: bar",
 				currentLabels: ["bug", "accepted"],
 				expectedLabels: ["bug", "accepted"],
 			}));
@@ -341,16 +341,16 @@ describe("commit-message", () => {
 	describe("when the title changes to or from other title forms", () => {
 		test("Updates labels from an invalid title to a valid title", () =>
 			expectTitleChange({
-				from: "invalid title",
-				title: "feat: foo",
+				fromTitle: "invalid title",
+				toTitle: "feat: foo",
 				currentLabels: [],
 				expectedLabels: ["feature"],
 			}));
 
 		test("Updates labels from a valid title to an invalid title", () =>
 			expectTitleChange({
-				from: "fix: foo",
-				title: "invalid title",
+				fromTitle: "fix: foo",
+				toTitle: "invalid title",
 				currentLabels: ["bug", "accepted"],
 				expectedLabels: ["accepted"],
 				state: "failure",
@@ -358,8 +358,8 @@ describe("commit-message", () => {
 
 		test("Updates labels from a valid title to an overlong title", () =>
 			expectTitleChange({
-				from: "fix: foo",
-				title: `feat: ${"A".repeat(72)}`,
+				fromTitle: "fix: foo",
+				toTitle: `feat: ${"A".repeat(72)}`,
 				currentLabels: ["bug"],
 				expectedLabels: [],
 				state: "failure",
@@ -367,15 +367,16 @@ describe("commit-message", () => {
 
 		test("Updates labels from a valid title to a revert title", () =>
 			expectTitleChange({
-				from: "feat!: foo",
-				title: 'Revert "feat!: foo"',
+				fromTitle: "feat!: foo",
+				toTitle: 'Revert "feat!: foo"',
 				currentLabels: ["feature", "breaking", "accepted"],
 				expectedLabels: ["accepted"],
 			}));
 	});
 
+	// These tests don't use expectTitleChange because it always emits a title change.
 	describe("when the title does not change", () => {
-		test("Updates labels when only the PR body changes", async () => {
+		test("Does not update labels when only the PR body changes", async () => {
 			mockSingleCommitWithMessage("feat: foo");
 			fetchMock.mockGlobal().post(
 				{
@@ -395,6 +396,42 @@ describe("commit-message", () => {
 					labels: ["bug", "feature", "accepted"].map(name => ({
 						name,
 					})),
+					user: { login: "user-a" },
+				},
+			});
+
+			expect(
+				fetchMock.callHistory.called(
+					`${API_ROOT}/repos/test/repo-test/statuses/first-sha`,
+				),
+			).toBeTruthy();
+			expect(
+				fetchMock.callHistory.calls({ method: "delete" }),
+			).toHaveLength(0);
+			expect(
+				fetchMock.callHistory.called(
+					`${API_ROOT}/repos/test/repo-test/issues/1/labels`,
+				),
+			).toBe(false);
+		});
+
+		test("Does not update labels when a commit with a different tag is added", async () => {
+			mockSingleCommitWithMessage("fix: foo");
+			fetchMock.mockGlobal().post(
+				{
+					url: `${API_ROOT}/repos/test/repo-test/statuses/first-sha`,
+					body: { state: "success" },
+					matchPartialBody: true,
+				},
+				201,
+			);
+
+			await emitBotEvent(bot, {
+				action: "synchronize",
+				pull_request: {
+					number: 1,
+					title: "feat: foo",
+					labels: ["feature", "accepted"].map(name => ({ name })),
 					user: { login: "user-a" },
 				},
 			});

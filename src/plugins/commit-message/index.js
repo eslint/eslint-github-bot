@@ -131,15 +131,17 @@ async function processCommitMessage(context) {
 		state = "success";
 		description = "PR title follows commit message guidelines";
 
-		const labels = currentLabels.filter(
+		const labelsToAdd = currentLabels.filter(
 			label =>
 				!payload.pull_request.labels?.some(
 					({ name }) => name === label,
 				),
 		);
 
-		if (labels.length > 0) {
-			await octokit.issues.addLabels(context.issue({ labels }));
+		if (labelsToAdd.length > 0) {
+			await octokit.issues.addLabels(
+				context.issue({ labels: labelsToAdd }),
+			);
 		}
 	} else {
 		state = "failure";
