@@ -82,7 +82,7 @@ function getCommitMessageLabels(message) {
 	const commitTitle = message.split(/\r?\n/u)[0];
 	const [tag] = commitTitle.match(TAG_REGEX) || [""];
 
-	return TAG_LABELS.get(tag.trim());
+	return TAG_LABELS.get(tag.trim()) || [];
 }
 
 /**
@@ -107,17 +107,41 @@ async function processCommitMessage(context) {
 	const allCommits = await octokit.pulls.listCommits(context.pullRequest());
 	const messageToCheck = payload.pull_request.title;
 	const errors = getCommitMessageErrors(messageToCheck);
+	const currentLabels = getCommitMessageLabels(messageToCheck);
 	let description;
 	let state;
+
+	if (payload.action === "edited" && payload.changes?.title) {
+		const previousLabels = getCommitMessageLabels(
+			payload.changes.title.from,
+		);
+		const labelsToRemove = payload.pull_request.labels.filter(
+			({ name }) =>
+				previousLabels.includes(name) && !currentLabels.includes(name),
+		);
+
+		await Promise.all(
+			labelsToRemove.map(({ name }) =>
+				octokit.issues.removeLabel(context.issue({ name })),
+			),
+		);
+	}
 
 	if (errors.length === 0) {
 		state = "success";
 		description = "PR title follows commit message guidelines";
 
-		const labels = getCommitMessageLabels(messageToCheck);
+		const labelsToAdd = currentLabels.filter(
+			label =>
+				!payload.pull_request.labels?.some(
+					({ name }) => name === label,
+				),
+		);
 
-		if (labels) {
-			await context.octokit.issues.addLabels(context.issue({ labels }));
+		if (labelsToAdd.length > 0) {
+			await octokit.issues.addLabels(
+				context.issue({ labels: labelsToAdd }),
+			);
 		}
 	} else {
 		state = "failure";
