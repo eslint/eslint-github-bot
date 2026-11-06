@@ -1,5 +1,5 @@
 /**
- * @fileoverview Comment on issues when PRs are created/edited to fix them
+ * @fileoverview Validate PR eligibility and comment on referenced issues
  * @author ESLint GitHub Bot Contributors
  */
 
@@ -67,21 +67,21 @@ function createCommentMessage(prUrl, prAuthor) {
 }
 
 /**
- * Check if an issue exists and is open
+ * Get an issue if it exists and is open
  * @param {ProbotContext} context Probot context object
  * @param {number} issueNumber Issue number to check
- * @returns {Promise<boolean>} True if issue exists and is open
+ * @returns {Promise<object|null>} The open issue, or null if unavailable
  * @private
  */
-async function isIssueOpenAndExists(context, issueNumber) {
+async function getOpenIssue(context, issueNumber) {
 	try {
 		const { data: issue } = await context.octokit.issues.get(
 			context.repo({ issue_number: issueNumber }),
 		);
-		return issue.state === "open";
+		return issue.state === "open" ? issue : null;
 	} catch {
 		// Issue doesn't exist or we don't have access
-		return false;
+		return null;
 	}
 }
 
@@ -114,7 +114,7 @@ async function hasExistingComment(context, issueNumber, prNumber) {
 }
 
 /**
- * Comment on issues referenced in the PR body
+ * Validate eligibility before commenting on issues referenced in the PR body
  * @param {ProbotContext} context Probot context object
  * @returns {Promise<void>}
  * @private
@@ -123,7 +123,7 @@ async function commentOnReferencedIssues(context) {
 	const { payload } = context;
 	const pr = payload.pull_request;
 
-	if (!pr || !pr.body) {
+	if (!pr || !pr.body || pr.state === "closed") {
 		return;
 	}
 
@@ -136,15 +136,42 @@ async function commentOnReferencedIssues(context) {
 	const prUrl = pr.html_url;
 	const prAuthor = pr.user.login;
 	const prNumber = pr.number;
+	const openIssueNumbers = [];
 
-	// Comment on each referenced issue
 	for (const issueNumber of issueNumbers) {
-		try {
-			// Check if issue exists and is open
-			if (!(await isIssueOpenAndExists(context, issueNumber))) {
-				continue;
-			}
+		const issue = await getOpenIssue(context, issueNumber);
+		if (!issue) {
+			continue;
+		}
 
+		if (
+			!issue.labels.some(label => label.name === "accepted") ||
+			!issue.assignees.some(
+				assignee =>
+					assignee.login.toLowerCase() === prAuthor.toLowerCase(),
+			)
+		) {
+			await context.octokit.issues.createComment(
+				context.repo({
+					issue_number: prNumber,
+					body: `Hey @${prAuthor}, thanks so much for the submission. In order to accept a PR, the issue must first be marked as accepted and you must be assigned to it. Issue #${issueNumber} does not meet these requirements. We're closing this in order to stick with our process, which you can read about here:
+
+https://eslint.org/docs/latest/contribute/work-on-issue
+https://eslint.org/docs/latest/contribute/pull-requests`,
+				}),
+			);
+			await context.octokit.pulls.update(
+				context.repo({ pull_number: prNumber, state: "closed" }),
+			);
+			return;
+		}
+
+		openIssueNumbers.push(issueNumber);
+	}
+
+	// Validate all issues before posting any link comments.
+	for (const issueNumber of openIssueNumbers) {
+		try {
 			// Check if we already commented on this issue for this PR
 			if (await hasExistingComment(context, issueNumber, prNumber)) {
 				continue;
