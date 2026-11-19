@@ -32,6 +32,15 @@ To add a plugin:
 1. Add the plugin to the list in `src/plugins/index.js`.
 1. Add the plugin to the list in `src/app.js` to enable it by default.
 
+## Pull request eligibility
+
+When a pull request is opened or edited, the bot checks open issues referenced by
+closing keywords such as `Fixes #123`. Each issue must have the `accepted` label
+and be assigned to the pull request author. Otherwise, the bot leaves a comment
+with contribution guidelines and closes the pull request without posting link
+comments on the referenced issues. The existing limit of three referenced issues
+per pull request applies.
+
 ## Deployment
 
 The bot is deployed to a [Dokku](https://dokku.com) instance named <https://github-bot.eslint.org> and is installed as a GitHub Application at the organization level.
