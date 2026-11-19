@@ -75,7 +75,7 @@ function createCommentMessage(prUrl, prAuthor) {
  */
 async function isIssueOpenAndExists(context, issueNumber) {
 	try {
-		const { data: issue } = await context.octokit.issues.get(
+		const { data: issue } = await context.octokit.rest.issues.get(
 			context.repo({ issue_number: issueNumber }),
 		);
 		return issue.state === "open";
@@ -95,9 +95,10 @@ async function isIssueOpenAndExists(context, issueNumber) {
  */
 async function hasExistingComment(context, issueNumber, prNumber) {
 	try {
-		const { data: comments } = await context.octokit.issues.listComments(
-			context.repo({ issue_number: issueNumber }),
-		);
+		const { data: comments } =
+			await context.octokit.rest.issues.listComments(
+				context.repo({ issue_number: issueNumber }),
+			);
 
 		const botComments = comments.filter(
 			comment =>
@@ -151,7 +152,7 @@ async function commentOnReferencedIssues(context) {
 			}
 
 			// Create the comment
-			await context.octokit.issues.createComment(
+			await context.octokit.rest.issues.createComment(
 				context.repo({
 					issue_number: issueNumber,
 					body: createCommentMessage(prUrl, prAuthor),

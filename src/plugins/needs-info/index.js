@@ -42,7 +42,7 @@ async function check(context) {
 	const { payload, octokit } = context;
 
 	if (payload.issue.labels.some(hasNeedInfoLabel)) {
-		await octokit.issues.createComment(
+		await octokit.rest.issues.createComment(
 			context.issue({
 				body: commentMessage(),
 			}),

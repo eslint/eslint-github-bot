@@ -47,7 +47,7 @@ function pluckLatestCommitSha(allCommits) {
  */
 function getAllOpenPRs(context) {
 	return context.octokit.paginate(
-		context.octokit.pulls.list,
+		context.octokit.rest.pulls.list,
 		context.repo({
 			state: "open",
 		}),
@@ -66,7 +66,7 @@ function getAllOpenPRs(context) {
  * @private
  */
 function createStatusOnPR({ context, state, sha, description, targetUrl }) {
-	return context.octokit.repos.createCommitStatus(
+	return context.octokit.rest.repos.createCommitStatus(
 		context.repo({
 			sha,
 			state,
@@ -86,7 +86,7 @@ function createStatusOnPR({ context, state, sha, description, targetUrl }) {
  * @private
  */
 async function getAllCommitsForPR({ context, pr }) {
-	const commits = await context.octokit.pulls.listCommits(
+	const commits = await context.octokit.rest.pulls.listCommits(
 		context.repo({ pull_number: pr.number }),
 	);
 
@@ -231,11 +231,12 @@ async function prOpenHandler(context) {
 	 * false: add success status to pr
 	 * true: add failure message if its not a fix or doc pr else success
 	 */
-	const { data: releaseIssues } = await context.octokit.issues.listForRepo(
-		context.repo({
-			labels: `${RELEASE_LABEL},${POST_RELEASE_LABEL}`,
-		}),
-	);
+	const { data: releaseIssues } =
+		await context.octokit.rest.issues.listForRepo(
+			context.repo({
+				labels: `${RELEASE_LABEL},${POST_RELEASE_LABEL}`,
+			}),
+		);
 
 	await createAppropriateStatusForPR({
 		context,

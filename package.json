@@ -9,7 +9,7 @@
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
     "start": "node ./src/app.js",
-    "test": "jest --colors --verbose --coverage"
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --colors --verbose --coverage"
   },
   "author": "Gyandeep Singh <gyandeeps@gmail.com>",
   "license": "MIT",
@@ -30,7 +30,7 @@
   "dependencies": {
     "moment": "^2.31.0",
     "moment-timezone": "^0.6.6",
-    "probot": "^13.4.7"
+    "probot": "^14.3.7"
   },
   "devDependencies": {
     "eslint": "^10.15.0",
@@ -49,6 +49,9 @@
     "eslint"
   ],
   "jest": {
+    "setupFiles": [
+      "<rootDir>/tests/setup.js"
+    ],
     "testMatch": [
       "<rootDir>/tests/**/*.test.js"
     ],

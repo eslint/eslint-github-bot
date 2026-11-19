@@ -9,7 +9,6 @@
 // Requirements
 //-----------------------------------------------------------------------------
 
-const { run } = require("probot");
 const plugins = require("./plugins");
 
 //-----------------------------------------------------------------------------
@@ -44,4 +43,4 @@ function appFn(robot) {
 }
 
 // start the server
-run(appFn);
+import("probot").then(({ run }) => run(appFn));
