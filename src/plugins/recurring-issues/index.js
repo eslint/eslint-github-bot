@@ -101,7 +101,7 @@ async function getTeamMembers({ octokit, organizationName, teamName }) {
 	 * close to being a problem right now, so it hasn't been worth figuring out a good
 	 * way to paginate yet, but that would be a good enhancement in the future.
 	 */
-	const teams = await octokit.teams
+	const teams = await octokit.rest.teams
 		.list({ org: organizationName, per_page: 100 })
 		.then(res => res.data);
 	const desiredTeam = teams.find(team => team.slug === teamName);
@@ -110,7 +110,7 @@ async function getTeamMembers({ octokit, organizationName, teamName }) {
 		throw new Error(`No team with name ${teamName} found`);
 	}
 
-	const teamMembers = await octokit.teams
+	const teamMembers = await octokit.rest.teams
 		.listMembersInOrg({
 			team_slug: desiredTeam.slug,
 			org: organizationName,
@@ -121,7 +121,7 @@ async function getTeamMembers({ octokit, organizationName, teamName }) {
 	return Promise.all(
 		teamMembers.map(async member => ({
 			login: member.login,
-			name: await octokit.users
+			name: await octokit.rest.users
 				.getByUsername({ username: member.login })
 				.then(res => res.data.name),
 		})),
@@ -205,7 +205,7 @@ async function issueWasClosedMultipleTimes(
 	octokit,
 	{ owner, repo, issue_number },
 ) {
-	const issueEvents = await octokit.issues
+	const issueEvents = await octokit.rest.issues
 		.listEvents({
 			owner,
 			repo,
@@ -280,7 +280,7 @@ function createIssueHandler({
 		});
 
 		// Create a new issue.
-		await context.octokit.issues.create(
+		await context.octokit.rest.issues.create(
 			context.repo({
 				title: newTitle,
 				body: newBody,

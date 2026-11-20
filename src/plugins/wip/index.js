@@ -30,7 +30,7 @@ const DO_NOT_MERGE_LABEL = "do not merge";
  * @private
  */
 function createStatusOnPR({ context, state, sha, description, targetUrl }) {
-	return context.octokit.repos.createCommitStatus(
+	return context.octokit.rest.repos.createCommitStatus(
 		context.repo({
 			sha,
 			state,
@@ -87,7 +87,7 @@ async function maybeResolveWipStatusOnPR(context, sha) {
 
 	const { octokit } = context;
 	const statuses = await octokit.paginate(
-		octokit.repos.getCombinedStatusForRef,
+		octokit.rest.repos.getCombinedStatusForRef,
 		repoAndRef,
 	);
 	const statusCheckExists = statuses.some(status => status.context === "wip");
@@ -108,7 +108,7 @@ async function maybeResolveWipStatusOnPR(context, sha) {
  * @private
  */
 async function getAllCommitsForPR({ context, pr }) {
-	const { data: commitList } = await context.octokit.pulls.listCommits(
+	const { data: commitList } = await context.octokit.rest.pulls.listCommits(
 		context.repo({ pull_number: pr.number }),
 	);
 

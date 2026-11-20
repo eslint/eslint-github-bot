@@ -104,7 +104,9 @@ async function processCommitMessage(context) {
 		return;
 	}
 
-	const allCommits = await octokit.pulls.listCommits(context.pullRequest());
+	const allCommits = await octokit.rest.pulls.listCommits(
+		context.pullRequest(),
+	);
 	const messageToCheck = payload.pull_request.title;
 	const errors = getCommitMessageErrors(messageToCheck);
 	const currentLabels = getCommitMessageLabels(messageToCheck);
@@ -122,7 +124,7 @@ async function processCommitMessage(context) {
 
 		await Promise.all(
 			labelsToRemove.map(({ name }) =>
-				octokit.issues.removeLabel(context.issue({ name })),
+				octokit.rest.issues.removeLabel(context.issue({ name })),
 			),
 		);
 	}
@@ -139,7 +141,7 @@ async function processCommitMessage(context) {
 		);
 
 		if (labelsToAdd.length > 0) {
-			await octokit.issues.addLabels(
+			await octokit.rest.issues.addLabels(
 				context.issue({ labels: labelsToAdd }),
 			);
 		}
@@ -149,7 +151,7 @@ async function processCommitMessage(context) {
 	}
 
 	// create status on the last commit
-	await octokit.repos.createCommitStatus(
+	await octokit.rest.repos.createCommitStatus(
 		context.repo({
 			sha: allCommits.data.at(-1).sha,
 			state,
@@ -161,7 +163,7 @@ async function processCommitMessage(context) {
 	);
 
 	if (state === "failure") {
-		await octokit.issues.createComment(
+		await octokit.rest.issues.createComment(
 			context.issue({
 				body: commentMessage(errors, payload.pull_request.user.login),
 			}),

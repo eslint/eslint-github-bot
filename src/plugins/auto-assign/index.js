@@ -40,7 +40,7 @@ async function issueOpenedHandler(context) {
 		return;
 	}
 
-	await context.octokit.issues.addAssignees(
+	await context.octokit.rest.issues.addAssignees(
 		context.issue({
 			assignees: [payload.issue.user.login],
 		}),
