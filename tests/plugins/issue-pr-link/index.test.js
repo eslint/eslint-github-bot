@@ -5,6 +5,11 @@ const { Probot, ProbotOctokit } = require("probot");
 const { default: fetchMock } = require("fetch-mock");
 
 const API_ROOT = "https://api.github.com";
+const eligibleIssue = {
+	state: "open",
+	labels: [{ name: "accepted" }],
+	assignees: [{ login: "contributor" }],
+};
 
 describe("issue-pr-link", () => {
 	let bot = null;
@@ -28,6 +33,145 @@ describe("issue-pr-link", () => {
 		fetchMock.clearHistory();
 	});
 
+	describe.each(["opened", "edited"])("PR eligibility on %s", action => {
+		let payload;
+
+		beforeEach(() => {
+			fetchMock.mockGlobal();
+			payload = {
+				action,
+				installation: { id: 1 },
+				pull_request: {
+					number: 789,
+					state: "open",
+					body: "Fixes #123",
+					html_url: "https://github.com/test/repo-test/pull/789",
+					user: { login: "contributor" },
+				},
+				repository: {
+					name: "repo-test",
+					owner: { login: "test" },
+				},
+			};
+		});
+
+		test.each([
+			["not accepted", { labels: [{ name: "evaluating" }] }],
+			["unassigned", { assignees: [] }],
+			["assigned to someone else", { assignees: [{ login: "other" }] }],
+			["neither accepted nor assigned", { labels: [], assignees: [] }],
+		])("closes PR when issue is %s", async (reason, issue) => {
+			fetchMock
+				.get(`${API_ROOT}/repos/test/repo-test/issues/123`, {
+					...eligibleIssue,
+					...issue,
+				})
+				.post(
+					`${API_ROOT}/repos/test/repo-test/issues/789/comments`,
+					200,
+				)
+				.patch(`${API_ROOT}/repos/test/repo-test/pulls/789`, 200);
+
+			await bot.receive({ name: "pull_request", payload });
+
+			const comment = fetchMock.callHistory.lastCall(
+				`${API_ROOT}/repos/test/repo-test/issues/789/comments`,
+			);
+			const { body } = JSON.parse(comment.options.body);
+			expect(body).toContain("@contributor");
+			expect(body).toContain("Issue #123");
+			expect(body).toContain("marked as accepted");
+			expect(body).toContain("you must be assigned");
+			expect(body).toContain(
+				"https://eslint.org/docs/latest/contribute/work-on-issue",
+			);
+			expect(body).toContain(
+				"https://eslint.org/docs/latest/contribute/pull-requests",
+			);
+			const update = fetchMock.callHistory.lastCall(
+				`${API_ROOT}/repos/test/repo-test/pulls/789`,
+			);
+			expect(JSON.parse(update.options.body)).toEqual({
+				state: "closed",
+			});
+			expect(fetchMock.callHistory.calls()).toHaveLength(3);
+		});
+
+		test.each([123, 456])(
+			"does not comment on any issues when issue #%s is ineligible",
+			async invalidIssueNumber => {
+				payload.pull_request.body = "Fixes #123 and closes #456";
+				for (const issueNumber of [123, 456]) {
+					fetchMock.get(
+						`${API_ROOT}/repos/test/repo-test/issues/${issueNumber}`,
+						{
+							...eligibleIssue,
+							labels:
+								issueNumber === invalidIssueNumber
+									? []
+									: eligibleIssue.labels,
+						},
+					);
+				}
+				fetchMock
+					.post(
+						`${API_ROOT}/repos/test/repo-test/issues/789/comments`,
+						200,
+					)
+					.patch(`${API_ROOT}/repos/test/repo-test/pulls/789`, 200);
+
+				await bot.receive({ name: "pull_request", payload });
+
+				expect(
+					fetchMock.callHistory.called(
+						`${API_ROOT}/repos/test/repo-test/pulls/789`,
+						"PATCH",
+					),
+				).toBe(true);
+				expect(
+					fetchMock.callHistory
+						.calls()
+						.some(
+							call =>
+								call.url.endsWith("/issues/123/comments") ||
+								call.url.endsWith("/issues/456/comments"),
+						),
+				).toBe(false);
+			},
+		);
+
+		test("allows the author among multiple assignees regardless of login case", async () => {
+			fetchMock
+				.get(`${API_ROOT}/repos/test/repo-test/issues/123`, {
+					...eligibleIssue,
+					assignees: [{ login: "other" }, { login: "Contributor" }],
+				})
+				.get(`${API_ROOT}/repos/test/repo-test/issues/123/comments`, [])
+				.post(
+					`${API_ROOT}/repos/test/repo-test/issues/123/comments`,
+					200,
+				);
+
+			await bot.receive({ name: "pull_request", payload });
+
+			expect(
+				fetchMock.callHistory.called(
+					`${API_ROOT}/repos/test/repo-test/issues/123/comments`,
+					"POST",
+				),
+			).toBe(true);
+			expect(fetchMock.callHistory.calls()).toHaveLength(3);
+		});
+
+		test("ignores an already closed PR", async () => {
+			payload.pull_request.state = "closed";
+
+			await bot.receive({ name: "pull_request", payload });
+
+			expect(fetchMock.callHistory.called()).toBe(false);
+		});
+	});
+
 	describe("pull request opened", () => {
 		test("comments on issue when PR body references an issue", async () => {
 			// Mock the issue exists and is open
@@ -35,7 +179,7 @@ describe("issue-pr-link", () => {
 				.mockGlobal()
 				.get(`${API_ROOT}/repos/test/repo-test/issues/123`, {
 					status: 200,
-					body: { state: "open", number: 123 },
+					body: { ...eligibleIssue, number: 123 },
 				})
 				.get(`${API_ROOT}/repos/test/repo-test/issues/123/comments`, {
 					status: 200,
@@ -196,7 +340,7 @@ describe("issue-pr-link", () => {
 				.mockGlobal()
 				.get(`${API_ROOT}/repos/test/repo-test/issues/123`, {
 					status: 200,
-					body: { state: "open", number: 123 },
+					body: { ...eligibleIssue, number: 123 },
 				})
 				.get(`${API_ROOT}/repos/test/repo-test/issues/123/comments`, {
 					status: 200,
@@ -251,11 +395,11 @@ describe("issue-pr-link", () => {
 				.mockGlobal()
 				.get(`${API_ROOT}/repos/test/repo-test/issues/123`, {
 					status: 200,
-					body: { state: "open", number: 123 },
+					body: { ...eligibleIssue, number: 123 },
 				})
 				.get(`${API_ROOT}/repos/test/repo-test/issues/456`, {
 					status: 200,
-					body: { state: "open", number: 456 },
+					body: { ...eligibleIssue, number: 456 },
 				})
 				.get(`${API_ROOT}/repos/test/repo-test/issues/123/comments`, {
 					status: 200,
@@ -318,7 +462,7 @@ describe("issue-pr-link", () => {
 					.mockGlobal()
 					.get(`${API_ROOT}/repos/test/repo-test/issues/${i}`, {
 						status: 200,
-						body: { state: "open", number: i },
+						body: { ...eligibleIssue, number: i },
 					})
 					.get(
 						`${API_ROOT}/repos/test/repo-test/issues/${i}/comments`,
@@ -399,7 +543,7 @@ describe("issue-pr-link", () => {
 				.mockGlobal()
 				.get(`${API_ROOT}/repos/test/repo-test/issues/123`, {
 					status: 200,
-					body: { state: "open", number: 123 },
+					body: { ...eligibleIssue, number: 123 },
 				})
 				.get(`${API_ROOT}/repos/test/repo-test/issues/123/comments`, {
 					status: 200,
@@ -448,7 +592,7 @@ describe("issue-pr-link", () => {
 				.mockGlobal()
 				.get(`${API_ROOT}/repos/test/repo-test/issues/123`, {
 					status: 200,
-					body: { state: "open", number: 123 },
+					body: { ...eligibleIssue, number: 123 },
 				})
 				.get(`${API_ROOT}/repos/test/repo-test/issues/123/comments`, {
 					status: 200,
@@ -561,7 +705,7 @@ describe("issue-pr-link", () => {
 				.mockGlobal()
 				.get(`${API_ROOT}/repos/test/repo-test/issues/123`, {
 					status: 200,
-					body: { state: "open", number: 123 },
+					body: { ...eligibleIssue, number: 123 },
 				})
 				.get(`${API_ROOT}/repos/test/repo-test/issues/123/comments`, {
 					status: 200,
